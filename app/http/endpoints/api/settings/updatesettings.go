@@ -4,6 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
+
+	"github.com/Dev-Miniplays/Tickets-Worker/bot/customisation"
+	"github.com/Dev-Miniplays/Tickets-Worker/i18n"
 	"github.com/TicketsBot/GoPanel/botcontext"
 	dbclient "github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/rpc"
@@ -11,12 +15,9 @@ import (
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/TicketsBot/common/premium"
 	"github.com/TicketsBot/database"
-	"github.com/TicketsBot/worker/bot/customisation"
-	"github.com/TicketsBot/worker/i18n"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/channel"
 	"golang.org/x/sync/errgroup"
-	"time"
 )
 
 func UpdateSettingsHandler(ctx *gin.Context) {

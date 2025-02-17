@@ -3,12 +3,13 @@ package middleware
 import (
 	"context"
 	"errors"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/rpc/cache"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/TicketsBot/common/permission"
 	"github.com/gin-gonic/gin"
 	cache2 "github.com/rxdn/gdl/cache"
-	"strconv"
 )
 
 // requires AuthenticateCookie middleware to be run before

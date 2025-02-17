@@ -1,11 +1,12 @@
 package chatreplica
 
 import (
+	"strconv"
+
 	v2 "github.com/TicketsBot/logarchiver/pkg/model/v2"
 	"github.com/rxdn/gdl/objects/channel"
 	"github.com/rxdn/gdl/objects/channel/embed"
 	"github.com/rxdn/gdl/objects/channel/message"
-	"strconv"
 )
 
 type (

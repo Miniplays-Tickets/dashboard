@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
+
 	wrapper "github.com/TicketsBot/GoPanel/redis"
 	"github.com/go-redis/redis/v8"
-	"time"
 )
 
 var ErrNoSession = errors.New("no session data found")

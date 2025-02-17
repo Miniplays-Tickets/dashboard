@@ -4,6 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
+
 	"github.com/TicketsBot/GoPanel/app"
 	"github.com/TicketsBot/GoPanel/app/http/session"
 	"github.com/TicketsBot/GoPanel/config"
@@ -12,10 +17,6 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/rxdn/gdl/rest"
 	"github.com/rxdn/gdl/rest/request"
-	"net/http"
-	"strconv"
-	"strings"
-	"time"
 )
 
 func CallbackHandler(c *gin.Context) {

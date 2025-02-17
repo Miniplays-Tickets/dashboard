@@ -1,12 +1,13 @@
 package api
 
 import (
+	"strconv"
+	"strings"
+
 	dbclient "github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/TicketsBot/database"
 	"github.com/gin-gonic/gin"
-	"strconv"
-	"strings"
 )
 
 type integrationResponse struct {

@@ -1,13 +1,14 @@
 package api
 
 import (
+	"net/http"
+
 	dbclient "github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/TicketsBot/GoPanel/utils/types"
 	"github.com/TicketsBot/common/premium"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4"
-	"net/http"
 )
 
 func GetEntitlements(ctx *gin.Context) {

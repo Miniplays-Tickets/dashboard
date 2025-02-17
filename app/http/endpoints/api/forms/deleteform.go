@@ -1,12 +1,13 @@
 package forms
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/app"
 	dbclient "github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/gin-gonic/gin"
-	"net/http"
-	"strconv"
 )
 
 func DeleteForm(c *gin.Context) {

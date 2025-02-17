@@ -2,6 +2,8 @@ package api
 
 import (
 	"fmt"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/botcontext"
 	"github.com/TicketsBot/GoPanel/config"
 	dbclient "github.com/TicketsBot/GoPanel/database"
@@ -9,7 +11,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/channel/embed"
 	"github.com/rxdn/gdl/rest"
-	"strconv"
 )
 
 func SetIntegrationPublicHandler(ctx *gin.Context) {

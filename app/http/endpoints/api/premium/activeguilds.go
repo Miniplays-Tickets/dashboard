@@ -1,6 +1,8 @@
 package api
 
 import (
+	"net/http"
+
 	dbclient "github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/TicketsBot/GoPanel/utils/types"
@@ -8,7 +10,6 @@ import (
 	"github.com/TicketsBot/common/permission"
 	"github.com/TicketsBot/common/premium"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 type setActiveGuildsBody struct {

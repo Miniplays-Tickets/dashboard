@@ -3,6 +3,9 @@ package api
 import (
 	"context"
 	"errors"
+	"net/http"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/app"
 	"github.com/TicketsBot/GoPanel/app/http/validation"
 	"github.com/TicketsBot/GoPanel/botcontext"
@@ -17,8 +20,6 @@ import (
 	"github.com/rxdn/gdl/objects/interaction/component"
 	"github.com/rxdn/gdl/rest"
 	"github.com/rxdn/gdl/rest/request"
-	"net/http"
-	"strconv"
 )
 
 func UpdatePanel(c *gin.Context) {

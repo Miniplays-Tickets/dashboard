@@ -1,5 +1,5 @@
 <svelte:head>
-  <title>Tickets | A Discord Support Manager Bot</title>
+  <title>Tickets Dashboard</title>
 
   <!-- Meta -->
   <meta charset="utf-8">

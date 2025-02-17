@@ -3,14 +3,15 @@ package api
 import (
 	"context"
 	"errors"
+	"net/http"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/app"
 	"github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/rpc/cache"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/gin-gonic/gin"
 	cache2 "github.com/rxdn/gdl/cache"
-	"net/http"
-	"strconv"
 )
 
 func WhitelabelGetGuilds(c *gin.Context) {

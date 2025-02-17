@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/pprof"
 
+	"github.com/Dev-Miniplays/Tickets-Worker/i18n"
 	"github.com/TicketsBot-cloud/archiverclient"
 	app "github.com/TicketsBot/GoPanel/app/http"
 	"github.com/TicketsBot/GoPanel/app/http/endpoints/api/ticket/livechat"
@@ -21,7 +22,6 @@ import (
 	"github.com/TicketsBot/common/observability"
 	"github.com/TicketsBot/common/premium"
 	"github.com/TicketsBot/common/secureproxy"
-	"github.com/TicketsBot/worker/i18n"
 	"github.com/getsentry/sentry-go"
 	"github.com/rxdn/gdl/rest/request"
 	"go.uber.org/zap"

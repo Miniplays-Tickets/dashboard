@@ -1,9 +1,10 @@
 package middleware
 
 import (
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 func ParseGuildId(ctx *gin.Context) {

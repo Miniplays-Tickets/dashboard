@@ -3,6 +3,9 @@ package api
 import (
 	"context"
 	"fmt"
+	"sort"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/botcontext"
 	dbclient "github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/utils"
@@ -10,8 +13,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/user"
 	"golang.org/x/sync/errgroup"
-	"sort"
-	"strconv"
 )
 
 func GetMembers(ctx *gin.Context) {

@@ -1,6 +1,8 @@
 package api
 
 import (
+	"sort"
+
 	"github.com/TicketsBot/GoPanel/botcontext"
 	"github.com/TicketsBot/GoPanel/redis"
 	"github.com/TicketsBot/GoPanel/rpc/cache"
@@ -8,7 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/channel"
 	"github.com/rxdn/gdl/rest"
-	"sort"
 )
 
 func ChannelsHandler(ctx *gin.Context) {

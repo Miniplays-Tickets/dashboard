@@ -3,6 +3,9 @@ package api
 import (
 	"errors"
 	"fmt"
+	"regexp"
+	"strings"
+
 	"github.com/TicketsBot/GoPanel/botcontext"
 	dbclient "github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/rpc"
@@ -14,8 +17,6 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/rxdn/gdl/objects/interaction"
 	"github.com/rxdn/gdl/rest"
-	"regexp"
-	"strings"
 )
 
 type tag struct {

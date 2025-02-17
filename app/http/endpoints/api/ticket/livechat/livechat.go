@@ -1,12 +1,13 @@
 package livechat
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/config"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"net/http"
-	"strconv"
 )
 
 var upgrader = websocket.Upgrader{

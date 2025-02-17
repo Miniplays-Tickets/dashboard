@@ -1,10 +1,11 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/TicketsBot/GoPanel/app"
 	"github.com/TicketsBot/GoPanel/database"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func WhitelabelGetErrors(c *gin.Context) {

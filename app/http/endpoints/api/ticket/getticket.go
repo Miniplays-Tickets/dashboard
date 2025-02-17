@@ -2,6 +2,11 @@ package api
 
 import (
 	"context"
+	"net/http"
+	"regexp"
+	"strconv"
+	"time"
+
 	"github.com/TicketsBot/GoPanel/app"
 	"github.com/TicketsBot/GoPanel/botcontext"
 	dbclient "github.com/TicketsBot/GoPanel/database"
@@ -12,10 +17,6 @@ import (
 	"github.com/rxdn/gdl/objects/channel/embed"
 	"github.com/rxdn/gdl/objects/user"
 	"github.com/rxdn/gdl/rest"
-	"net/http"
-	"regexp"
-	"strconv"
-	"time"
 )
 
 var MentionRegex, _ = regexp.Compile("<@(\\d+)>")

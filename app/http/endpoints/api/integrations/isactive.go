@@ -1,10 +1,11 @@
 package api
 
 import (
+	"strconv"
+
 	dbclient "github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 func IsIntegrationActiveHandler(ctx *gin.Context) {

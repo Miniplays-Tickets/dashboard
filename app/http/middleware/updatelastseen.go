@@ -2,10 +2,11 @@ package middleware
 
 import (
 	"context"
+	"time"
+
 	"github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/gin-gonic/gin"
-	"time"
 )
 
 // UpdateLastSeen We store the last time a user was seen in the dashboard so that we can delete their data if they

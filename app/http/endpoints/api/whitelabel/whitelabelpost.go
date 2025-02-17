@@ -5,6 +5,11 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"net/http"
+	"strconv"
+	"strings"
+
+	"github.com/Dev-Miniplays/Tickets-Worker/bot/command/manager"
 	"github.com/TicketsBot/GoPanel/app"
 	dbclient "github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/redis"
@@ -12,14 +17,10 @@ import (
 	"github.com/TicketsBot/common/tokenchange"
 	"github.com/TicketsBot/common/whitelabeldelete"
 	"github.com/TicketsBot/database"
-	"github.com/TicketsBot/worker/bot/command/manager"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/application"
 	"github.com/rxdn/gdl/rest"
 	"github.com/rxdn/gdl/rest/request"
-	"net/http"
-	"strconv"
-	"strings"
 )
 
 func WhitelabelPost() func(*gin.Context) {

@@ -3,6 +3,9 @@ package api
 import (
 	"context"
 	"errors"
+	"net/http"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/app"
 	"github.com/TicketsBot/GoPanel/botcontext"
 	dbclient "github.com/TicketsBot/GoPanel/database"
@@ -15,8 +18,6 @@ import (
 	"github.com/rxdn/gdl/rest"
 	"github.com/rxdn/gdl/rest/request"
 	"golang.org/x/sync/errgroup"
-	"net/http"
-	"strconv"
 )
 
 func MultiPanelUpdate(c *gin.Context) {

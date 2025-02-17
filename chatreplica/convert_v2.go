@@ -2,6 +2,7 @@ package chatreplica
 
 import (
 	"fmt"
+
 	v2 "github.com/TicketsBot/logarchiver/pkg/model/v2"
 )
 

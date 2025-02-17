@@ -2,13 +2,14 @@ package api
 
 import (
 	"context"
+	"net/http"
+
 	"github.com/TicketsBot/GoPanel/app"
 	"github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/user"
 	"github.com/rxdn/gdl/rest"
-	"net/http"
 )
 
 type whitelabelResponse struct {

@@ -3,6 +3,9 @@ package api
 import (
 	"errors"
 	"fmt"
+	"net/http"
+	"time"
+
 	"github.com/TicketsBot/GoPanel/app/http/session"
 	"github.com/TicketsBot/GoPanel/config"
 	"github.com/TicketsBot/GoPanel/redis"
@@ -11,8 +14,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/rest"
 	"github.com/rxdn/gdl/rest/request"
-	"net/http"
-	"time"
 )
 
 func ReloadGuildsHandler(c *gin.Context) {

@@ -1,10 +1,11 @@
 package api
 
 import (
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 func RemoveRoleBlacklistHandler(ctx *gin.Context) {

@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"fmt"
+
 	"github.com/TicketsBot/GoPanel/config"
 	"github.com/TicketsBot/GoPanel/rpc"
 	"github.com/TicketsBot/GoPanel/utils"

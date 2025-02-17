@@ -1,6 +1,8 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/TicketsBot/GoPanel/app"
 	"github.com/TicketsBot/GoPanel/database"
 	"github.com/TicketsBot/GoPanel/redis"
@@ -8,7 +10,6 @@ import (
 	"github.com/TicketsBot/common/statusupdates"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/user"
-	"net/http"
 )
 
 type statusUpdateBody struct {

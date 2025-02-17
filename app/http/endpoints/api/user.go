@@ -2,10 +2,11 @@ package api
 
 import (
 	"context"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/rpc/cache"
 	"github.com/TicketsBot/GoPanel/utils"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 func UserHandler(ctx *gin.Context) {

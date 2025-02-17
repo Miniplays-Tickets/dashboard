@@ -2,6 +2,9 @@ package api
 
 import (
 	"errors"
+	"net/http"
+	"strconv"
+
 	"github.com/TicketsBot/GoPanel/app"
 	"github.com/TicketsBot/GoPanel/botcontext"
 	"github.com/TicketsBot/GoPanel/database"
@@ -11,8 +14,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/rest"
 	"github.com/rxdn/gdl/rest/request"
-	"net/http"
-	"strconv"
 )
 
 func DeletePanel(c *gin.Context) {

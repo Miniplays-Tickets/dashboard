@@ -1,19 +1,58 @@
 name: Build and Publish
 
+env:
+  REGISTRY: ghcr.io
+  PACKAGE_NAME: miniplays-ticketsdashboard
+  GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+  GITHUB_SHA: ${{ github.sha }}
+
 on:
   push:
-    branches: [ "master" ]
-    tags:
-      - '*'
-  workflow_dispatch:
+    branches: [ "master", "sunset" ]
 
 jobs:
-  run:
-    uses: ticketsbot-cloud/template/.github/workflows/template.yaml@main
+  publish-image:
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    with:
-      package_name: api
-      sha: ${{ github.sha }}
-    secrets: inherit
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set image name
+        run: |
+          echo "IMAGE_NAME=${REGISTRY}/${GITHUB_REPOSITORY_OWNER,,}/${PACKAGE_NAME,,}" >> ${GITHUB_ENV}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} 
+          tags: |
+            type=sha,format=long
+            type=raw,value=latest,enable={{is_default_branch}}
+        env:
+          DOCKER_METADATA_SHORT_SHA_LENGTH: 20
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Log image name
+        run: |
+          echo "Image URI: ${IMAGE_NAME}"
