@@ -1,4 +1,4 @@
-module github.com/TicketsBot/GoPanel
+module github.com/Dev-Miniplays/Ticketsv2-dashboard
 
 go 1.22.6
 
