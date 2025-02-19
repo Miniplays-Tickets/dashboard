@@ -2,13 +2,14 @@ package utils
 
 import (
 	"context"
-	"github.com/TicketsBot/GoPanel/botcontext"
-	dbclient "github.com/TicketsBot/GoPanel/database"
-	"github.com/TicketsBot/GoPanel/internal/api"
+	"net/http"
+
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
+	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/internal/api"
 	"github.com/TicketsBot/common/permission"
 	"github.com/TicketsBot/database"
 	"github.com/rxdn/gdl/objects/member"
-	"net/http"
 )
 
 func GetPermissionLevel(ctx context.Context, guildId, userId uint64) (permission.PermissionLevel, error) {

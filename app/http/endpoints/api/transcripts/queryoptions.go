@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/TicketsBot/GoPanel/botcontext"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
 	"github.com/TicketsBot/database"
 	"github.com/rxdn/gdl/utils"
 )

@@ -3,10 +3,10 @@ package api
 import (
 	"net/http"
 
-	"github.com/TicketsBot/GoPanel/app"
-	"github.com/TicketsBot/GoPanel/database"
-	"github.com/TicketsBot/GoPanel/redis"
-	"github.com/TicketsBot/GoPanel/utils"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
 	"github.com/TicketsBot/common/statusupdates"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/user"

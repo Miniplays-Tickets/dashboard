@@ -3,9 +3,9 @@ package middleware
 import (
 	"fmt"
 
-	"github.com/TicketsBot/GoPanel/config"
-	"github.com/TicketsBot/GoPanel/rpc"
-	"github.com/TicketsBot/GoPanel/utils"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
 	"github.com/TicketsBot/common/premium"
 	"github.com/gin-gonic/gin"
 )

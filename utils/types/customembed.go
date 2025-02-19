@@ -1,7 +1,7 @@
 package types
 
 import (
-	"github.com/TicketsBot/GoPanel/utils"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
 	"github.com/TicketsBot/database"
 	"github.com/rxdn/gdl/objects/channel/embed"
 )

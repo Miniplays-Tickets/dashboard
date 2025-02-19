@@ -5,9 +5,9 @@ import (
 	"strconv"
 	"strings"
 
-	dbclient "github.com/TicketsBot/GoPanel/database"
-	"github.com/TicketsBot/GoPanel/rpc/cache"
-	"github.com/TicketsBot/GoPanel/utils"
+	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/user"
 )

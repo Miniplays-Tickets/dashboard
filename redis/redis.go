@@ -3,9 +3,10 @@ package redis
 import (
 	"context"
 	"fmt"
-	"github.com/TicketsBot/GoPanel/config"
-	"github.com/go-redis/redis/v8"
 	"time"
+
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
+	"github.com/go-redis/redis/v8"
 )
 
 type RedisClient struct {

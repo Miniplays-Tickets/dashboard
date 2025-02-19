@@ -3,9 +3,9 @@ package forms
 import (
 	"net/http"
 
-	"github.com/TicketsBot/GoPanel/app"
-	dbclient "github.com/TicketsBot/GoPanel/database"
-	"github.com/TicketsBot/GoPanel/utils"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
+	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
 	"github.com/TicketsBot/database"
 	"github.com/gin-gonic/gin"
 )

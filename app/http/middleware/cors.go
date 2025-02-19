@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/TicketsBot/GoPanel/config"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
 	"github.com/gin-gonic/gin"
 )
 

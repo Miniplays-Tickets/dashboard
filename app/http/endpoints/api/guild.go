@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/TicketsBot/GoPanel/botcontext"
-	"github.com/TicketsBot/GoPanel/utils"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
 	"github.com/gin-gonic/gin"
 )
 

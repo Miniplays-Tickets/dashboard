@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"errors"
 
-	"github.com/TicketsBot/GoPanel/app"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
 	"github.com/gin-gonic/gin"
 )
 

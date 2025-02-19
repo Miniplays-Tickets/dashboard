@@ -4,8 +4,11 @@ import (
 	"cmp"
 	"context"
 	"fmt"
-	dbclient "github.com/TicketsBot/GoPanel/database"
-	"github.com/TicketsBot/GoPanel/rpc/cache"
+	"slices"
+	"sync"
+
+	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
 	"github.com/TicketsBot/common/collections"
 	"github.com/TicketsBot/common/permission"
 	"github.com/TicketsBot/database"
@@ -13,8 +16,6 @@ import (
 	"github.com/rxdn/gdl/objects/guild"
 	"github.com/rxdn/gdl/rest"
 	errgroup "golang.org/x/sync/errgroup"
-	"slices"
-	"sync"
 )
 
 type GuildDto struct {

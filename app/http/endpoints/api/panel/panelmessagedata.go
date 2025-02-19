@@ -1,8 +1,8 @@
 package api
 
 import (
-	"github.com/TicketsBot/GoPanel/app"
-	"github.com/TicketsBot/GoPanel/botcontext"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
 	"github.com/TicketsBot/database"
 	"github.com/rxdn/gdl/objects"
 	"github.com/rxdn/gdl/objects/channel/embed"

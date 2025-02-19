@@ -2,7 +2,8 @@ package cache
 
 import (
 	"context"
-	"github.com/TicketsBot/GoPanel/config"
+
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
 	"github.com/jackc/pgx/v4/pgxpool"
 	gdlcache "github.com/rxdn/gdl/cache"
 )

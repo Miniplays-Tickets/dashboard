@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/TicketsBot/GoPanel/config"
-	dbclient "github.com/TicketsBot/GoPanel/database"
-	"github.com/TicketsBot/GoPanel/redis"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
+	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
 	"github.com/TicketsBot/common/restcache"
 	"github.com/rxdn/gdl/rest/ratelimit"
 )

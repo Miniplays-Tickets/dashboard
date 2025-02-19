@@ -3,10 +3,10 @@ package api
 import (
 	"sort"
 
-	"github.com/TicketsBot/GoPanel/botcontext"
-	"github.com/TicketsBot/GoPanel/redis"
-	"github.com/TicketsBot/GoPanel/rpc/cache"
-	"github.com/TicketsBot/GoPanel/utils"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/channel"
 	"github.com/rxdn/gdl/rest"
