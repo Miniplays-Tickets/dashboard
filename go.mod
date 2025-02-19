@@ -8,6 +8,7 @@ require (
 	github.com/BurntSushi/toml v1.2.1
         github.com/Dev-Miniplays/Ticketsv2-dashboard v0.0.0-20250219112424-1be7c4704291
 	github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20250118213159-9f8ea705f203
+        github.com/TicketsBot/GoPanel v0.0.0-20250216132547-07943c2e1a9b
 	github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70
 	github.com/TicketsBot-cloud/database v0.0.0-20250215204312-d433be0833c9
 	github.com/TicketsBot/common v0.0.0-20241117150316-ff54c97b45c1
