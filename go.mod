@@ -1,6 +1,6 @@
 module github.com/Dev-Miniplays/Ticketsv2-dashboard
 
-go 1.22.6
+go 1.23.0
 
 // replace github.com/TicketsBot-cloud/database => ../database
 
@@ -10,7 +10,7 @@ require (
 	github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20250118213159-9f8ea705f203
         github.com/Dev-Miniplays/Ticketsv2-dashboard v0.0.0-20250216132547-07943c2e1a9b
 	github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70
-	github.com/TicketsBot-cloud/database v0.0.0-20250215204312-d433be0833c9
+	github.com/TicketsBot-cloud/database v0.0.0-20250227151152-3fb2e052f33c
 	github.com/TicketsBot/common v0.0.0-20241117150316-ff54c97b45c1
 	github.com/TicketsBot/database v0.0.0-20250205194156-c8239ae6eb4e
 	github.com/TicketsBot/logarchiver v0.0.0-20241012220745-5f3ba17a5138
@@ -124,7 +124,7 @@ require (
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
-	golang.org/x/crypto v0.33.0 // indirect
+	golang.org/x/crypto v0.34.0 // indirect
 	golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f // indirect
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect

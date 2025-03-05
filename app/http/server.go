@@ -123,7 +123,8 @@ func StartServer(logger *zap.Logger, sm *livechat.SocketManager) {
 		guildAuthApiAdmin.POST("/settings", api_settings.UpdateSettingsHandler)
 
 		guildAuthApiAdmin.POST("/import", api_import.ImportHandler)
-		guildAuthApiAdmin.GET("/import/presign", api_import.PresignTranscriptURL)
+		guildAuthApiAdmin.GET("/import/runs", api_import.GetRuns)
+		guildAuthApiAdmin.GET("/import/presign", api_import.PresignURL)
 
 		guildAuthApiSupport.GET("/blacklist", api_blacklist.GetBlacklistHandler)
 		guildAuthApiSupport.POST("/blacklist", api_blacklist.AddBlacklistHandler)
