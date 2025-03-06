@@ -39,12 +39,10 @@ github.com/ClickHouse/ch-go v0.52.1 h1:nucdgfD1BDSHjbNaG3VNebonxJzD8fX8jbuBpfo5V
 github.com/ClickHouse/ch-go v0.52.1/go.mod h1:B9htMJ0hii/zrC2hljUKdnagRBuLqtRG/GrU3jqCwRk=
 github.com/ClickHouse/clickhouse-go/v2 v2.10.0 h1:0w/A50D5MfsRUYBaV6rLKwZ4LXWKLZKJ1u31QXjTIO4=
 github.com/ClickHouse/clickhouse-go/v2 v2.10.0/go.mod h1:teXfZNM90iQ99Jnuht+dxQXCuhDZ8nvvMoTJOFrcmcg=
-github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
-github.com/ReneKroon/ttlcache v1.6.0/go.mod h1:DG6nbhXKUQhrExfwwLuZUdH7UnRDDRA1IW+nBuCssvs=
-github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20241117155137-89dec1fd9a11 h1:kxVaPl8YOcCYfVQczVIgUnx0DW+2EIDZVk2hC+UnGcE=
-github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20241117155137-89dec1fd9a11/go.mod h1:UjYX/xEJ7WsqmdxOL7B+jk4LC5Ejv8bLVdkdolIVjxA=
 github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20250118213159-9f8ea705f203 h1:8fq1J/duWweGmUadjOsdwp0M1a503gnoy+D3F9g1xpI=
 github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20250118213159-9f8ea705f203/go.mod h1:fyIh6+02OPuA7jcYDeuWCOrQm3fCByW4TDRVGiF3gfU=
+github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
+github.com/ReneKroon/ttlcache v1.6.0/go.mod h1:DG6nbhXKUQhrExfwwLuZUdH7UnRDDRA1IW+nBuCssvs=
 github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70 h1:bkTKXS4RRLTOC2UbqRnYObI7uGfyW64mo7dYxx8HN+w=
 github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70/go.mod h1:BtS3JYHIuRStuUm909E7IDAwg7aAuiS5CNfIH5Y+Ayw=
 github.com/TicketsBot-cloud/common v0.0.0-20250208140430-b5da1dd487b3 h1:2rpwH5o8negd0BCqWG8xv9r0jh/fYK3P/V3WJ+yFDKs=
@@ -55,8 +53,6 @@ github.com/TicketsBot/analytics-client v0.0.0-20240724103359-30f5dac821e6 h1:Jig
 github.com/TicketsBot/analytics-client v0.0.0-20240724103359-30f5dac821e6/go.mod h1:9Z9qP/yovb6DUe1KlzgN2wicc+8ey6MMoxfynFbMyRg=
 github.com/TicketsBot/archiverclient v0.0.0-20241012221057-16a920bfb454 h1:u77mqvmLdljjircnvgikSWNOSyc2uSLLybPOQP8moK8=
 github.com/TicketsBot/archiverclient v0.0.0-20241012221057-16a920bfb454/go.mod h1:ZJ+b5JzRBQqywD7/oTsqJSB34VwzQ8eExHslaGRLOVQ=
-github.com/Dev-Miniplays/Ticketsv2-dashboard v0.0.0-20250216132547-07943c2e1a9b h1:+IpZezkWmkfYUBs4wiXYc1k8ZFdNDApgAw3gv73waRk=
-github.com/Dev-Miniplays/Ticketsv2-dashboard v0.0.0-20250216132547-07943c2e1a9b/go.mod h1:QTnTdaCV90iqt3E0y4sYOcArOMY9ZIXyl3+AJZZVi4M=
 github.com/TicketsBot/common v0.0.0-20241117150316-ff54c97b45c1 h1:FqC1KGOsmB+ikvbmDkyNQU6bGUWyfYq8Ip9r4KxTveY=
 github.com/TicketsBot/common v0.0.0-20241117150316-ff54c97b45c1/go.mod h1:N7zwetwx8B3RK/ZajWwMroJSyv2ZJ+bIOZWv/z8DhaM=
 github.com/TicketsBot/database v0.0.0-20250205194156-c8239ae6eb4e h1:3cYv3r/wSbTSp2Rmtk9jx3D7qpBQx6QMnOjIQbbND3w=
@@ -65,8 +61,6 @@ github.com/TicketsBot/logarchiver v0.0.0-20241012220745-5f3ba17a5138 h1:wsR5ESea
 github.com/TicketsBot/logarchiver v0.0.0-20241012220745-5f3ba17a5138/go.mod h1:4Rq0CgSCgXVW6uEyEUvWzxOmFp+L57rFfCjPDFPHFiw=
 github.com/TicketsBot/ttlcache v1.6.1-0.20200405150101-acc18e37b261 h1:NHD5GB6cjlkpZFjC76Yli2S63/J2nhr8MuE6KlYJpQM=
 github.com/TicketsBot/ttlcache v1.6.1-0.20200405150101-acc18e37b261/go.mod h1:2zPxDAN2TAPpxUPjxszjs3QFKreKrQh5al/R3cMXmYk=
-github.com/TicketsBot/worker v0.0.0-20250223150309-90ae2883be48 h1:QOKpS6/aNkG9VJKNTEapFuko4FX0su60xN8jJZJNwrQ=
-github.com/TicketsBot/worker v0.0.0-20250223150309-90ae2883be48/go.mod h1:UjYX/xEJ7WsqmdxOL7B+jk4LC5Ejv8bLVdkdolIVjxA=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
 github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
 github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf/go.mod h1:ybxpYRFXyAe+OPACYpWeL0wqObRcbAqCMya13uyzqw0=
