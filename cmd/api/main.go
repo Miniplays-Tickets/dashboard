@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/http/pprof"
 
-	"github.com/Dev-Miniplays/Tickets-Worker/i18n"
+	"github.com/Dev-Miniplays/Ticketsv2-worker/i18n"
 	app "github.com/Dev-Miniplays/Ticketsv2-dashboard/app/http"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app/http/endpoints/api/ticket/livechat"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"

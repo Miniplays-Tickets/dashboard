@@ -6,7 +6,6 @@ go 1.23.0
 
 require (
 	github.com/BurntSushi/toml v1.2.1
-	github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20250118213159-9f8ea705f203
 	github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70
 	github.com/TicketsBot-cloud/common v0.0.0-20250208140430-b5da1dd487b3
 	github.com/TicketsBot-cloud/database v0.0.0-20250306095726-e4915520c1ab
@@ -46,6 +45,7 @@ require github.com/TicketsBot/archiverclient v0.0.0-20241012221057-16a920bfb454 
 require (
 	github.com/ClickHouse/ch-go v0.52.1 // indirect
 	github.com/ClickHouse/clickhouse-go/v2 v2.10.0 // indirect
+	github.com/Dev-Miniplays/Ticketsv2-worker v0.0.0-20250306234801-8889064d0484 // indirect
 	github.com/TicketsBot/analytics-client v0.0.0-20240724103359-30f5dac821e6 // indirect
 	github.com/TicketsBot/ttlcache v1.6.1-0.20200405150101-acc18e37b261 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Dev-Miniplays/Tickets-Worker/bot/command/manager"
+	"github.com/Dev-Miniplays/Ticketsv2-worker/bot/command/manager"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"

@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Dev-Miniplays/Tickets-Worker/bot/customisation"
-	"github.com/Dev-Miniplays/Tickets-Worker/i18n"
+	"github.com/Dev-Miniplays/Ticketsv2-worker/bot/customisation"
+	"github.com/Dev-Miniplays/Ticketsv2-worker/i18n"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
 	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc"

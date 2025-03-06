@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Dev-Miniplays/Tickets-Worker/bot/command/manager"
+	"github.com/Dev-Miniplays/Ticketsv2-worker/bot/command/manager"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
 	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"

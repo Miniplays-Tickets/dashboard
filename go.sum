@@ -41,6 +41,8 @@ github.com/ClickHouse/clickhouse-go/v2 v2.10.0 h1:0w/A50D5MfsRUYBaV6rLKwZ4LXWKLZ
 github.com/ClickHouse/clickhouse-go/v2 v2.10.0/go.mod h1:teXfZNM90iQ99Jnuht+dxQXCuhDZ8nvvMoTJOFrcmcg=
 github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20250118213159-9f8ea705f203 h1:8fq1J/duWweGmUadjOsdwp0M1a503gnoy+D3F9g1xpI=
 github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20250118213159-9f8ea705f203/go.mod h1:fyIh6+02OPuA7jcYDeuWCOrQm3fCByW4TDRVGiF3gfU=
+github.com/Dev-Miniplays/Ticketsv2-worker v0.0.0-20250306234801-8889064d0484 h1:+qanHiOj7uy5UVh15/6MvKF0s2nX1/2elXlQuBTPpuQ=
+github.com/Dev-Miniplays/Ticketsv2-worker v0.0.0-20250306234801-8889064d0484/go.mod h1:S92Eeckdn60RODjNeFJY2bKibQHwoGZH1AwSdEUahrE=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
 github.com/ReneKroon/ttlcache v1.6.0/go.mod h1:DG6nbhXKUQhrExfwwLuZUdH7UnRDDRA1IW+nBuCssvs=
 github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70 h1:bkTKXS4RRLTOC2UbqRnYObI7uGfyW64mo7dYxx8HN+w=
@@ -55,6 +57,7 @@ github.com/TicketsBot/archiverclient v0.0.0-20241012221057-16a920bfb454 h1:u77mq
 github.com/TicketsBot/archiverclient v0.0.0-20241012221057-16a920bfb454/go.mod h1:ZJ+b5JzRBQqywD7/oTsqJSB34VwzQ8eExHslaGRLOVQ=
 github.com/TicketsBot/common v0.0.0-20241117150316-ff54c97b45c1 h1:FqC1KGOsmB+ikvbmDkyNQU6bGUWyfYq8Ip9r4KxTveY=
 github.com/TicketsBot/common v0.0.0-20241117150316-ff54c97b45c1/go.mod h1:N7zwetwx8B3RK/ZajWwMroJSyv2ZJ+bIOZWv/z8DhaM=
+github.com/TicketsBot/database v0.0.0-20250205194156-c8239ae6eb4e/go.mod h1:mpVkDO8tnnWn1pMGEphVg6YSeGIhDwLAN43lBTkpGmU=
 github.com/TicketsBot/logarchiver v0.0.0-20241012220745-5f3ba17a5138 h1:wsR5ESeaQKo122qsmzPcblxlJdE0GIQbp2B/7/uX+TA=
 github.com/TicketsBot/logarchiver v0.0.0-20241012220745-5f3ba17a5138/go.mod h1:4Rq0CgSCgXVW6uEyEUvWzxOmFp+L57rFfCjPDFPHFiw=
 github.com/TicketsBot/ttlcache v1.6.1-0.20200405150101-acc18e37b261 h1:NHD5GB6cjlkpZFjC76Yli2S63/J2nhr8MuE6KlYJpQM=
