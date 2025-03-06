@@ -6,7 +6,7 @@ import (
 
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils/types"
-	"github.com/TicketsBot/database"
+	"github.com/TicketsBot-cloud/database"
 	"github.com/rxdn/gdl/objects/channel/embed"
 	"github.com/rxdn/gdl/objects/interaction/component"
 	"github.com/rxdn/gdl/rest"

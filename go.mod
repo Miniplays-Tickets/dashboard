@@ -6,12 +6,12 @@ go 1.23.0
 
 require (
 	github.com/BurntSushi/toml v1.2.1
-        github.com/Dev-Miniplays/Ticketsv2-dashboard v0.0.0-20250219112424-1be7c4704291
 	github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20250118213159-9f8ea705f203
-        github.com/Dev-Miniplays/Ticketsv2-dashboard v0.0.0-20250216132547-07943c2e1a9b
 	github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70
 	github.com/TicketsBot-cloud/common v0.0.0-20250208140430-b5da1dd487b3
 	github.com/TicketsBot-cloud/database v0.0.0-20250306095726-e4915520c1ab
+	github.com/TicketsBot/common v0.0.0-20241117150316-ff54c97b45c1
+	github.com/TicketsBot/database v0.0.0-20250205194156-c8239ae6eb4e
 	github.com/TicketsBot/logarchiver v0.0.0-20241012220745-5f3ba17a5138
 	github.com/apex/log v1.1.2
 	github.com/caarlos0/env/v11 v11.2.2
@@ -47,8 +47,6 @@ require (
 	github.com/ClickHouse/ch-go v0.52.1 // indirect
 	github.com/ClickHouse/clickhouse-go/v2 v2.10.0 // indirect
 	github.com/TicketsBot/analytics-client v0.0.0-20240724103359-30f5dac821e6 // indirect
-	github.com/TicketsBot/common v0.0.0-20241117150316-ff54c97b45c1 // indirect
-	github.com/TicketsBot/database v0.0.0-20250205194156-c8239ae6eb4e // indirect
 	github.com/TicketsBot/ttlcache v1.6.1-0.20200405150101-acc18e37b261 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect

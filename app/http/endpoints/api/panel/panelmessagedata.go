@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
-	"github.com/TicketsBot/database"
+	"github.com/TicketsBot-cloud/database"
 	"github.com/rxdn/gdl/objects"
 	"github.com/rxdn/gdl/objects/channel/embed"
 	"github.com/rxdn/gdl/objects/guild/emoji"

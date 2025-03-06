@@ -6,7 +6,7 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
-	"github.com/TicketsBot/common/permission"
+	"github.com/TicketsBot-cloud/common/permission"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 	cache2 "github.com/rxdn/gdl/cache"

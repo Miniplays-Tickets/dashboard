@@ -9,9 +9,9 @@ import (
 
 	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
-	"github.com/TicketsBot/common/collections"
-	"github.com/TicketsBot/common/permission"
-	"github.com/TicketsBot/database"
+	"github.com/TicketsBot-cloud/common/collections"
+	"github.com/TicketsBot-cloud/common/permission"
+	"github.com/TicketsBot-cloud/database"
 	"github.com/jackc/pgtype"
 	"github.com/rxdn/gdl/objects/guild"
 	"github.com/rxdn/gdl/rest"

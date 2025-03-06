@@ -7,8 +7,8 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
 	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/internal/api"
-	"github.com/TicketsBot/common/permission"
-	"github.com/TicketsBot/database"
+	"github.com/TicketsBot-cloud/common/permission"
+	"github.com/TicketsBot-cloud/database"
 	"github.com/rxdn/gdl/objects/member"
 )
 
