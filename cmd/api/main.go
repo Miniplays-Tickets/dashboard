@@ -22,7 +22,6 @@ import (
 	"github.com/TicketsBot/common/observability"
 	"github.com/TicketsBot/common/premium"
 	"github.com/TicketsBot/common/secureproxy"
-	"github.com/TicketsBot/worker/i18n"
 	"github.com/getsentry/sentry-go"
 	"github.com/rxdn/gdl/rest/request"
 	"go.uber.org/zap"
