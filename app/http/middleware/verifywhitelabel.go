@@ -6,7 +6,7 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
-	"github.com/TicketsBot/common/premium"
+	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/gin-gonic/gin"
 )
 

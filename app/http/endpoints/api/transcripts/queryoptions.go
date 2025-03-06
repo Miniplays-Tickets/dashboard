@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
-	"github.com/TicketsBot/database"
+	"github.com/TicketsBot-cloud/database"
 	"github.com/rxdn/gdl/utils"
 )
 

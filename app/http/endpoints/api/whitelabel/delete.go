@@ -6,7 +6,7 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
-	"github.com/TicketsBot/common/whitelabeldelete"
+	"github.com/TicketsBot-cloud/common/whitelabeldelete"
 	"github.com/gin-gonic/gin"
 )
 

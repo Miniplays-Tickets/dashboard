@@ -14,7 +14,7 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/internal/api"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
-	"github.com/TicketsBot/common/premium"
+	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/golang-jwt/jwt"
 )
 

@@ -13,8 +13,8 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
-	"github.com/TicketsBot/common/premium"
-	"github.com/TicketsBot/database"
+	"github.com/TicketsBot-cloud/common/premium"
+	"github.com/TicketsBot-cloud/database"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/channel"
 	"golang.org/x/sync/errgroup"
@@ -136,7 +136,7 @@ func (s *Settings) Validate(ctx context.Context, guildId uint64, premiumTier pre
 		return errors.New("Invalid colour")
 	}
 
-	for colour, _ := range s.Colours {
+	for colour := range s.Colours {
 		if !utils.Exists(activeColours, colour) {
 			return errors.New("Invalid colour")
 		}

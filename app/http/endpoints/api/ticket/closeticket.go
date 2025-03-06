@@ -9,7 +9,7 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
-	"github.com/TicketsBot/common/closerelay"
+	"github.com/TicketsBot-cloud/common/closerelay"
 	"github.com/gin-gonic/gin"
 )
 

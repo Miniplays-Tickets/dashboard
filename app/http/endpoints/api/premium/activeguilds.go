@@ -6,9 +6,9 @@ import (
 	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils/types"
-	"github.com/TicketsBot/common/model"
-	"github.com/TicketsBot/common/permission"
-	"github.com/TicketsBot/common/premium"
+	"github.com/TicketsBot-cloud/common/model"
+	"github.com/TicketsBot-cloud/common/permission"
+	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/gin-gonic/gin"
 )
 

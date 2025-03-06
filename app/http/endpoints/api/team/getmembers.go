@@ -9,7 +9,7 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
 	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
-	syncutils "github.com/TicketsBot/common/utils"
+	syncutils "github.com/TicketsBot-cloud/common/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/user"
 	"golang.org/x/sync/errgroup"

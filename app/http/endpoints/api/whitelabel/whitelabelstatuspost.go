@@ -7,7 +7,7 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
-	"github.com/TicketsBot/common/statusupdates"
+	"github.com/TicketsBot-cloud/common/statusupdates"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/user"
 )

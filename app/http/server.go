@@ -23,7 +23,7 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app/http/middleware"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app/http/session"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
-	"github.com/TicketsBot/common/permission"
+	"github.com/TicketsBot-cloud/common/permission"
 	"github.com/gin-gonic/gin"
 	"github.com/penglongli/gin-metrics/ginmetrics"
 	"go.uber.org/zap"

@@ -112,7 +112,7 @@ func GetRuns(ctx *gin.Context) {
 		return
 	}
 
-	runs, err := dbclient.Client2.ImportLogs.GetRuns(ctx, guildId)
+	runs, err := dbclient.Client.ImportLogs.GetRuns(ctx, guildId)
 	if err != nil {
 		ctx.JSON(500, utils.ErrorJson(err))
 		return
