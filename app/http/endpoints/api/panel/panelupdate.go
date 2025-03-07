@@ -10,7 +10,7 @@ import (
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app/http/validation"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
 	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc"
+	"github.com/Dev-Miniplays/Ticketsv2-dashboard/log"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc"
 	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
 	"github.com/TicketsBot-cloud/common/premium"
