@@ -10,6 +10,6 @@
 
 <script>
     function invite() {
-        window.location.href = `https://invite.ticketsbot.cloud`;
+        window.location.href = `https://discord.com/oauth2/authorize?client_id=1319784485335728199`;
     }
 </script>
