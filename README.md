@@ -21,11 +21,13 @@
     <a href="https://docs.ticketsbot.cloud"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://ticketsbot.cloud">View Hosted Version</a>
+    <a href="https://ticketsdashboard.miniplays.de">View Hosted Version</a>
+    <br />
+    <a href="https://ticketsv2.atlassian.net/jira/software/c/projects/RM/boards/3">View Roadmap</a> (These Changes are Implemented Instantly when they are in the <a href="https://github.com/Ticketsbot-cloud/dashboard/">v2 Tickets Bot</a>.)
+    <br />
+    <a href="https://discord.com/channels/1348788179678793815/1348789681797726208">Get Support</a>
     &middot;
-    <a href="https://ticketsv2.atlassian.net/jira/software/c/projects/RM/boards/3">View Roadmap</a>
-    &middot;
-    <a href="https://discord.com/channels/1071167333265047653/1326292607432921090">Get Support</a>
+    <a href="https://discord.gg/czDZuKudjG">Invite</a>
   </p>
 </div>
 
@@ -91,8 +93,8 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors
 
-<a href="https://github.com/TicketsBot-cloud/dashboard/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=TicketsBot-cloud/dashboard" alt="contrib.rocks image" />
+<a href="https://github.com/Dev-Miniplays/Ticketsv2-dashboard/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Dev-Miniplays/Ticketsv2-dashboard" alt="contrib.rocks image" />
 </a>
 
 <!-- LICENSE -->
@@ -106,20 +108,21 @@ Distributed under the MIT license. See `LICENSE` for more information.
 ## Acknowledgments
 
 * [TicketsBot.net](https://ticketsbot.net) For creating the original Tickets Bot
+* [TicketsBot.cloud](https://ticketsbot.cloud) For creating the v2 Tickets Bot
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/TicketsBot-cloud/dashboard.svg?style=for-the-badge
-[contributors-url]: https://github.com/TicketsBot-cloud/dashboard/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/TicketsBot-cloud/dashboard.svg?style=for-the-badge
-[forks-url]: https://github.com/TicketsBot-cloud/dashboard/network/members
-[stars-shield]: https://img.shields.io/github/stars/TicketsBot-cloud/dashboard.svg?style=for-the-badge
-[stars-url]: https://github.com/TicketsBot-cloud/dashboard/stargazers
-[issues-shield]: https://img.shields.io/github/issues/TicketsBot-cloud/dashboard.svg?style=for-the-badge
-[issues-url]: https://github.com/TicketsBot-cloud/dashboard/issues
-[license-shield]: https://img.shields.io/github/license/TicketsBot-cloud/dashboard.svg?style=for-the-badge
-[license-url]: https://github.com/TicketsBot-cloud/dashboard/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
+[contributors-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
+[forks-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/network/members
+[stars-shield]: https://img.shields.io/github/stars/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
+[stars-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
+[issues-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/issues
+[license-shield]: https://img.shields.io/github/license/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
+[license-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/blob/master/LICENSE.txt
 
 [Golang]: https://img.shields.io/badge/Go-%2300ADD8?style=for-the-badge&logo=go&logoColor=white
 [Golang-url]: https://go.dev/
