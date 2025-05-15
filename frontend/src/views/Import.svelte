@@ -45,7 +45,7 @@
                         <div>
                             <br />
                             <br />
-                            <p style="text-align: center;"><i class="fa-solid fa-spinner fa-spin-pulse"></i> We are currently loading your data in, please do not navigate away from this page.</p>
+                            <p style="text-align: center;"><i class="fa-solid fa-spinner fa-spin-pulse"></i> Deine Daten werden gerade hochgeladen, bitte verlasse diese Seite nicht.</p>
                         </div>
                         {/if}
                     </div>
@@ -54,22 +54,22 @@
 
             {#if runs.length > 0}
             <div class="section">
-                <h2 class="section-title">Runs <span style="font-size: 12px; font-style: italic;">(Refreshes every 30 seconds)</span></h2>
+                <h2 class="section-title">Ausführungen <span style="font-size: 12px; font-style: italic;">(Aktuallisiert alle 30 Sekunden)</span></h2>
                 {#each ["DATA", "TRANSCRIPT"] as runType}
                     {#if runs.filter(run => run.run_type == runType).length > 0}
                         <h3>{runType.toLowerCase().replace(/\b\w/g, s => s.toUpperCase())} Logs</h3>
                         {#each runs.filter(run => run.run_type == runType) as run}
-                        <Collapsible tooltip="View your logs for this run">
-                            <span slot="header" class="header">{run.run_type} Run #{run.run_id} - {new Date(run.date).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric", hour: "2-digit", minute: "2-digit"})}</span>
+                        <Collapsible tooltip="Zeigt dir die logs für diese Ausführung">
+                            <span slot="header" class="header">{run.run_type} Run #{run.run_id} - {new Date(run.date).toLocaleDateString('de-de', { weekday:"long", year:"numeric", month:"long", day:"numeric", hour: "2-digit", minute: "2-digit"})}</span>
                             <div slot="content" class="col-1">
                             <table class="nice">
                                 <thead>
                                 <tr>
                                     <th>Log Id</th>
                                     <th>Log Status</th>
-                                    <th>Entity Type</th>
-                                    <th>Message</th>
-                                    <th>Date</th>
+                                    <th>Entrag Typ</th>
+                                    <th>Nachricht</th>
+                                    <th>Datum</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -79,7 +79,7 @@
                                     <td>{log.log_type}</td>
                                     <td>{log.entity_type ?? "N/A"}</td>
                                     <td>{log.message ?? "N/A"}</td>
-                                    <td>{new Date(log.date).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"})}</td>
+                                    <td>{new Date(log.date).toLocaleDateString('de-de', { weekday:"long", year:"numeric", month:"long", day:"numeric", hour: "2-digit", minute: "2-digit", second: "2-digit"})}</td>
                                 </tr>
                                 {/each}
                                 </tbody>
@@ -94,9 +94,9 @@
 
             {#if dataReturned}
             <div class="section">
-                <h2 class="section-title">Import Files Uploaded</h2>
+                <h2 class="section-title">Import Dateien Hochgeladen</h2>
                 <div class="row">
-                    <p style="text-align: center;">Your Data & Transcripts have been placed in a queue and may take a few days to appear.</p>
+                    <p style="text-align: center;">Deine Daten & Transcripts wurden der Wartenschlange hinzugefügt, es wird etwas dauern, bis diese Importiert wurden.</p>
                 </div>
             </div>
             {/if}
@@ -136,7 +136,7 @@
     function getRuns() {
         axios.get(`${API_URL}/api/${guildId}/import/runs`).then((res) => {
             if (res.status !== 200) {
-                notifyError(`Failed to get import runs: ${res.data.error}`);
+                notifyError(`Fehler beim abrufen von Ausführungen: ${res.data.error}`);
                 return;
             }
 
@@ -160,7 +160,7 @@
             transcriptFileInput.files.length === 0
         ) {
             notifyError(
-                "Please select a file to import, at least one of data or transcripts must be provided",
+                "Bitte wähle eine Datei zum importieren aus.",
             );
             return;
         }
@@ -174,8 +174,8 @@
         setTimeout(() => {
             if (queryLoading) {
                 notify(
-                    "Uploading...",
-                    "Your files are still uploading, please wait whilst they are processed.",
+                    "Hochladen...",
+                    "Deine Dateien werden noch Hochgeladen, bitte warte kurz.",
                 );
             }
         }, 60 * 1000);
@@ -183,7 +183,7 @@
         if (transcriptFileInput.files.length > 0) {
             const presignTranscriptRes = await axios.get(`${API_URL}/api/${guildId}/import/presign?file_size=${transcriptFileInput.files[0].size}&file_type=transcripts&file_content_type=${transcriptFileInput.files[0].type}`);
             if (presignTranscriptRes.status !== 200) {
-                notifyError(`Failed to upload transcripts: ${presignTranscriptRes.data.error}`);
+                notifyError(`Fehler beim Hochladen der Transscripts: ${presignTranscriptRes.data.error}`);
                 queryLoading = false;
                 return;
             }
@@ -196,13 +196,13 @@
                 },
             }).then((res) => {
                 if (res.status !== 200) {
-                    notifyError(`Failed to upload transcripts: ${res.data.error}`);
+                    notifyError(`Fehler beim Hochladen der Transscripts: ${res.data.error}`);
                     queryLoading = false;
                     return;
                 }
 
                 dataReturned = true;
-                notifySuccess("Transcripts uploaded successfully - They have now been placed in a queue and will be processed over the next few days.");
+                notifySuccess("Transcripts erfolgreich Hochgeladen - Sie wurden der Warteschlange hinzugefügt und werden in den demnächst verarbeitet.");
             }).catch((e) => {
                 notifyError(`Failed to upload transcripts: ${e}`);
                 queryLoading = false;
@@ -212,7 +212,7 @@
         if (dataFileInput.files.length > 0) {
             const presignDataRes = await axios.get(`${API_URL}/api/${guildId}/import/presign?file_size=${dataFileInput.files[0].size}&file_type=data&file_content_type=${dataFileInput.files[0].type}`);
             if (presignDataRes.status !== 200) {
-                notifyError(`Failed to upload data: ${presignDataRes.data.error}`);
+                notifyError(`Fehler beim Hochladen der Serverdaten: ${presignDataRes.data.error}`);
                 queryLoading = false;
                 return;
             }
@@ -225,13 +225,13 @@
                 },
             }).then((res) => {
                 if (res.status !== 200) {
-                    notifyError(`Failed to upload data: ${res.data.error}`);
+                    notifyError(`Fehler beim Hochladen der Serverdaten: ${res.data.error}`);
                     queryLoading = false;
                     return;
                 }
 
                 dataReturned = true;
-                notifySuccess("Data uploaded successfully - It has now been placed in a queue and will be processed over the next few days.");
+                notifySuccess("Serverdaten erfolgreich Hochgeladen - Sie wurden der Warteschlange hinzugefügt und werden in den demnächst verarbeitet.");
             }).catch((e) => {
                 notifyError(`Failed to upload data: ${e}`);
                 queryLoading = false;
