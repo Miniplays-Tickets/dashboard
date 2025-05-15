@@ -1,6 +1,6 @@
   <div class="content">
     <Card footer={false}>
-      <span slot="title">Support Teams</span>
+      <span slot="title">Teams</span>
       <div slot="body" class="body-wrapper">
         <div class="section">
           <h2 class="section-title">Team erstellen</h2>
@@ -34,7 +34,7 @@
 
           <div class="manage">
             <div class="col">
-              <h3>Manage Members</h3>
+              <h3>Mitglieder verwalten</h3>
 
               <table class="nice">
                 <tbody>
@@ -47,7 +47,7 @@
                       <td>{role === undefined ? "Unbekannte Rolle" : role.name}</td>
                     {/if}
                     <td style="display: flex; flex-direction: row-reverse">
-                      <Button type="button" danger={true} on:click={() => removeMember(activeTeam, member)}>Löschen
+                      <Button type="button" danger={true} on:click={() => removeMember(activeTeam, member)}>Entfernen
                       </Button>
                     </td>
                   </tr>
@@ -132,7 +132,7 @@
             return;
         }
 
-        notifySuccess(`${selectedRole.name} has been added to the support team ${getTeam(activeTeam).name}`);
+        notifySuccess(`Die Rolle ${selectedRole.name} wurde zum Team ${getTeam(activeTeam).name} hinzugefügt`);
 
         let entity = {
             id: selectedRole.id,
@@ -153,10 +153,10 @@
         members = members.filter((member) => member.id !== entity.id);
 
         if (entity.type === USER_TYPE) {
-            notifySuccess(`${entity.name} has been removed from the team`);
+            notifySuccess(`${entity.name} wurde vom Team entfernt`);
         } else {
             const role = roles.find((role) => role.id === entity.id);
-            notifySuccess(`${role === undefined ? "Unknown role" : role.name} has been removed from the team`);
+            notifySuccess(`${role === undefined ? "Unbekannte Rolle" : role.name} wurde vom Team entfernt`);
         }
     }
 
@@ -171,7 +171,7 @@
             return;
         }
 
-        notifySuccess(`Team ${createName} has been created`);
+        notifySuccess(`Team ${createName} wurde erstellt`);
         createName = '';
         teams = [...teams, res.data];
     }
@@ -183,7 +183,7 @@
             return;
         }
 
-        notifySuccess(`Team deleted successfully`);
+        notifySuccess(`Team erfolgreich gelöscht`);
 
         activeTeam = defaultTeam.id;
         teams = teams.filter((team) => team.id !== id);
