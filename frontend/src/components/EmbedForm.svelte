@@ -1,13 +1,13 @@
 {#if data && appliedOverrides}
     <form class="form-wrapper" on:submit|preventDefault>
         <div class="row">
-            <Colour col3 label="Embed Colour" on:change={updateColour} bind:value={tempColour}/>
-            <Input col3 label="Title" placeholder="Embed Title" bind:value={data.title}/>
-            <Input col3 label="Title URL (Optional)" placeholder="https://example.com" bind:value={data.url}/>
+            <Colour col3 label="Embed Farbe" on:change={updateColour} bind:value={tempColour}/>
+            <Input col3 label="Titel" placeholder="Embed Title" bind:value={data.title}/>
+            <Input col3 label="Titel URL (Optional)" placeholder="https://example.com" bind:value={data.url}/>
         </div>
 
         <div class="row">
-            <Textarea col1 label="Description" placeholder="Large text area, up to 4096 characters"
+            <Textarea col1 label="Beschreibung" placeholder="Großer Text Bereich, bis zu 4096 Zeichen"
                       bind:value={data.description}/>
         </div>
 
