@@ -31,7 +31,7 @@
                 <tr>
                     <th class:visible={selectedColumns.includes('ID')}>ID</th>
                     <th class:visible={selectedColumns.includes('Panel')}>Panel</th>
-                    <th class:visible={selectedColumns.includes('User')}>User</th>
+                    <th class:visible={selectedColumns.includes('User')}>Benuter</th>
                     <th class:visible={selectedColumns.includes('Opened Time')}>Geöffnet</th>
                     <th class:visible={selectedColumns.includes('Claimed By')}>Beansprucht von</th>
                     <th class:visible={selectedColumns.includes('Last Message Time')}>Letzte Nachricht</th>
