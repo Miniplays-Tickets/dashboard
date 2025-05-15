@@ -1,15 +1,15 @@
 <div class="content">
     <Card footer={false}>
-        <span slot="title">Import Settings, Tickets & Transcripts</span>
+        <span slot="title">Import von Einstellungen, Tickets & Transcripts</span>
         <div slot="body" class="body-wrapper">
             <div class="section">
-                <h3 class="section-title">Import Items</h3>
+                <h3 class="section-title">Import</h3>
 
                 <form>
                     <div class="row">
                         <div class="col-4">
                             <label class="form-label" for="import_data">
-                                Data Export File (.zip)
+                                Daten Export Datei (.zip)
                             </label>
                             <div class="col-1">
                                 <input
@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-4">
                             <label class="form-label" for="import_transcripts">
-                                Transcripts Export File (.zip)
+                                Transcripts Export Datei (.zip)
                             </label>
                             <div class="col-1">
                                 <input
@@ -37,7 +37,7 @@
                     <br />
                     <div class="row">
                         <div class="col-6">
-                            <Button on:click={dispatchConfirm} icon={queryLoading ? "fa-solid fa-spinner fa-spin-pulse" : ""} disabled={queryLoading}>Confirm</Button>
+                            <Button on:click={dispatchConfirm} icon={queryLoading ? "fa-solid fa-spinner fa-spin-pulse" : ""} disabled={queryLoading}>Speichern</Button>
                         </div>
                     </div>
                     <div class="row">
