@@ -1,16 +1,16 @@
 <div class="modal" transition:fade>
   <div class="modal-wrapper">
     <Card footer="{true}" footerRight="{true}" fill="{false}">
-      <span slot="title">Embed Builder</span>
+      <span slot="title">Embed Ersteller</span>
 
       <div slot="body" class="body-wrapper">
         <EmbedForm bind:data />
       </div>
 
       <div slot="footer">
-        <Button danger={true} on:click={dispatchClose}>Cancel</Button>
+        <Button danger={true} on:click={dispatchClose}>Abbrechen</Button>
         <div style="margin-left: 12px">
-          <Button icon="fas fa-paper-plane" on:click={dispatchConfirm}>Submit</Button>
+          <Button icon="fas fa-paper-plane" on:click={dispatchConfirm}>Speichern</Button>
         </div>
       </div>
     </Card>
