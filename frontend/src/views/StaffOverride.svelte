@@ -64,7 +64,7 @@
 
         modal = false;
         activeOverride = true;
-        notifySuccess('Staff access override has been granted');
+        notifySuccess('Dem Support wurde der Zugriff gewährt');
     }
 
     async function removeOverride() {
@@ -75,7 +75,7 @@
         }
 
         activeOverride = false;
-        notifySuccess('Staff access override has been revoked');
+        notifySuccess('Dem Support wurde der Zugriff entfernt');
     }
 
     withLoadingScreen(async () => {
