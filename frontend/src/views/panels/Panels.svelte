@@ -9,7 +9,7 @@
 {#if multiPanelToDelete !== null}
     <ConfirmationModal icon="fas fa-trash-can" isDangerous on:cancel={() => multiPanelToDelete = null}
                        on:confirm={() => deleteMultiPanel(multiPanelToDelete.id)}>
-        <span slot="body">Bist du dir Sicher dass du dass Multi-Panel {multiPanelToDelete.embed?.title || "Open a ticket!"} löschen möchtest?</span>
+        <span slot="body">Bist du dir Sicher dass du dass Multi-Panel {multiPanelToDelete.embed?.title || "Öffne ein Ticket!!"} löschen möchtest?</span>
         <span slot="confirm">Löschen</span>
     </ConfirmationModal>
 {/if}
