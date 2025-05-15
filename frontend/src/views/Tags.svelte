@@ -12,7 +12,7 @@
                 <thead>
                 <tr>
                     <th>Tag</th>
-                    <th style="text-align: right">Actions</th>
+                    <th style="text-align: right">Aktionen</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -20,8 +20,8 @@
                     <tr>
                         <td>{id}</td>
                         <td class="actions">
-                            <Button type="button" on:click={() => openEditModal(id)}>Edit</Button>
-                            <Button type="button" danger={true} on:click={() => deleteTag(id)}>Delete</Button>
+                            <Button type="button" on:click={() => openEditModal(id)}>Bearbeiten</Button>
+                            <Button type="button" danger={true} on:click={() => deleteTag(id)}>Löschen</Button>
                         </td>
                     </tr>
                 {/each}
