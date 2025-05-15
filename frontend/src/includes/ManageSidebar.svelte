@@ -8,10 +8,10 @@
     </header>
     <nav>
         <ul class="nav-list">
-            <ManageSidebarLink {currentRoute} title="← Back to servers" href="/" />
+            <ManageSidebarLink {currentRoute} title="← Zurück zur Serverübersicht" href="/" />
 
             {#if isAdmin}
-                <ManageSidebarLink {currentRoute} title="Settings" icon="fa-cogs" href="/manage/{guildId}/settings" />
+                <ManageSidebarLink {currentRoute} title="Einstellungen" icon="fa-cogs" href="/manage/{guildId}/settings" />
             {/if}
 
             <ManageSidebarLink {currentRoute} title="Transcripts" icon="fa-copy" href="/manage/{guildId}/transcripts" />
@@ -33,8 +33,8 @@
     <nav class="bottom">
         <hr/>
         <ul class="nav-list">
-            <ManageSidebarLink {currentRoute} title="Documentation" icon="fa-book" href="https://docs.ticketsbot.cloud" newWindow />
-            <ManageSidebarLink {currentRoute} title="Logout" icon="fa-sign-out-alt" href="/logout" />
+            <ManageSidebarLink {currentRoute} title="Dokumentation" icon="fa-book" href="https://docs.ticketsbot.cloud" newWindow />
+            <ManageSidebarLink {currentRoute} title="Abmelden" icon="fa-sign-out-alt" href="/logout" />
         </ul>
     </nav>
 </section>
