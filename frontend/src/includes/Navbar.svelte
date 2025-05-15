@@ -17,8 +17,8 @@
 
         {#if isAdmin}
           <NavElement icon="fas fa-mouse-pointer" link="/manage/{guildId}/panels" on:click={closeDropdown}>Ticket Panels</NavElement>
-          <NavElement icon="fas fa-poll-h" link="/manage/{guildId}/forms" on:click={closeDropdown}>Forms</NavElement>
-          <NavElement icon="fas fa-users" link="/manage/{guildId}/teams" on:click={closeDropdown}>Staff Teams</NavElement>
+          <NavElement icon="fas fa-poll-h" link="/manage/{guildId}/forms" on:click={closeDropdown}>Formulare</NavElement>
+          <NavElement icon="fas fa-users" link="/manage/{guildId}/teams" on:click={closeDropdown}>Teams</NavElement>
           <NavElement icon="fas fa-robot" link="/manage/{guildId}/integrations" on:click={closeDropdown}>Integrations</NavElement>
           <NavElement icon="fas fa-file-import" link="/manage/{guildId}/import" on:click={closeDropdown}>Import</NavElement>
         {/if}
