@@ -14,8 +14,8 @@
         </span>
         {#if guild.permission_level === 0}
             <span class="no-permission">
-            No permission
-            <Tooltip tip="You do not have permission to manage this server." top color="#121212">
+            Keine Berechtigungen
+            <Tooltip tip="Du hast keine Berechtigungen diesen Server zu verwalten." top color="#121212">
                 <a href="https://docs.ticketsbot.cloud/miscellaneous/dashboard-no-permission" target="_blank">
                     <i class="fas fa-circle-question form-label tooltip-icon"></i>
                 </a>
