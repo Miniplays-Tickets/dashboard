@@ -1,6 +1,6 @@
 <label class="form-label">{label}</label>
 
-<WrappedSelect placeholder="Select panel..." items={panels} optionIdentifier="panel_id" nameMapper={labelMapper}
+<WrappedSelect placeholder="Panel auswählen..." items={panels} optionIdentifier="panel_id" nameMapper={labelMapper}
                bind:selectedValue={selectedRaw} on:input={update} on:clear={handleClear} {isMulti} {isSearchable} />
 
 <script>
