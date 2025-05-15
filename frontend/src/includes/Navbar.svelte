@@ -8,7 +8,7 @@
         <!-- on:click required to close dropdown again -->
 
         {#if isAdmin}
-          <NavElement icon="fas fa-cogs" link="/manage/{guildId}/settings" on:click={closeDropdown}>Settings
+          <NavElement icon="fas fa-cogs" link="/manage/{guildId}/settings" on:click={closeDropdown}>Einstellungen
           </NavElement>
         {/if}
 
@@ -30,9 +30,9 @@
     </div>
     <div>
       <div class="nav-section" class:dropdown={$dropdown}>
-        <NavElement icon="fas fa-book" link="https://docs.ticketsbot.cloud">Documentation</NavElement>
-        <NavElement icon="fas fa-server" link="/#">Servers</NavElement>
-        <NavElement icon="fas fa-sign-out-alt" link="/logout">Logout</NavElement>
+        <NavElement icon="fas fa-book" link="https://docs.ticketsbot.cloud">Dokumentation</NavElement>
+        <NavElement icon="fas fa-server" link="/#">Server</NavElement>
+        <NavElement icon="fas fa-sign-out-alt" link="/logout">Abmelden</NavElement>
       </div>
     </div>
   </div>
