@@ -24,7 +24,7 @@
 
                 <div slot="footer" style="gap: 12px">
                     <Button danger on:click={() => blacklistUserModal = false}>Abbrechen</Button>
-                    <Button on:click={addUser}>Confirm</Button>
+                    <Button on:click={addUser}>Bestätigen</Button>
                 </div>
             </Card>
         </div>
@@ -43,8 +43,8 @@
                 </div>
 
                 <div slot="footer" style="gap: 12px">
-                    <Button danger on:click={() => blacklistRoleModal = false}>Abrechen</Button>
-                    <Button on:click={addRole}>Confirm</Button>
+                    <Button danger on:click={() => blacklistRoleModal = false}>Abbrechen</Button>
+                    <Button on:click={addRole}>Bestätigen</Button>
                 </div>
             </Card>
         </div>
