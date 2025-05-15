@@ -1,17 +1,16 @@
 {#if panelToDelete !== null}
     <ConfirmationModal icon="fas fa-trash-can" isDangerous on:cancel={() => panelToDelete = null}
                        on:confirm={() => deletePanel(panelToDelete.panel_id)}>
-        <span slot="body">Are you sure you want to delete the panel {panelToDelete.title}?</span>
-        <span slot="confirm">Delete</span>
+        <span slot="body">Bist du dir Sicher dass du das Panel {panelToDelete.title} löschen möchtest?</span>
+        <span slot="confirm">Löschen</span>
     </ConfirmationModal>
 {/if}
 
 {#if multiPanelToDelete !== null}
     <ConfirmationModal icon="fas fa-trash-can" isDangerous on:cancel={() => multiPanelToDelete = null}
                        on:confirm={() => deleteMultiPanel(multiPanelToDelete.id)}>
-        <span slot="body">Are you sure you want to delete the multi-panel
-            {multiPanelToDelete.embed?.title || "Open a ticket!"}?</span>
-        <span slot="confirm">Delete</span>
+        <span slot="body">Bist du dir Sicher dass du dass Multi-Panel {multiPanelToDelete.embed?.title || "Open a ticket!"} löschen möchtest?</span>
+        <span slot="confirm">Löschen</span>
     </ConfirmationModal>
 {/if}
 
@@ -19,20 +18,20 @@
     <div class="col">
         <div class="row">
             <Card footer="{false}">
-                <span slot="title">Ticket Panels</span>
+                <span slot="title">Ticket Panel</span>
                 <div slot="body" class="card-body panels">
                     <div class="controls">
-                        <p>Your panel quota: <b>{panels.length} / {isPremium ? '∞' : '3'}</b></p>
+                        <p>Deine Panel Anzahl: <b>{panels.length} / {isPremium ? '∞' : '3'}</b></p>
                         <Navigate to="/manage/{guildId}/panels/create" styles="link">
-                            <Button icon="fas fa-plus">New Panel</Button>
+                            <Button icon="fas fa-plus">Neues Panel</Button>
                         </Navigate>
                     </div>
 
                     <table style="margin-top: 10px">
                         <thead>
                         <tr>
-                            <th>Channel</th>
-                            <th class="max">Panel Title</th>
+                            <th>Kanal</th>
+                            <th class="max">Panel Titel</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -41,20 +40,20 @@
                         <tbody>
                         {#each panels as panel}
                             <tr>
-                                <td>#{channels.find((c) => c.id === panel.channel_id)?.name ?? 'Unknown Channel'}</td>
+                                <td>#{channels.find((c) => c.id === panel.channel_id)?.name ?? 'Unbekannter Kanal'}</td>
                                 <td class="max">{panel.title}</td>
                                 <td>
                                     <Button disabled={panel.force_disabled}
-                                            on:click={() => resendPanel(panel.panel_id)}>Resend
+                                            on:click={() => resendPanel(panel.panel_id)}>Neu Senden
                                     </Button>
                                 </td>
                                 <td>
                                     <Navigate to="/manage/{guildId}/panels/edit/{panel.panel_id}" styles="link">
-                                        <Button disabled={panel.force_disabled}>Edit</Button>
+                                        <Button disabled={panel.force_disabled}>Bearbeiten</Button>
                                     </Navigate>
                                 </td>
                                 <td>
-                                    <Button danger on:click={() => panelToDelete = panel}>Delete</Button>
+                                    <Button danger on:click={() => panelToDelete = panel}>Löschen</Button>
                                 </td>
                             </tr>
                         {/each}
@@ -71,14 +70,14 @@
                 <div slot="body" class="card-body">
                     <div class="controls">
                         <Navigate to="/manage/{guildId}/panels/create-multi" styles="link">
-                            <Button icon="fas fa-plus">New Multi-Panel</Button>
+                            <Button icon="fas fa-plus">Neues Multi-Panel</Button>
                         </Navigate>
                     </div>
 
                     <table style="margin-top: 10px">
                         <thead>
                         <tr>
-                            <th class="max">Panel Title</th>
+                            <th class="max">Panel Titel</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -87,17 +86,17 @@
                         <tbody>
                         {#each multiPanels as panel}
                             <tr>
-                                <td class="max">{panel.embed?.title || 'Open a ticket!'}</td>
+                                <td class="max">{panel.embed?.title || 'Öffne ein Ticket!'}</td>
                                 <td>
-                                    <Button on:click={() => resendMultiPanel(panel.id)}>Resend</Button>
+                                    <Button on:click={() => resendMultiPanel(panel.id)}>Neu Senden</Button>
                                 </td>
                                 <td>
                                     <Navigate to="/manage/{guildId}/panels/edit-multi/{panel.id}" styles="link">
-                                        <Button>Edit</Button>
+                                        <Button>Bearbeiten</Button>
                                     </Navigate>
                                 </td>
                                 <td>
-                                    <Button danger on:click={() => multiPanelToDelete = panel}>Delete</Button>
+                                    <Button danger on:click={() => multiPanelToDelete = panel}>Löschen</Button>
                                 </td>
                             </tr>
                         {/each}
@@ -144,7 +143,7 @@
             return;
         }
 
-        notifySuccess("Panel resent successfully");
+        notifySuccess("Panel erfolgreich neu gesendet");
     }
 
     async function deletePanel(panelId) {
@@ -165,7 +164,7 @@
             return;
         }
 
-        notifySuccess("Multipanel resent successfully")
+        notifySuccess("Multipanel erfolgreich neu gesendet")
     }
 
     async function deleteMultiPanel(id) {
@@ -188,15 +187,15 @@
         ])
 
         if (checkForParamAndRewrite("created")) {
-            notifySuccess("Panel created successfully");
+            notifySuccess("Panel erfolgreich erstellt");
         }
 
         if (checkForParamAndRewrite("edited")) {
-            notifySuccess("Panel edited successfully");
+            notifySuccess("Panel erfolgreich bearbeitet");
         }
 
         if (checkForParamAndRewrite("notfound")) {
-            notifyError("Panel not found");
+            notifyError("Panel nicht gefunden");
         }
     });
 </script>
