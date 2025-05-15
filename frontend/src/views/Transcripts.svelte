@@ -3,7 +3,7 @@
     <Card footer footerRight ref="filter-card">
       <span slot="title">
         <i class="fas fa-filter"></i>
-        Filter Logs
+        Filter Transscripts
       </span>
 
       <div slot="body" class="body-wrapper">
@@ -23,7 +23,7 @@
               <PanelDropdown label="Panel" isMulti={false} bind:panels bind:selected={selectedPanel} />
             </div>
 
-            <Dropdown label="Rating" bind:value={filterSettings.rating}>
+            <Dropdown label="Bewertung" bind:value={filterSettings.rating}>
               <option value=0>Any</option>
               <option value=1>1 ⭐</option>
               <option value=2>2 ⭐</option>
@@ -51,8 +51,8 @@
             <tr>
               <th>Ticket ID</th>
               <th>Username</th>
-              <th>Rating</th>
-              <th class="reason">Close Reason</th>
+              <th>Bewertung</th>
+              <th class="reason">Schließgrund</th>
               <th>Transcript</th>
             </tr>
             </thead>
@@ -65,17 +65,19 @@
                   {#if transcript.rating}
                     {transcript.rating} ⭐
                   {:else}
-                    No rating
+                    Keine Bewertung
                   {/if}
                 </td>
-                <td class="reason">{transcript.close_reason || 'No reason specified'}</td>
-                {#if transcript.has_transcript}
-                  <td>
+                <td class="reason">{transcript.close_reason || 'Kein Grund angegeben'}</td>
+                <td>
+                  {#if transcript.has_transcript}
                     <Navigate to="{`/manage/${guildId}/transcripts/view/${transcript.ticket_id}`}" styles="link">
-                      <Button>View</Button>
+                      <Button>Anzeigen</Button>
                     </Navigate>
-                  </td>
-                {/if}
+                  {:else}
+                    Nicht vorhanden
+                  {/if}
+                </td>
               </tr>
             {/each}
             </tbody>
