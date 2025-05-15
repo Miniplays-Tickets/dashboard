@@ -76,7 +76,7 @@
     async function createTag(e) {
         const data = e.detail;
         if (!data.id || data.id.length === 0) {
-            notifyError("Tag ID is required");
+            notifyError("Tag ID wird benötigt");
             return;
         }
 
@@ -110,7 +110,7 @@
         }
 
         if (!data.id || data.id.length === 0) {
-            notifyError("Tag ID is required");
+            notifyError("Tag ID wird benötigt");
             return;
         }
 
@@ -130,7 +130,7 @@
         editData = undefined;
         editId = undefined;
 
-        notifySuccess("Tag edited successfully");
+        notifySuccess("Tag erfolgreich bearbeitet");
     }
 
     async function deleteTag(id) {
@@ -144,7 +144,7 @@
             return;
         }
 
-        notifySuccess(`Tag deleted successfully`);
+        notifySuccess(`Tag erfolgreich gelöscht`);
         delete tags[id];
         tags = tags;
     }
