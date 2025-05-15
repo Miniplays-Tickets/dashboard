@@ -3,11 +3,11 @@
         <span slot="title">Choose Premium Servers</span>
         <div slot="body" class="card-body">
             <div class="explanation">
-                <span>Your premium subscription allows you to choose {@html limit === 1 ? "<b>one</b> server" : `up to <b>${limit}</b> servers`}
-                    to apply premium to.
+                <span>
+                    Dein Premium erlaubt dir {@html limit === 1 ? "<b>einen</b>" : `bis zu <b>${limit}</b>`} Premium Server.
                 </span>
                 <span>
-                    Currently selected: <b>{selected.length} / {limit}</b> server{limit > 1 ? "s" : ""}.
+                    Aktuell ausgewählt: <b>{selected.length} / {limit}</b> Server{limit > 1 ? "s" : ""}.
                 </span>
             </div>
             <div class="servers">
@@ -20,7 +20,7 @@
                 {/each}
             </div>
             <div class="submit-wrapper">
-                <Button on:click={submitServers}>Save</Button>
+                <Button on:click={submitServers}>Speichern</Button>
             </div>
         </div>
     </Card>
@@ -127,12 +127,12 @@
     async function loadEntitlements() {
         const res = await axios.get(`${API_URL}/api/premium/@me/entitlements`)
         if (res.status !== 200) {
-            notifyError(`Failed to load entitlements: ${res.data.error}`)
+            notifyError(`Fehler beim Laden deiner Abonnements: ${res.data.error}`)
             return;
         }
 
         if (res.data.legacy_entitlement === null || res.data.legacy_entitlement.is_legacy) {
-            errorPage('This feature is only available to users with a server-specific premium subscription via Patreon.');
+            errorPage('Diese Funktion ist nur für Benutzer mit einer bestimmten Premium Abonnement.');
             return;
         }
 
@@ -143,7 +143,7 @@
     async function loadGuilds() {
         const fromLocalStorage = window.localStorage.getItem('guilds');
         if (!fromLocalStorage) {
-            notifyError('Failed to load guilds from local storage.');
+            notifyError('Fehler beim laden der Guilds aus dem lokalen Speicher.');
             return;
         }
 
@@ -156,11 +156,11 @@
         });
 
         if (res.status !== 204) {
-            notifyError(`Failed to save servers: ${res.data.error}`);
+            notifyError(`Fehler beim Speichern von Servern: ${res.data.error}`);
             return;
         }
 
-        notifySuccess('Your premium server selection has been saved.')
+        notifySuccess('Deine Premium Server Auswahl wurde gespeichert.')
     }
 
     withLoadingScreen(async () => {
@@ -173,7 +173,7 @@
             if (!guilds.find(g => g.id === id)) {
                 guilds = [{
                     id,
-                    name: `Unknown Server ${id}`,
+                    name: `Unbekannter Server ${id}`,
                     icon: "",
                     permission_level: 2
                 }, ...guilds];
