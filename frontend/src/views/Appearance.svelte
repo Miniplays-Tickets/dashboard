@@ -2,7 +2,7 @@
   <div class="content">
     <div class="container">
       <Card footer={false}>
-        <span slot="title">Looking for whitelabel?</span>
+        <span slot="title">Suchst nach Whitelabel Einstellungen?</span>
         <div slot="body" class="body-wrapper">
           <p>Wenn du nach den Whitelabel Einstellungen (Eigener Bot Name und Avatar) suchst, 
              ist dies auf einer anderen Seite, <Navigate to="/whitelabel" styles="link-blue">verfügbar hier</Navigate>.
