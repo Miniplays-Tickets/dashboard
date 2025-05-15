@@ -2,21 +2,21 @@
     <div class="col">
         {#if active}
             <Card footer="{false}" fill="{false}">
-                <h4 slot="title">Manage Bot</h4>
+                <h4 slot="title">Bot verwalten</h4>
                 <div slot="body" class="full-width">
-                    <p>Your whitelabel bot <b>{bot.username}</b> is active.</p>
+                    <p>Dein Whitelabel Bot <b>{bot.username}</b> ist aktiv.</p>
 
                     <div class="buttons">
                         <Button icon="fas fa-plus" on:click={invite}>
-                            Generate Invite Link
+                            Invite Link Erstellen
                         </Button>
 
                         <Button icon="fas fa-paper-plane" on:click={createSlashCommands}>
-                            Re-create Slash Commands
+                            Slash Commands neu erstellen
                         </Button>
 
                         <Button icon="fas fa-trash-can" on:click={disable} danger>
-                            Disable Whitelabel
+                            Bot Löschen
                         </Button>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                 <div slot="body" class="full-width">
                     <form class="form-wrapper full-width" on:submit|preventDefault>
                         <div class="row">
-                            <Dropdown col3 label="Status Type" bind:value={bot.status_type}>
+                            <Dropdown col3 label="Status Typ" bind:value={bot.status_type}>
                                 <option value="0">Playing</option>
                                 <option value="2">Listening</option>
                                 <option value="3">Watching</option>
@@ -40,7 +40,7 @@
 
                         <div class="buttons">
                             <Button icon="fas fa-paper-plane" on:click={updateStatus} fullWidth="{true}">
-                                Submit
+                                Speichern
                             </Button>
                         </div>
                     </form>
@@ -55,10 +55,10 @@
 
                         <input name="token" type="text" bind:value={token} class="form-input full-width"
                                placeholder="xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxx">
-                        <p>Note: You will not be able to view the token after submitting it</p>
+                        <p>Info: Du kannst den Bot token nach dem Speichern nicht mehr einsehen</p>
 
                         <div class="buttons">
-                            <Button icon="fas fa-paper-plane" on:click={submitToken} fullWidth="{true}">Submit
+                            <Button icon="fas fa-paper-plane" on:click={submitToken} fullWidth="{true}">Speichern
                             </Button>
                         </div>
                     </form>
@@ -68,7 +68,7 @@
     </div>
     <div class="col">
         <Card footer="{false}" fill="{false}">
-            <h4 slot="title">Error Log</h4>
+            <h4 slot="title">Fehler Log</h4>
             <div slot="body" class="full-width">
                 <table class="error-log">
                     <thead>
