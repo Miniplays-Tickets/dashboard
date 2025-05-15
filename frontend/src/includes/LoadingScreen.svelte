@@ -1,6 +1,6 @@
 {#if $loadingScreen}
   <div id="loading-container" out:fade>
-    <div class="loader">Loading...</div>
+    <div class="loader">Wird Geladen...</div>
   </div>
 {/if}
 
