@@ -7,7 +7,7 @@
                     <h2 class="section-title">Ticket schließen</h2>
 
                     <div class="row" style="gap: 20px">
-                        <Input label="Close Reason" col2 placeholder=Kein Grund Angegeben" bind:value={closeReason}/>
+                        <Input label="Close Reason" col2 placeholder="Kein Grund Angegeben" bind:value={closeReason}/>
                         <div style="display: flex; align-items: flex-end; padding-bottom: 8px">
                             <Button danger={true} noShadow icon="fas fa-lock" col3 on:click={closeTicket}>Ticket Schließen
                             </Button>
