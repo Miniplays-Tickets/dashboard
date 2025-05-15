@@ -19,7 +19,7 @@
             {#if isAdmin}
                 <ManageSidebarLink {currentRoute} routePrefix="/manage/{guildId}/panels" title="Ticket Panels" icon="fa-mouse-pointer" href="/manage/{guildId}/panels" />
 
-                <ManageSidebarLink {currentRoute} title="Forms" icon="fa-poll-h" href="/manage/{guildId}/forms" />
+                <ManageSidebarLink {currentRoute} title="Formulare" icon="fa-poll-h" href="/manage/{guildId}/forms" />
                 <ManageSidebarLink {currentRoute} title="Staff Teams" icon="fa-users" href="/manage/{guildId}/teams" />
                 <ManageSidebarLink {currentRoute} title="Integrations" icon="fa-robot" href="/manage/{guildId}/integrations" />
                 <ManageSidebarLink {currentRoute} title="Import" icon="fa-file-import" href="/manage/{guildId}/import" />
@@ -156,7 +156,7 @@
                 window.localStorage.setItem('guilds', JSON.stringify(guilds));
             }
         } else {
-            console.error(`Guild with id ${id} not found`);
+            console.error(`Guild mit ID ${id} nicht gefunden`);
         }
     }
 
