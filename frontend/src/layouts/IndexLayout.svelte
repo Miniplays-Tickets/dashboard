@@ -32,7 +32,7 @@
 
     let userData = {
         id: 0,
-        username: 'Unknown',
+        username: 'Unbekannt',
         avatar: '',
         admin: false
     };
