@@ -2,7 +2,7 @@
   <div class="card-wrapper">
     <Card footer={false} fill={false}>
       <span slot="title">
-        Servers
+        Server
       </span>
 
       <div slot="body" style="width: 100%">
@@ -16,7 +16,7 @@
 
         <div class="flex-container" id="refresh-container">
           <Button icon="fas fa-sync" on:click={refreshGuilds}>
-            Refresh list
+            Liste Aktuallisieren
           </Button>
         </div>
       </div>
