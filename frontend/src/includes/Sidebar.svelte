@@ -43,7 +43,7 @@
     <div class="sidebar-element">
       <Navigate to="/logout" onclick="clearLocalStorage();" styles="sidebar-link">
         <i class="sidebar-icon fas fa-sign-out-alt sidebar-icon"></i>
-        <span class="sidebar-text">Logout</span>
+        <span class="sidebar-text">Abmelden</span>
       </Navigate>
     </div>
     <div class="sidebar-element user-element">
