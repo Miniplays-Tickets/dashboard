@@ -16,14 +16,14 @@
                         </Button>
 
                         <Button icon="fas fa-trash-can" on:click={disable} danger>
-                            Bot Löschen
+                            Bot Deaktivieren
                         </Button>
                     </div>
                 </div>
             </Card>
 
             <Card footer="{false}" fill="{false}">
-                <h4 slot="title">Custom Status</h4>
+                <h4 slot="title">Eigener Status</h4>
                 <div slot="body" class="full-width">
                     <form class="form-wrapper full-width" on:submit|preventDefault>
                         <div class="row">
@@ -228,7 +228,7 @@
         $: token = '';
 
         await loadBot();
-        notifySuccess(`Started tickets whitelabel on ${res.data.bot.name}`);
+        notifySuccess(`Tickets Whitelabel auf ${res.data.bot.name} gestartet`);
     }
 
     async function updateStatus() {
@@ -248,14 +248,15 @@
             return;
         }
 
-        notifySuccess('Updated status successfully')
+        notifySuccess('Status erfolgreich Aktualisiert')
     }
 
     async function loadBot() {
         const res = await axios.get(`${API_URL}/user/whitelabel/`);
         if (res.status !== 200) {
             if (res.status === 402) {
-                window.location.replace("https://tickets.miniplays.de/premium");
+                notifyError("Du hast kein Whitelabel");
+                window.location.href = '/';
                 return false;
             }
 
@@ -297,7 +298,7 @@
             return;
         }
 
-        notifySuccess('Slash commands have been created. Please note, they may take a few minutes before they are visible.');
+        notifySuccess('Slash Befehle wurden erstellt. Es wird eventuell kurz dauern, bis diese angezeigt werden.have been created. ');
     }
 
     async function disable() {
@@ -308,7 +309,7 @@
         }
 
         active = false;
-        notifySuccess('Whitelabel has been disabled');
+        notifySuccess('Whitelabel wurde Deaktiviert');
     }
 
     withLoadingScreen(async () => {
