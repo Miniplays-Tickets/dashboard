@@ -2,11 +2,11 @@
     <div class="modal" transition:fade>
         <div class="modal-wrapper">
             <Card footer footerRight fill={false}>
-                <span slot="title">Blacklist User</span>
+                <span slot="title">Benutzer Blockieren</span>
 
                 <div slot="body" class="modal-inner">
                     <div>
-                        <label class="form-label" style="margin-bottom: 0 !important;">Use User ID</label>
+                        <label class="form-label" style="margin-bottom: 0 !important;">Benuter ID nutzen</label>
                         <Toggle hideLabel
                                 toggledColor="#66bb6a"
                                 untoggledColor="#ccc"
@@ -14,16 +14,16 @@
                     </div>
 
                     {#if blacklistById}
-                        <Input label="User ID" placeholder="592348585904198711" bind:value={blacklistUserId}/>
+                        <Input label="Benutzer ID" placeholder="592348585904198711" bind:value={blacklistUserId}/>
                     {:else}
                         <div class="user-select-wrapper">
-                            <UserSelect {guildId} label="User" bind:value={blacklistUser}/>
+                            <UserSelect {guildId} label="Benutzer" bind:value={blacklistUser}/>
                         </div>
                     {/if}
                 </div>
 
                 <div slot="footer" style="gap: 12px">
-                    <Button danger on:click={() => blacklistUserModal = false}>Cancel</Button>
+                    <Button danger on:click={() => blacklistUserModal = false}>Abbrechen</Button>
                     <Button on:click={addUser}>Confirm</Button>
                 </div>
             </Card>
@@ -36,14 +36,14 @@
     <div class="modal" transition:fade>
         <div class="modal-wrapper">
             <Card footer footerRight fill={false}>
-                <span slot="title">Blacklist Role</span>
+                <span slot="title">Rolle Blockieren</span>
 
                 <div slot="body" class="modal-inner user-select-wrapper">
-                    <RoleSelect {guildId} {roles} label="Role" bind:value={blacklistRole}/>
+                    <RoleSelect {guildId} {roles} label="Rolle" bind:value={blacklistRole}/>
                 </div>
 
                 <div slot="footer" style="gap: 12px">
-                    <Button danger on:click={() => blacklistRoleModal = false}>Cancel</Button>
+                    <Button danger on:click={() => blacklistRoleModal = false}>Abrechen</Button>
                     <Button on:click={addRole}>Confirm</Button>
                 </div>
             </Card>
@@ -61,8 +61,8 @@
                 <span slot="title">Blacklist</span>
                 <div slot="body" class="body-wrapper">
                     <div class="row" style="gap: 10px">
-                        <Button icon="fas fa-ban" on:click={() => blacklistRoleModal = true}>Blacklist New Role</Button>
-                        <Button icon="fas fa-ban" on:click={() => blacklistUserModal = true}>Blacklist New User</Button>
+                        <Button icon="fas fa-ban" on:click={() => blacklistRoleModal = true}>Neue Rolle Blockieren</Button>
+                        <Button icon="fas fa-ban" on:click={() => blacklistUserModal = true}>Neuen Benuter Blockieren</Button>
                     </div>
 
                     <hr/>
@@ -71,8 +71,8 @@
                         <table class="nice">
                             <thead>
                             <tr>
-                                <th class="full-width">Role</th>
-                                <th>Remove</th>
+                                <th class="full-width">Rolle</th>
+                                <th>Entfernen</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -80,7 +80,7 @@
                                 {@const role = roles.find(role => role.id === roleId)}
                                 <tr>
                                     {#if role === undefined}
-                                        <td class="full-width">Unknown ({roleId})</td>
+                                        <td class="full-width">Unbekannte Rollen ID: ({roleId})</td>
                                     {:else}
                                         <td class="full-width">{role.name}</td>
                                     {/if}
@@ -88,7 +88,7 @@
                                     <td>
                                         <Button type="button" danger icon="fas fa-trash-can"
                                                 on:click={() => removeRoleBlacklist(roleId, role)}>
-                                            Remove
+                                            Entfernen
                                         </Button>
                                     </td>
                                 </tr>
@@ -99,8 +99,8 @@
                         <table class="nice">
                             <thead>
                             <tr>
-                                <th class="full-width">User</th>
-                                <th>Remove</th>
+                                <th class="full-width">Benuter</th>
+                                <th>Entfernen</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -109,13 +109,13 @@
                                     {#if user.username !== ''}
                                         <td class="full-width">{user.username} ({user.id})</td>
                                     {:else}
-                                        <td class="full-width">Unknown ({user.id})</td>
+                                        <td class="full-width">Unbekannte Benutzer ID: ({user.id})</td>
                                     {/if}
 
                                     <td>
                                         <Button type="button" danger icon="fas fa-trash-can"
                                                 on:click={() => removeUserBlacklist(user)}>
-                                            Remove
+                                            Entfernen
                                         </Button>
                                     </td>
                                 </tr>
@@ -127,7 +127,7 @@
                     <div class="row nav">
                         <i class="fas fa-chevron-left pagination-chevron" class:disabled-chevron={page <= 1}
                            on:click={loadPrevious}></i>
-                        <span>Page {page}</span>
+                        <span>Seite {page}</span>
                         <i class="fas fa-chevron-right pagination-chevron"
                            class:disabled-chevron={data.users.length < data.page_limit && data.roles.length < data.page_limit}
                            on:click={loadNext}></i>
@@ -199,14 +199,14 @@
         }
 
         if (res.data.resolved) {
-            notifySuccess(`${res.data.username} has been blacklisted`);
+            notifySuccess(`Benutzer ${res.data.username} wurde Blockiert`);
 
             data.users = [...data.users, {
                 id: res.data.id,
                 username: res.data.username,
             }];
         } else {
-            notifySuccess(`User with ID ${res.data.id} has been blacklisted`);
+            notifySuccess(`Benuter mit ID ${res.data.id} wurde Blockiert`);
             data.users = [...data.users, {
                 id: res.data.id,
                 username: "Unknown",
@@ -233,7 +233,7 @@
 
         data.roles = [...data.roles, blacklistRole.id];
 
-        notifySuccess(`${blacklistRole.name} has been blacklisted`);
+        notifySuccess(`Rolle ${blacklistRole.name} wurde Blockiert`);
         blacklistRole = undefined;
         blacklistRoleModal = false;
     }
@@ -245,7 +245,7 @@
             return;
         }
 
-        notifySuccess(`${user.username || `User with ID ${user.id}`} has been removed from the blacklist`);
+        notifySuccess(`${user.username || `Benuzer mit ID ${user.id}`} has been removed from the blacklist`);
         data.users = data.users.filter((u) => u.id !== user.id);
     }
 
@@ -257,9 +257,9 @@
         }
 
         if (role) {
-            notifySuccess(`${role.name} has been removed from the blacklist`);
+            notifySuccess(`Rolle ${role.name} wurde entblockiert`);
         } else {
-            notifySuccess(`Role with ID ${roleId} has been removed from the blacklist`);
+            notifySuccess(`Rolle mit ID ${roleId} wurde entblockiert`);
         }
 
         data.roles = data.roles.filter((otherId) => otherId !== roleId);
