@@ -28,9 +28,9 @@
                     <form class="form-wrapper full-width" on:submit|preventDefault>
                         <div class="row">
                             <Dropdown col3 label="Status Typ" bind:value={bot.status_type}>
-                                <option value="0">Playing</option>
-                                <option value="2">Listening</option>
-                                <option value="3">Watching</option>
+                                <option value="0">Spielt</option>
+                                <option value="2">Hört</option>
+                                <option value="3">Schaut</option>
                             </Dropdown>
 
                             <div class="col-2-3">
