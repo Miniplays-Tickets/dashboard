@@ -4,8 +4,8 @@
       <Card footer={false}>
         <span slot="title">Looking for whitelabel?</span>
         <div slot="body" class="body-wrapper">
-          <p>If you're looking for whitelabel settings (customising bot name and avatar), this is managed on a separate
-            page, <Navigate to="/whitelabel" styles="link-blue">available here</Navigate>.
+          <p>Wenn du nach den Whitelabel Einstellungen (Eigener Bot Name und Avatar) suchst, 
+             ist dies auf einer anderen Seite, <Navigate to="/whitelabel" styles="link-blue">verfügbar hier</Navigate>.
           </p>
         </div>
       </Card>
@@ -14,18 +14,18 @@
     <div class="container">
       <Card footer={false}>
         <div slot="title" class="row">
-          Colour Scheme
+          Farb Schema
           <Badge>Premium</Badge>
         </div>
         <div slot="body" class="body-wrapper">
           <form class="settings-form" on:submit|preventDefault={updateColours}>
             <div class="row colour-picker-row">
-              <Colour col3={true} label="Success" bind:value={colours["0"]} disabled={!isPremium} />
-              <Colour col3={true} label="Failure" bind:value={colours["1"]} disabled={!isPremium} />
+              <Colour col3={true} label="Erfolg" bind:value={colours["0"]} disabled={!isPremium} />
+              <Colour col3={true} label="Fehlschlag" bind:value={colours["1"]} disabled={!isPremium} />
             </div>
 
             <div class="row centre">
-              <Button icon="fas fa-paper-plane">Submit</Button>
+              <Button icon="fas fa-paper-plane">Speichern</Button>
             </div>
           </form>
         </div>
@@ -58,7 +58,7 @@
       return;
     }
 
-    notifySuccess(`Your colour scheme has been saved`);
+    notifySuccess(`Dein Farb Schema wurde gespeichert`);
   }
 
   async function loadColours() {
