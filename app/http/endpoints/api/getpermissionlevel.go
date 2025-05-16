@@ -14,7 +14,7 @@ func GetPermissionLevel(c *gin.Context) {
 
 	guildId, err := strconv.ParseUint(c.Query("guild"), 10, 64)
 	if err != nil {
-		c.JSON(400, utils.ErrorStr("Invalid guild ID"))
+		c.JSON(400, utils.ErrorStr("Ungültige Guild ID"))
 		return
 	}
 
