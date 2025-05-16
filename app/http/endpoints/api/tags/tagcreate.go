@@ -43,7 +43,7 @@ func CreateTag(ctx *gin.Context) {
 	}
 
 	if count >= 200 {
-		ctx.JSON(400, utils.ErrorStr("Tag limit (200) reached"))
+		ctx.JSON(400, utils.ErrorStr("Du kannst nur bis zu 200 Tag haben"))
 		return
 	}
 
@@ -63,22 +63,22 @@ func CreateTag(ctx *gin.Context) {
 	if err := validate.Struct(data); err != nil {
 		var validationErrors validator.ValidationErrors
 		if ok := errors.As(err, &validationErrors); !ok {
-			ctx.JSON(500, utils.ErrorStr("An error occurred while validating the integration"))
+			ctx.JSON(500, utils.ErrorStr("Es ist ein Fehler aufgetreten die Integration zu validieren"))
 			return
 		}
 
-		formatted := "Your input contained the following errors:\n" + utils.FormatValidationErrors(validationErrors)
+		formatted := "Deine Eingabe enthält die folgenden Fehler:\n" + utils.FormatValidationErrors(validationErrors)
 		ctx.JSON(400, utils.ErrorStr(formatted))
 		return
 	}
 
 	if !data.verifyId() {
-		ctx.JSON(400, utils.ErrorStr("Tag IDs must be alphanumeric (including hyphens and underscores), and be between 1 and 16 characters long"))
+		ctx.JSON(400, utils.ErrorStr("Tag IDs müssen alphabetisch sein (inklusive Bindestriche und Unterstriche) und müssen zwische 1-16 Zeichen lang sein."))
 		return
 	}
 
 	if !data.verifyContent() {
-		ctx.JSON(400, utils.ErrorStr("You have not provided any content for the tag"))
+		ctx.JSON(400, utils.ErrorStr("Du hast keinen Inhalt für den Tag angegeben"))
 		return
 	}
 
@@ -96,7 +96,7 @@ func CreateTag(ctx *gin.Context) {
 		}
 
 		if premiumTier < premium.Premium {
-			ctx.JSON(400, utils.ErrorStr("Premium is required to use custom commands"))
+			ctx.JSON(400, utils.ErrorStr("Premium wird benötigt um eigene Befehle zu nutzen"))
 			return
 		}
 	}
@@ -114,7 +114,7 @@ func CreateTag(ctx *gin.Context) {
 	if data.UseGuildCommand {
 		cmd, err := botContext.CreateGuildCommand(ctx, guildId, rest.CreateCommandData{
 			Name:        data.Id,
-			Description: fmt.Sprintf("Alias for /tag %s", data.Id),
+			Description: fmt.Sprintf("Alias für /tag %s", data.Id),
 			Options:     nil,
 			Type:        interaction.ApplicationCommandTypeChatInput,
 		})
