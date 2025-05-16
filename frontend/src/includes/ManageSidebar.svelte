@@ -28,7 +28,10 @@
             <ManageSidebarLink {currentRoute} title="Tickets" icon="fa-ticket-alt" href="/manage/{guildId}/tickets" />
             <ManageSidebarLink {currentRoute} title="Blacklist" icon="fa-ban" href="/manage/{guildId}/blacklist" />
             <ManageSidebarLink {currentRoute} title="Tags" icon="fa-tags" href="/manage/{guildId}/tags" />
-            <ManageSidebarLink {currentRoute} title="Support Zugriff" icon="fa-users" href="/manage/{guildId}/staffoverride" />
+
+            {#if isAdmin}
+                <ManageSidebarLink {currentRoute} title="Support Zugriff" icon="fa-users" href="/manage/{guildId}/staffoverride" />
+            {/if}
         </ul>
     </nav>
     <nav class="bottom">
