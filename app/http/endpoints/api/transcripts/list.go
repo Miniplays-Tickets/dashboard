@@ -67,7 +67,7 @@ func ListTranscripts(ctx *gin.Context) {
 		} else if errors.Is(err, cache2.ErrNotFound) {
 			user, err = botContext.GetUser(context.Background(), ticket.UserId)
 			if err != nil { // TODO: Log
-				usernames[ticket.UserId] = "Unknown User"
+				usernames[ticket.UserId] = "Unbekannter Benutzer"
 			} else {
 				usernames[ticket.UserId] = user.Username
 			}
