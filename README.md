@@ -23,7 +23,7 @@
     <br />
     <a href="https://ticketsdashboard.miniplays.de">View Hosted Version</a>
     <br />
-    <a href="https://ticketsv2.atlassian.net/jira/software/c/projects/RM/boards/3">View Roadmap</a> (These Changes are Implemented Instantly when they are in the <a href="https://github.com/Ticketsbot-cloud/dashboard/">v2 Tickets Bot</a>.)
+    <a href="https://ticketsv2.atlassian.net/jira/software/c/projects/RM/boards/3">View Roadmap</a> (These Changes aren't Implemented Instantly when they are in the <a href="https://github.com/Ticketsbot-cloud/dashboard/">v2 Tickets Bot</a>.)
     <br />
     <a href="https://discord.com/channels/1348788179678793815/1348789681797726208">Get Support</a>
     &middot;
