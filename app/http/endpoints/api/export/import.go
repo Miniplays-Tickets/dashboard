@@ -38,7 +38,7 @@ func PresignURL(ctx *gin.Context) {
 	}
 
 	if bucketName == "" {
-		ctx.JSON(400, utils.ErrorStr("Invalid file type"))
+		ctx.JSON(400, utils.ErrorStr("Ungültier Datei Typ"))
 		return
 	}
 
@@ -57,13 +57,13 @@ func PresignURL(ctx *gin.Context) {
 	}
 
 	if fileContentType != "application/zip" && fileContentType != "application/x-zip-compressed" {
-		ctx.JSON(400, utils.ErrorStr("Invalid file_content_type"))
+		ctx.JSON(400, utils.ErrorStr("Ungültiger Dateityp"))
 		return
 	}
 
 	// Check if file is over 1GB
 	if fileSize > 1024*1024*1024 {
-		ctx.JSON(400, utils.ErrorStr("File size too large"))
+		ctx.JSON(400, utils.ErrorStr("Datei Große zu lang"))
 		return
 	}
 
@@ -79,8 +79,9 @@ func PresignURL(ctx *gin.Context) {
 		return
 	}
 
-	if guild.OwnerId != userId {
-		ctx.JSON(403, utils.ErrorStr("Only the server owner can import transcripts"))
+	botContext, err := botcontext.ContextForGuild(guildId)
+	if guild.OwnerId != userId || botContext.IsBotAdmin(ctx, userId) {
+		ctx.JSON(403, utils.ErrorStr("Nur der Serverbesitzer kann Transkripte importieren"))
 		return
 	}
 
@@ -108,7 +109,7 @@ func GetRuns(ctx *gin.Context) {
 	}
 
 	if permissionLevel < permission.Admin {
-		ctx.JSON(403, utils.ErrorStr("You do not have permission to view import logs"))
+		ctx.JSON(403, utils.ErrorStr("Du hast keine Berechtigung, Importprotokolle einzusehen"))
 		return
 	}
 

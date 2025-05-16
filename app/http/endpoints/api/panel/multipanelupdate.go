@@ -26,14 +26,14 @@ func MultiPanelUpdate(c *gin.Context) {
 	// parse body
 	var data multiPanelCreateData
 	if err := c.ShouldBindJSON(&data); err != nil {
-		c.JSON(400, utils.ErrorStr("Invalid request body"))
+		c.JSON(400, utils.ErrorStr("Fehler 28"))
 		return
 	}
 
 	// parse panel ID
 	panelId, err := strconv.Atoi(c.Param("panelid"))
 	if err != nil {
-		c.JSON(400, utils.ErrorStr("Missing panel ID"))
+		c.JSON(400, utils.ErrorStr("Fehlende Panel ID"))
 		return
 	}
 
@@ -46,24 +46,24 @@ func MultiPanelUpdate(c *gin.Context) {
 
 	// check panel exists
 	if !ok {
-		c.JSON(404, utils.ErrorJson(errors.New("No panel with the provided ID found")))
+		c.JSON(404, utils.ErrorJson(errors.New("Kein Panel mit der angegebenen ID gefunden")))
 		return
 	}
 
 	// check panel is in the same guild
 	if guildId != multiPanel.GuildId {
-		c.JSON(403, utils.ErrorJson(errors.New("Guild ID doesn't match")))
+		c.JSON(403, utils.ErrorJson(errors.New("Guild ID stimmt nicht")))
 		return
 	}
 
 	if err := validate.Struct(data); err != nil {
 		var validationErrors validator.ValidationErrors
 		if ok := errors.As(err, &validationErrors); !ok {
-			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "An error occurred while validating the panel"))
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Beim Validieren des Panels ist ein Fehler aufgetreten"))
 			return
 		}
 
-		formatted := "Your input contained the following errors:\n" + utils.FormatValidationErrors(validationErrors)
+		formatted := "Deine Eingabe enthielt die folgenden Fehler:\n" + utils.FormatValidationErrors(validationErrors)
 		c.JSON(400, utils.ErrorStr(formatted))
 		return
 	}
@@ -123,7 +123,7 @@ func MultiPanelUpdate(c *gin.Context) {
 	if err != nil {
 		var unwrapped request.RestError
 		if errors.As(err, &unwrapped) && unwrapped.StatusCode == 403 {
-			c.JSON(http.StatusBadRequest, utils.ErrorJson(errors.New("I do not have permission to send messages in the provided channel")))
+			c.JSON(http.StatusBadRequest, utils.ErrorJson(errors.New("Ich habe keine Berechtigung, Nachrichten in dem angegebenen Kanal zu senden")))
 		} else {
 			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
 		}

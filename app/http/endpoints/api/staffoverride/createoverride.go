@@ -18,7 +18,7 @@ func CreateOverrideHandler(ctx *gin.Context) {
 
 	var body createOverrideBody
 	if err := ctx.BindJSON(&body); err != nil {
-		ctx.JSON(400, utils.ErrorStr("Invalid request body"))
+		ctx.JSON(400, utils.ErrorStr("Fehler 25"))
 		fmt.Println(err.Error())
 		return
 	}

@@ -39,7 +39,7 @@ func multiPanelIntoMessageData(panel database.MultiPanel, isPremium bool) multiP
 func (d *multiPanelMessageData) send(ctx *botcontext.BotContext, panels []database.Panel) (uint64, error) {
 	if !d.IsPremium {
 		// TODO: Don't harcode
-		d.Embed.SetFooter("Powered by MINIPLAYS", "https://tickets.miniplays.de/assets/img/logo.png")
+		d.Embed.SetFooter("Powered by MINIPLAYS", "https://miniplays.de/imgs/miniplays_logo_neu1024.png")
 	}
 
 	var components []component.Component
@@ -57,7 +57,7 @@ func (d *multiPanelMessageData) send(ctx *botcontext.BotContext, panels []databa
 
 		var placeholder string
 		if d.SelectMenuPlaceholder == nil {
-			placeholder = "Select a topic..."
+			placeholder = "Wähle ein Thema aus..."
 		} else {
 			placeholder = *d.SelectMenuPlaceholder
 		}

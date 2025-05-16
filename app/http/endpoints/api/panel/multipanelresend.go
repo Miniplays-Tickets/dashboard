@@ -34,13 +34,13 @@ func MultiPanelResend(ctx *gin.Context) {
 
 	// check panel exists
 	if !ok {
-		ctx.JSON(404, utils.ErrorStr("No panel with the provided ID found"))
+		ctx.JSON(404, utils.ErrorStr("Kein Panel mit der angegebenen ID gefunden"))
 		return
 	}
 
 	// check panel is in the same guild
 	if guildId != multiPanel.GuildId {
-		ctx.JSON(403, utils.ErrorStr("Guild ID doesn't match"))
+		ctx.JSON(403, utils.ErrorStr("Guild ID stimmt nicht"))
 		return
 	}
 
@@ -80,7 +80,7 @@ func MultiPanelResend(ctx *gin.Context) {
 	if err != nil {
 		var unwrapped request.RestError
 		if errors.As(err, &unwrapped) && unwrapped.StatusCode == 403 {
-			ctx.JSON(500, utils.ErrorJson(errors.New("I do not have permission to send messages in the provided channel")))
+			ctx.JSON(500, utils.ErrorJson(errors.New("Ich habe keine Berechtigung, Nachrichten in dem angegebenen Kanal zu senden.")))
 		} else {
 			ctx.JSON(500, utils.ErrorJson(err))
 		}

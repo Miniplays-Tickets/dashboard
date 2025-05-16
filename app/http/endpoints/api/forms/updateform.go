@@ -26,7 +26,7 @@ func UpdateForm(c *gin.Context) {
 
 	formId, err := strconv.Atoi(c.Param("form_id"))
 	if err != nil {
-		c.JSON(400, utils.ErrorStr("Invalid form ID"))
+		c.JSON(400, utils.ErrorStr("Ungültige Formular ID"))
 		return
 	}
 
@@ -37,12 +37,12 @@ func UpdateForm(c *gin.Context) {
 	}
 
 	if !ok {
-		c.JSON(404, utils.ErrorStr("Form not found"))
+		c.JSON(404, utils.ErrorStr("Formular nicht gefunden"))
 		return
 	}
 
 	if form.GuildId != guildId {
-		c.JSON(403, utils.ErrorStr("Form does not belong to this guild"))
+		c.JSON(403, utils.ErrorStr("Formular gehört nicht zu dieser Guild"))
 		return
 	}
 

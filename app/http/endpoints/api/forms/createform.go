@@ -19,12 +19,12 @@ func CreateForm(c *gin.Context) {
 
 	var data createFormBody
 	if err := c.BindJSON(&data); err != nil {
-		c.JSON(400, utils.ErrorStr("Invalid request body"))
+		c.JSON(400, utils.ErrorStr("Fehler 29"))
 		return
 	}
 
 	if len(data.Title) > 45 {
-		c.JSON(400, utils.ErrorStr("Title is too long"))
+		c.JSON(400, utils.ErrorStr("Titel ist zu lang"))
 		return
 	}
 

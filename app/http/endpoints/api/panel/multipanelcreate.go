@@ -51,11 +51,11 @@ func MultiPanelCreate(c *gin.Context) {
 	if err := validate.Struct(data); err != nil {
 		var validationErrors validator.ValidationErrors
 		if ok := errors.As(err, &validationErrors); !ok {
-			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "An error occurred while validating the panel"))
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Beim Validieren des Panels ist ein Fehler aufgetreten"))
 			return
 		}
 
-		formatted := "Your input contained the following errors:\n" + utils.FormatValidationErrors(validationErrors)
+		formatted := "Deine Eingabe enthielt die folgenden Fehler:\n" + utils.FormatValidationErrors(validationErrors)
 		c.JSON(400, utils.ErrorStr(formatted))
 		return
 	}
@@ -86,7 +86,7 @@ func MultiPanelCreate(c *gin.Context) {
 	if err != nil {
 		var unwrapped request.RestError
 		if errors.As(err, &unwrapped); unwrapped.StatusCode == 403 {
-			c.JSON(http.StatusBadRequest, utils.ErrorJson(errors.New("I do not have permission to send messages in the provided channel")))
+			c.JSON(http.StatusBadRequest, utils.ErrorJson(errors.New("Ich habe keine Berechtigung, Nachrichten in dem angegebenen Kanal zu senden")))
 		} else {
 			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
 		}
@@ -167,7 +167,7 @@ func (d *multiPanelCreateData) validateChannel(guildId uint64) func() error {
 		}
 
 		if !valid {
-			return errors.New("channel does not exist")
+			return errors.New("Channel existiert nicht")
 		}
 
 		return nil
@@ -176,12 +176,12 @@ func (d *multiPanelCreateData) validateChannel(guildId uint64) func() error {
 
 func (d *multiPanelCreateData) validatePanels(guildId uint64) (panels []database.Panel, err error) {
 	if len(d.Panels) < 2 {
-		err = errors.New("a multi-panel must contain at least 2 sub-panels")
+		err = errors.New("Ein Multi-Panel muss mindestens 2 Unter-Panels enthalten")
 		return
 	}
 
 	if len(d.Panels) > 15 {
-		err = errors.New("multi-panels cannot contain more than 15 sub-panels")
+		err = errors.New("Multi-Panels dürfen nicht mehr als 15 Unter-Panels enthalten")
 		return
 	}
 
@@ -201,7 +201,7 @@ func (d *multiPanelCreateData) validatePanels(guildId uint64) (panels []database
 		}
 
 		if !valid {
-			return nil, errors.New("invalid panel ID")
+			return nil, errors.New("Ungültige Panel ID")
 		}
 	}
 

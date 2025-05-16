@@ -42,7 +42,7 @@ func CallbackHandler(c *gin.Context) {
 
 	scopes := strings.Split(res.Scope, " ")
 	if !utils.Contains(scopes, "identify") {
-		c.JSON(400, utils.ErrorStr("Missing identify scope"))
+		c.JSON(400, utils.ErrorStr("Fehlender Identify-Bereich"))
 		return
 	}
 

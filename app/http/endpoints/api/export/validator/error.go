@@ -3,6 +3,6 @@ package validator
 import "errors"
 
 var (
-	ErrValidationFailed    = errors.New("validation failed")
-	ErrMaximumSizeExceeded = errors.New("maximum size exceeded")
+	ErrValidationFailed    = errors.New("Validierung fehlgeschlagen")
+	ErrMaximumSizeExceeded = errors.New("Maximale Größe überschritten")
 )
