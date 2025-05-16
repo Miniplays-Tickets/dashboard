@@ -48,7 +48,7 @@ func GetTranscriptRenderHandler(ctx *gin.Context) {
 		}
 
 		if !hasPermission {
-			ctx.JSON(403, utils.ErrorStr("Du hast keine Berechtigungen dir dieses Transscript anzuschaue"))
+			ctx.JSON(403, utils.ErrorStr("Du hast keine Berechtigungen dir dieses Transscript anzuschauen"))
 			return
 		}
 	}
