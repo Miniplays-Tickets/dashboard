@@ -8,7 +8,7 @@
       <Navigate to="/admin/bot-staff" styles="sidebar-link">
         <div class="sidebar-element">
           <i class="fas fa-user-group sidebar-icon"></i>
-          <span class="sidebar-text">Bot Staff</span>
+          <span class="sidebar-text">Support Team</span>
         </div>
       </Navigate>
     </div>

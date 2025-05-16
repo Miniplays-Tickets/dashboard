@@ -41,7 +41,7 @@ func ListBotStaffHandler(ctx *gin.Context) {
 			if err == nil {
 				data.Username = user.Username
 			} else if errors.Is(err, cache2.ErrNotFound) {
-				data.Username = "Unknown User"
+				data.Username = "Unbekannter Benutzer"
 			} else {
 				return err
 			}

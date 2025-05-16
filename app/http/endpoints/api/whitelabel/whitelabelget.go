@@ -29,7 +29,7 @@ func WhitelabelGet(c *gin.Context) {
 	}
 
 	if bot.BotId == 0 {
-		c.JSON(404, utils.ErrorStr("No bot found"))
+		c.JSON(404, utils.ErrorStr("Kein Bot Gefunden"))
 		return
 	}
 
@@ -56,7 +56,7 @@ func getBotUsername(ctx context.Context, token string) string {
 	user, err := rest.GetCurrentUser(ctx, token, nil)
 	if err != nil {
 		// TODO: Log error
-		return "Unknown User"
+		return "Unbekannter Benutzer"
 	}
 
 	return user.Username

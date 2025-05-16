@@ -14,7 +14,7 @@
       }
 
       clearLocalStorage()
-      window.location.href = 'https://tickets.miniplays.de'
+      window.location.href = 'https://ticketsdashboard.miniplays.de'
   }
 
   process()

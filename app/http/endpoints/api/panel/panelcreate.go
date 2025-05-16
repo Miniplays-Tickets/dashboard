@@ -80,7 +80,7 @@ func CreatePanel(c *gin.Context) {
 	var data panelBody
 
 	if err := c.BindJSON(&data); err != nil {
-		c.JSON(400, utils.ErrorStr("Invalid request body"))
+		c.JSON(400, utils.ErrorStr("Fehler 27"))
 		return
 	}
 
@@ -101,7 +101,7 @@ func CreatePanel(c *gin.Context) {
 		}
 
 		if len(panels) >= freePanelLimit {
-			c.JSON(402, utils.ErrorStr("You have exceeded your panel quota. Purchase premium to unlock more panels."))
+			c.JSON(402, utils.ErrorStr("Du hast dein Panel-Kontingent überschritten. Kaufe Premium, um mehr Panels freizuschalten"))
 			return
 		}
 	}
@@ -149,11 +149,11 @@ func CreatePanel(c *gin.Context) {
 	if err := validate.Struct(data); err != nil {
 		var validationErrors validator.ValidationErrors
 		if ok := errors.As(err, &validationErrors); !ok {
-			c.JSON(500, utils.ErrorStr("An error occurred while validating the panel"))
+			c.JSON(500, utils.ErrorStr("Beim Validieren des Panels ist ein Fehler aufgetreten"))
 			return
 		}
 
-		formatted := "Your input contained the following errors:\n" + utils.FormatValidationErrors(validationErrors)
+		formatted := "Deine Eingabe enthielt die folgenden Fehler:\n" + utils.FormatValidationErrors(validationErrors)
 		c.JSON(400, utils.ErrorStr(formatted))
 		return
 	}
@@ -170,9 +170,9 @@ func CreatePanel(c *gin.Context) {
 		var unwrapped request.RestError
 		if errors.As(err, &unwrapped) {
 			if unwrapped.StatusCode == http.StatusForbidden {
-				c.JSON(400, utils.ErrorStr("I do not have permission to send messages in the specified channel"))
+				c.JSON(400, utils.ErrorStr("Ich habe keine Berechtigung, Nachrichten in dem angegebenen Kanal zu senden"))
 			} else {
-				c.JSON(400, utils.ErrorStr("Error sending panel message: "+unwrapped.ApiError.Message))
+				c.JSON(400, utils.ErrorStr("Fehler beim Senden der Panel-Nachricht: "+unwrapped.ApiError.Message))
 			}
 		} else {
 			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
@@ -253,7 +253,7 @@ func CreatePanel(c *gin.Context) {
 		} else {
 			roleId, err := strconv.ParseUint(mention, 10, 64)
 			if err != nil {
-				c.JSON(400, utils.ErrorStr("Invalid role ID"))
+				c.JSON(400, utils.ErrorStr("Ungültige Rollen ID"))
 				return
 			}
 

@@ -27,16 +27,16 @@ func NewServerError(internalError error) *ApiError {
 		return NewError(internalError, restError.Error())
 	}
 
-	return NewError(internalError, "An internal server error occurred")
+	return NewError(internalError, "Ein interner Server Fehler ist aufgetreten!")
 }
 
 func (e *ApiError) Error() string {
 	var restError request.RestError
 	if errors.As(e.InternalError, &restError) {
-		return fmt.Sprintf("internal error: %v, external message: %s, rest error: Discord returned HTTP %d: %s",
+		return fmt.Sprintf("Interner Fehler: %v, Externe Nachricht: %s, rest error: Discord returned HTTP %d: %s",
 			e.InternalError, e.ExternalMessage, restError.StatusCode, restError.ApiError.Message)
 	} else {
-		return fmt.Sprintf("internal error: %v, external message: %s", e.InternalError, e.ExternalMessage)
+		return fmt.Sprintf("Interner Fehler: %v, Externe Nachricht: %s", e.InternalError, e.ExternalMessage)
 	}
 }
 

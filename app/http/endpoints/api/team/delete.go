@@ -25,7 +25,7 @@ func DeleteTeam(ctx *gin.Context) {
 	}
 
 	if !exists {
-		ctx.JSON(400, utils.ErrorStr("Team not found"))
+		ctx.JSON(400, utils.ErrorStr("Team nicht gefunden"))
 		return
 	}
 

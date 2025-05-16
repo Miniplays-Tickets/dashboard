@@ -21,7 +21,7 @@ func CreateTeam(ctx *gin.Context) {
 	}
 
 	if len(data.Name) == 0 || len(data.Name) > 32 {
-		ctx.JSON(400, utils.ErrorStr("Team name must be between 1 and 32 characters"))
+		ctx.JSON(400, utils.ErrorStr("Team Name muss zwischen 1-32 Zeichen lang sein"))
 		return
 	}
 
@@ -32,7 +32,7 @@ func CreateTeam(ctx *gin.Context) {
 	}
 
 	if exists {
-		ctx.JSON(400, utils.ErrorStr("Team already exists"))
+		ctx.JSON(400, utils.ErrorStr("Team existiert bereits"))
 		return
 	}
 

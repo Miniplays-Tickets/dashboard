@@ -33,7 +33,7 @@ func RemoveMember(ctx *gin.Context) {
 
 	entityType, ok := entityTypes[typeParsed]
 	if !ok {
-		ctx.JSON(400, utils.ErrorStr("Invalid entity type"))
+		ctx.JSON(400, utils.ErrorStr("Fehler 20"))
 		return
 	}
 
@@ -43,7 +43,7 @@ func RemoveMember(ctx *gin.Context) {
 	} else {
 		parsed, err := strconv.Atoi(teamId)
 		if err != nil {
-			ctx.JSON(400, utils.ErrorStr("Invalid team ID"))
+			ctx.JSON(400, utils.ErrorStr("Ungültige Team ID"))
 			return
 		}
 
@@ -83,7 +83,7 @@ func removeDefaultMember(ctx *gin.Context, guildId, selfId, snowflake uint64, en
 		}
 
 		if guild.OwnerId != selfId {
-			ctx.JSON(403, utils.ErrorStr("Only the server owner can remove admins"))
+			ctx.JSON(403, utils.ErrorStr("Nur der Server owner kann Admins entfernen"))
 			return
 		}
 	}
@@ -148,7 +148,7 @@ func removeDefaultMember(ctx *gin.Context, guildId, selfId, snowflake uint64, en
 				return
 			}
 		} else {
-			ctx.JSON(500, utils.ErrorStr("Infallible"))
+			ctx.JSON(500, utils.ErrorStr("Fehler 21"))
 			return
 		}
 	}
@@ -164,7 +164,7 @@ func removeTeamMember(ctx *gin.Context, teamId int, guildId, snowflake uint64, e
 	}
 
 	if !exists {
-		ctx.JSON(404, utils.ErrorStr("Support team with provided ID not found"))
+		ctx.JSON(404, utils.ErrorStr("Support Team mit der angegeben ID nicht gefunden"))
 		return
 	}
 
@@ -227,7 +227,7 @@ func removeTeamMember(ctx *gin.Context, teamId int, guildId, snowflake uint64, e
 				return
 			}
 		} else {
-			ctx.JSON(500, utils.ErrorStr("Infallible"))
+			ctx.JSON(500, utils.ErrorStr("Fehler 22"))
 		}
 	}
 

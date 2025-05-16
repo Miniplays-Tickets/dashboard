@@ -52,7 +52,7 @@ func GetWhitelabelCreateInteractions() func(*gin.Context) {
 	}
 }
 
-var ErrInteractionCreateCooldown = errors.New("Interaction creation on cooldown")
+var ErrInteractionCreateCooldown = errors.New("Erstellung von Interactions aktuell in Abklingzeit")
 
 func createInteractions(cm *manager.CommandManager, botId uint64, token string) error {
 	// Cooldown
@@ -71,7 +71,7 @@ func createInteractions(cm *manager.CommandManager, botId uint64, token string) 
 			return err
 		}
 
-		return fmt.Errorf("%w, please wait another %d seconds", ErrInteractionCreateCooldown, int64(expiration.Seconds()))
+		return fmt.Errorf("%w, bitte warte noch %d Sekunden", ErrInteractionCreateCooldown, int64(expiration.Seconds()))
 	}
 
 	botContext, err := botcontext.ContextForGuild(0)

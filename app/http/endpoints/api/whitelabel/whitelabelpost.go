@@ -37,7 +37,7 @@ func WhitelabelPost() func(*gin.Context) {
 		// Get token
 		var data whitelabelPostBody
 		if err := c.BindJSON(&data); err != nil {
-			c.JSON(http.StatusBadRequest, utils.ErrorStr("Invalid request body"))
+			c.JSON(http.StatusBadRequest, utils.ErrorStr("Fehler 12"))
 			return
 		}
 
@@ -45,9 +45,9 @@ func WhitelabelPost() func(*gin.Context) {
 		if err != nil {
 			var restError request.RestError
 			if errors.Is(err, errInvalidToken) {
-				c.JSON(http.StatusBadRequest, utils.ErrorStr("Invalid token"))
+				c.JSON(http.StatusBadRequest, utils.ErrorStr("Ungültiger token"))
 			} else if errors.As(err, &restError) && restError.StatusCode == http.StatusUnauthorized {
-				c.JSON(http.StatusBadRequest, utils.ErrorStr("Invalid token"))
+				c.JSON(http.StatusBadRequest, utils.ErrorStr("Ungültiger token"))
 			} else {
 				_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
 			}

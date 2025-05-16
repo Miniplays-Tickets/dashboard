@@ -3,7 +3,7 @@
     <Card footer footerRight ref="filter-card">
       <span slot="title">
         <i class="fas fa-filter"></i>
-        Filter Logs
+        Filter Transscripts
       </span>
 
       <div slot="body" class="body-wrapper">
@@ -12,10 +12,10 @@
             <Input col4=true label="Ticket ID" placeholder="Ticket ID"
                    on:input={handleInputTicketId} bind:value={filterSettings.ticketId}/>
 
-            <Input col4=true label="Username" placeholder="Username" on:input={handleInputUsername}
+            <Input col4=true label="Benutzername" placeholder="Benutzername" on:input={handleInputUsername}
                    bind:value={filterSettings.username}/>
 
-            <Input col4=true label="User ID" placeholder="User ID" on:input={handleInputUserId}
+            <Input col4=true label="Benuter ID" placeholder="Benuter ID" on:input={handleInputUserId}
                    bind:value={filterSettings.userId}/>
           </div>
           <div class="row">
@@ -23,8 +23,8 @@
               <PanelDropdown label="Panel" isMulti={false} bind:panels bind:selected={selectedPanel} />
             </div>
 
-            <Dropdown label="Rating" bind:value={filterSettings.rating}>
-              <option value=0>Any</option>
+            <Dropdown label="Bewertung" bind:value={filterSettings.rating}>
+              <option value=0>Alle</option>
               <option value=1>1 ⭐</option>
               <option value=2>2 ⭐</option>
               <option value=3>3 ⭐</option>
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div slot="footer">
-        <Button icon="fas fa-search" on:click={filter}>Filter</Button>
+        <Button icon="fas fa-search" on:click={filter}>Filtern</Button>
       </div>
     </Card>
 
@@ -50,9 +50,9 @@
             <thead>
             <tr>
               <th>Ticket ID</th>
-              <th>Username</th>
-              <th>Rating</th>
-              <th class="reason">Close Reason</th>
+              <th>Benutername</th>
+              <th>Bewertung</th>
+              <th class="reason">Schließgrund</th>
               <th>Transcript</th>
             </tr>
             </thead>
@@ -65,17 +65,19 @@
                   {#if transcript.rating}
                     {transcript.rating} ⭐
                   {:else}
-                    No rating
+                    Keine Bewertung
                   {/if}
                 </td>
-                <td class="reason">{transcript.close_reason || 'No reason specified'}</td>
-                {#if transcript.has_transcript}
-                  <td>
+                <td class="reason">{transcript.close_reason || 'Kein Grund angegeben'}</td>
+                <td>
+                  {#if transcript.has_transcript}
                     <Navigate to="{`/manage/${guildId}/transcripts/view/${transcript.ticket_id}`}" styles="link">
-                      <Button>View</Button>
+                      <Button>Anzeigen</Button>
                     </Navigate>
-                  </td>
-                {/if}
+                  {:else}
+                    Nicht vorhanden
+                  {/if}
+                </td>
               </tr>
             {/each}
             </tbody>
@@ -83,7 +85,7 @@
 
           <div class="nav" class:nav-margin={transcripts.length === 0}>
             <i class="fas fa-chevron-left" class:hidden={page === 1} on:click={loadPrevious}></i>
-            <span>Page {page}</span>
+            <span>Seite {page}</span>
             <i class="fas fa-chevron-right"
                class:hidden={transcripts.length < pageLimit || transcripts[transcripts.length - 1].ticket_id === 1}
                on:click={loadNext}></i>

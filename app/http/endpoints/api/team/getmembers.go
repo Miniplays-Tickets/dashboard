@@ -24,7 +24,7 @@ func GetMembers(ctx *gin.Context) {
 	} else {
 		parsed, err := strconv.Atoi(teamId)
 		if err != nil {
-			ctx.JSON(400, utils.ErrorStr("Invalid team ID"))
+			ctx.JSON(400, utils.ErrorStr("Ungültige Team ID"))
 			return
 		}
 
@@ -70,7 +70,7 @@ func getTeamMembers(ctx *gin.Context, teamId int, guildId uint64) {
 	}
 
 	if !exists {
-		ctx.JSON(404, utils.ErrorStr("Support team with provided ID not found"))
+		ctx.JSON(404, utils.ErrorStr("Support Team mit der angegebenen ID nicht gefunden"))
 		return
 	}
 

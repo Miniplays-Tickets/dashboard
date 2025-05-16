@@ -2,7 +2,7 @@
   <div class="card-wrapper">
     <Card footer=true footerRight=true>
       <span slot="title">
-        Error
+        Fehler
       </span>
 
       <div slot="body">
@@ -12,7 +12,7 @@
       <span slot="footer">
         <span class="buttons">
           <span style="margin-right: 20px">
-            <Button icon="fas fa-arrow-left" on:click={back}>Back</Button>
+            <Button icon="fas fa-arrow-left" on:click={back}>Zurück</Button>
           </span>
           <Button icon="fas fa-home" on:click={home}>Home</Button>
         </span>

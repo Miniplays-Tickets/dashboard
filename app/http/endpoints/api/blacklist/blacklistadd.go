@@ -51,7 +51,7 @@ func AddBlacklistHandler(ctx *gin.Context) {
 		}
 
 		if count >= 250 {
-			ctx.JSON(400, utils.ErrorStr("Blacklist limit (250) reached: consider using a role instead"))
+			ctx.JSON(400, utils.ErrorStr("Blacklist Limit von 250 erreicht: Ziehe in Betracht, stattdessen eine Rolle zu verwenden"))
 			return
 		}
 
@@ -63,7 +63,7 @@ func AddBlacklistHandler(ctx *gin.Context) {
 		}
 
 		if permLevel > permission.Everyone {
-			ctx.JSON(400, utils.ErrorStr("You cannot blacklist staff members!"))
+			ctx.JSON(400, utils.ErrorStr("Du kannst keine Mitglieder eines Teams auf die schwarze Liste setzen!"))
 			return
 		}
 
@@ -104,7 +104,7 @@ func AddBlacklistHandler(ctx *gin.Context) {
 		}
 
 		if count >= 50 {
-			ctx.JSON(400, utils.ErrorStr("Blacklist limit (50) reached"))
+			ctx.JSON(400, utils.ErrorStr("Blacklist Limit von 50 erreicht"))
 			return
 		}
 
@@ -118,7 +118,7 @@ func AddBlacklistHandler(ctx *gin.Context) {
 			Id:      body.Snowflake,
 		})
 	} else {
-		ctx.JSON(400, utils.ErrorStr("Invalid entity type"))
+		ctx.JSON(400, utils.ErrorStr("Fehler 30"))
 		return
 	}
 }

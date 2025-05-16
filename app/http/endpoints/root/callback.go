@@ -22,7 +22,7 @@ import (
 func CallbackHandler(c *gin.Context) {
 	code, ok := c.GetQuery("code")
 	if !ok {
-		c.JSON(400, utils.ErrorStr("Missing code query parameter"))
+		c.JSON(400, utils.ErrorStr("Fehlender code query parameter"))
 		return
 	}
 
@@ -31,7 +31,7 @@ func CallbackHandler(c *gin.Context) {
 		var oauthError request.OAuthError
 		if errors.As(err, &oauthError) {
 			if oauthError.ErrorCode == "invalid_grant" {
-				c.JSON(400, utils.ErrorStr("Invalid code: try logging in again"))
+				c.JSON(400, utils.ErrorStr("Ungültiger Code: Versuche dich erneut Anzumelden"))
 				return
 			}
 		}
@@ -42,7 +42,7 @@ func CallbackHandler(c *gin.Context) {
 
 	scopes := strings.Split(res.Scope, " ")
 	if !utils.Contains(scopes, "identify") {
-		c.JSON(400, utils.ErrorStr("Missing identify scope"))
+		c.JSON(400, utils.ErrorStr("Fehlender Identify-Bereich"))
 		return
 	}
 

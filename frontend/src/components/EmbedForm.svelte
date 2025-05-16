@@ -1,13 +1,13 @@
 {#if data && appliedOverrides}
     <form class="form-wrapper" on:submit|preventDefault>
         <div class="row">
-            <Colour col3 label="Embed Colour" on:change={updateColour} bind:value={tempColour}/>
-            <Input col3 label="Title" placeholder="Embed Title" bind:value={data.title}/>
-            <Input col3 label="Title URL (Optional)" placeholder="https://example.com" bind:value={data.url}/>
+            <Colour col3 label="Embed Farbe" on:change={updateColour} bind:value={tempColour}/>
+            <Input col3 label="Titel" placeholder="Embed Title" bind:value={data.title}/>
+            <Input col3 label="Titel URL (Optional)" placeholder="https://example.com" bind:value={data.url}/>
         </div>
 
         <div class="row">
-            <Textarea col1 label="Description" placeholder="Large text area, up to 4096 characters"
+            <Textarea col1 label="Beschreibung" placeholder="Großer Text Bereich, bis zu 4096 Zeichen"
                       bind:value={data.description}/>
         </div>
 
@@ -17,60 +17,60 @@
             <div slot="content" class="row">
                 <Input col3 label="Author Name" placeholder="Author Name" bind:value={data.author.name}/>
                 <Input col3 label="Author Icon URL (Optional)" placeholder="https://example.com/image.png"
-                       tooltipText="Small icon displayed in the top left" bind:value={data.author.icon_url}/>
+                       tooltipText="Kleines Icon was oben links angezeigt wird" bind:value={data.author.icon_url}/>
                 <Input col3 label="Author URL (Optional)" placeholder="https://example.com"
-                       tooltipText="Hyperlink on the author's name" bind:value={data.author.url}/>
+                       tooltipText="Link auf dem Authorennamen" bind:value={data.author.url}/>
             </div>
         </Collapsible>
 
         <Collapsible forceAlwaysOpen>
-            <span slot="header">Images</span>
+            <span slot="header">Bilder</span>
             <div slot="content" class="row">
-                <Input col2 label="Large Image URL" placeholder="https://example.com/image.png"
+                <Input col2 label="Großes Bild URL" placeholder="https://example.com/image.png"
                        bind:value={data.image_url}/>
-                <Input col2 label="Small Image URL" placeholder="https://example.com/image.png"
+                <Input col2 label="Kleines Bild URL" placeholder="https://example.com/image.png"
                        bind:value={data.thumbnail_url}/>
             </div>
         </Collapsible>
 
         <Collapsible forceAlwaysOpen>
-            <span slot="header">Footer</span>
+            <span slot="header">Fußzeile</span>
             <div slot="content" class="row">
                 {#if footerPremiumOnly}
-                    <Input col3 label="Footer Text" placeholder="Footer Text" badge="Premium"
+                    <Input col3 label="Fußzeilen Text" placeholder="Fußzeilen Text" badge="Premium"
                            bind:value={data.footer.text}/>
-                    <Input col3 label="Footer Icon URL (Optional)" badge="Premium"
+                    <Input col3 label="Fußzeilen Icon URL (Optional)" badge="Premium"
                            placeholder="https://example.com/image.png"
                            bind:value={data.footer.icon_url}/>
                 {:else}
-                    <Input col3 label="Footer Text" placeholder="Footer Text" bind:value={data.footer.text}/>
-                    <Input col3 label="Footer Icon URL (Optional)" placeholder="https://example.com/image.png"
+                    <Input col3 label="Fußzeilen Text" placeholder="Footer Text" bind:value={data.footer.text}/>
+                    <Input col3 label="Fußzeilen Icon URL (Optional)" placeholder="https://example.com/image.png"
                            bind:value={data.footer.icon_url}/>
                 {/if}
-                <DateTimePicker col3 label="Footer Timestamp (Optional)" bind:value={data.timestamp}/>
+                <DateTimePicker col3 label="Fußzeilen Timestamp (Optional)" bind:value={data.timestamp}/>
             </div>
         </Collapsible>
 
         <Collapsible forceAlwaysOpen>
-            <span slot="header">Fields</span>
+            <span slot="header">Felder</span>
             <div slot="content" class="col-1">
                 {#each data.fields as field, i}
                     <div class="row" style="justify-content: flex-start; gap: 10px">
-                        <Input col2 label="Field Name" placeholder="Field Name" bind:value={field.name}/>
-                        <Checkbox label="Inline" bind:value={field.inline}/>
+                        <Input col2 label="Feld Name" placeholder="Field Name" bind:value={field.name}/>
+                        <Checkbox label="Einzeilig" bind:value={field.inline}/>
 
                         <div style="margin-top: 18px; display: flex; align-self: center">
-                            <Button danger icon="fas fa-trash-can" on:click={() => deleteField(i)}>Delete</Button>
+                            <Button danger icon="fas fa-trash-can" on:click={() => deleteField(i)}>Löschen</Button>
                         </div>
                     </div>
                     <div class="row">
-                      <Textarea col1 label="Field Value" placeholder="Large text area, up to 1024 characters"
+                      <Textarea col1 label="Feld Wert" placeholder="Großer Text bereich, bis zu 1024 Zeichen"
                                 bind:value={field.value}/>
                     </div>
                 {/each}
 
                 <div class="add-field-wrapper">
-                    <Button type="button" icon="fas fa-plus" fullWidth on:click={addField}>Add Field</Button>
+                    <Button type="button" icon="fas fa-plus" fullWidth on:click={addField}>Feld hinzufügen</Button>
                 </div>
             </div>
         </Collapsible>

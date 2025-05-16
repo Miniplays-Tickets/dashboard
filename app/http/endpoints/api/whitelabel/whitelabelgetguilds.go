@@ -25,7 +25,7 @@ func WhitelabelGetGuilds(c *gin.Context) {
 
 	// id -> name
 	if bot.BotId == 0 {
-		c.JSON(400, utils.ErrorStr("Whitelabel bot not found"))
+		c.JSON(400, utils.ErrorStr("Whitelabel Bot nicht gefunden"))
 		return
 	}
 

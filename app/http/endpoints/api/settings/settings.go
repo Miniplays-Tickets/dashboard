@@ -88,7 +88,7 @@ func GetSettingsHandler(ctx *gin.Context) {
 	group.Go(func() (err error) {
 		settings.WelcomeMessage, err = dbclient.Client.WelcomeMessages.Get(ctx, guildId)
 		if err == nil && settings.WelcomeMessage == "" {
-			settings.WelcomeMessage = "Thank you for contacting support.\nPlease describe your issue and await a response."
+			settings.WelcomeMessage = "Vielen Dank, dass du den Support kontaktiert hast.\nBitte beschreibe dein Problem und warte auf eine Antwort."
 		}
 
 		return

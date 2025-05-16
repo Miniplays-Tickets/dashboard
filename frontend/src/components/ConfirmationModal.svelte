@@ -2,7 +2,7 @@
   <div class="modal-wrapper">
     <Card footer="{true}" footerRight="{true}" fill="{false}">
       <span slot="title">
-        <slot name="title">Embed Builder</slot>
+        <slot name="title">Embed Ersteller</slot>
       </span>
 
       <div slot="body" class="body-wrapper">
@@ -10,7 +10,7 @@
       </div>
 
       <div slot="footer" style="gap: 12px">
-        <Button danger={!isDangerous} on:click={() => dispatch("cancel", {})}>Cancel</Button>
+        <Button danger={!isDangerous} on:click={() => dispatch("cancel", {})}>Abbrechen</Button>
         <Button danger={isDangerous} {icon} on:click={() => dispatch("confirm", {})}>
           <slot name="confirm"></slot>
         </Button>

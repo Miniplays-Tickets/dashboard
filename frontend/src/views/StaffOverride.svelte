@@ -6,16 +6,16 @@
   <div class="content">
     <div class="main-col">
       <Card footer footerRight>
-        <span slot="title">Staff Override</span>
-        <div slot="body" class="body-wrapper">
-          You can grant access to the Tickets support team to temporarily access the dashboard for your server to help
-          you resolve issues. You can revoke access at any time by visiting this page.
+        <span slot="title">Support Zugriff</span>
+        <div slot="body" class="body-wrapper"
+          Du kannst dem Support Team temporären Zugriff auf das Dashboard des Servers geben, sodass sie dir mit Problemen helfen können. 
+          Du kannst diesen Zugriff jederzeit auf dieser Webseite entfernen.
         </div>
         <div slot="footer" class="footer-wrapper">
           {#if activeOverride}
-            <Button danger on:click={removeOverride}>Revoke Access</Button>
+            <Button danger on:click={removeOverride}>Zugriff Entfernen</Button>
           {/if}
-          <Button on:click={() => modal = true}>Grant Access</Button>
+          <Button on:click={() => modal = true}>Zugriff geben</Button>
         </div>
       </Card>
     </div>
@@ -64,7 +64,7 @@
 
         modal = false;
         activeOverride = true;
-        notifySuccess('Staff access override has been granted');
+        notifySuccess('Dem Support wurde der Zugriff gewährt');
     }
 
     async function removeOverride() {
@@ -75,7 +75,7 @@
         }
 
         activeOverride = false;
-        notifySuccess('Staff access override has been revoked');
+        notifySuccess('Dem Support wurde der Zugriff entfernt');
     }
 
     withLoadingScreen(async () => {

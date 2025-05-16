@@ -14,14 +14,14 @@ var (
 		Namespace: "tickets",
 		Subsystem: "api",
 		Name:      "active_livechat_websockets",
-		Help:      "The number of open live-chat websockets",
+		Help:      "Die Anzahl der geöffneten Live-Chat-Websockets",
 	})
 
 	websocketMessages = promauto.NewCounterVec(prometheus.CounterOpts{
 		Namespace: "tickets",
 		Subsystem: "api",
 		Name:      "livechat_websocket_messages",
-		Help:      "The number of messages relayed over live-chat websockets",
+		Help:      "Die Anzahl der über Live-Chat-Websockets übertragenen Nachrichten",
 	}, []string{"guild_id"})
 )
 

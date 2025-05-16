@@ -4,18 +4,18 @@
             <span slot="title">Ticket #{ticketId}</span>
             <div slot="body" class="body-wrapper">
                 <div class="section">
-                    <h2 class="section-title">Close Ticket</h2>
+                    <h2 class="section-title">Ticket schließen</h2>
 
                     <div class="row" style="gap: 20px">
-                        <Input label="Close Reason" col2 placeholder="No reason specified" bind:value={closeReason}/>
+                        <Input label="Close Reason" col2 placeholder="Kein Grund Angegeben" bind:value={closeReason}/>
                         <div style="display: flex; align-items: flex-end; padding-bottom: 8px">
-                            <Button danger={true} noShadow icon="fas fa-lock" col3 on:click={closeTicket}>Close Ticket
+                            <Button danger={true} noShadow icon="fas fa-lock" col3 on:click={closeTicket}>Ticket Schließen
                             </Button>
                         </div>
                     </div>
                 </div>
                 <div class="section">
-                    <h2 class="section-title">View Ticket</h2>
+                    <h2 class="section-title">Ticket Ansicht</h2>
                     <DiscordMessages {ticketId} {isPremium} {tags} {messages} bind:container on:send={sendMessage}/>
                 </div>
             </div>

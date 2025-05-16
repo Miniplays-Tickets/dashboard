@@ -10,8 +10,8 @@
                 <p>
                     Please read these terms of service ("terms", "terms of
                     service") carefully before using Tickets Discord bot and
-                    ticketsbot.cloud (the "service") operated by
-                    ticketsbot.cloud ("us", 'we", "our").
+                    ticketsdashboard.miniplays.de (the "service") operated by
+                    miniplays.de ("us", 'we", "our").
                 </p>
                 <br />
                 <p>

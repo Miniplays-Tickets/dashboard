@@ -1,19 +1,19 @@
 <main>
     <a href="/manage/{guildId}/panels" class="link">
         <i class="fas fa-arrow-left"></i>
-        Back to Panels
+        Zurück zu Panels
     </a>
     <Card footer={false}>
-        <span slot="title">Create Multi-Panel</span>
+        <span slot="title">Multi-Panel erstellen</span>
         <div slot="body" class="card-body">
-            <p>Note: The panels which you wish to combine into a multi-panel must already exist</p>
+            <p>Info: Die Panels die zu einem Multi-Panel kombinieren möchtest, müssen bereits existieren</p>
 
             {#if multiPanelData && !$loadingScreen}
                 <div style="margin-top: 10px">
                     <MultiPanelCreationForm {guildId} {channels} {panels} bind:data={multiPanelData} seedDefault={false} />
 
                     <div class="submit-wrapper">
-                        <Button icon="fas fa-floppy-disk" fullWidth={true} on:click={editMultiPanel}>Save
+                        <Button icon="fas fa-floppy-disk" fullWidth={true} on:click={editMultiPanel}>Speichern
                         </Button>
                     </div>
                 </div>

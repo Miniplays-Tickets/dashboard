@@ -23,13 +23,13 @@ func CloseTicket(c *gin.Context) {
 
 	ticketId, err := strconv.Atoi(c.Param("ticketId"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, utils.ErrorStr("Invalid ticket ID"))
+		c.JSON(http.StatusBadRequest, utils.ErrorStr("Ungültige Ticket ID"))
 		return
 	}
 
 	var body closeBody
 	if err := c.BindJSON(&body); err != nil {
-		c.JSON(400, utils.ErrorStr("Invalid request body"))
+		c.JSON(400, utils.ErrorStr("Fehler 13"))
 		return
 	}
 
@@ -42,7 +42,7 @@ func CloseTicket(c *gin.Context) {
 
 	// Verify the ticket exists
 	if ticket.UserId == 0 {
-		c.JSON(http.StatusNotFound, utils.ErrorStr("Ticket not found"))
+		c.JSON(http.StatusNotFound, utils.ErrorStr("Ticket nicht gefunden"))
 		return
 	}
 
@@ -54,7 +54,7 @@ func CloseTicket(c *gin.Context) {
 	}
 
 	if !hasPermission {
-		c.JSON(http.StatusForbidden, utils.ErrorStr("You do not have permission to close this ticket"))
+		c.JSON(http.StatusForbidden, utils.ErrorStr("Du hast keine Berechtigungen dieses Ticket zu schließen"))
 		return
 	}
 
