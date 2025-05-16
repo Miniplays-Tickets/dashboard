@@ -14,7 +14,7 @@ import (
 func UpdateLastSeen(req *gin.Context) {
 	userId, ok := req.Keys["userid"].(uint64) // ok=false if not present
 	if !ok {
-		req.AbortWithStatusJSON(500, utils.ErrorStr("userid not present in context"))
+		req.AbortWithStatusJSON(500, utils.ErrorStr("Fehler 2"))
 		return
 	}
 
