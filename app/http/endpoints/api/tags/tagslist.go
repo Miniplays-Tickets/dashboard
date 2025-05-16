@@ -2,8 +2,8 @@ package api
 
 import (
 	"github.com/Miniplays-Tickets/dashboard/database"
-	"github.com/Miniplays-Tickets/dashboard/types"
 	"github.com/Miniplays-Tickets/dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/utils/types"
 	"github.com/gin-gonic/gin"
 )
 

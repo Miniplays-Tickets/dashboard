@@ -6,9 +6,9 @@ import (
 	"strconv"
 
 	"github.com/Miniplays-Tickets/dashboard/botcontext"
-	dbclient "github.com/Miniplays-Tickets/dashboardase"
-	"github.com/Miniplays-Tickets/dashboard
-	"github.com/Miniplays-Tickets/dashboard"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/rpc"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/rest"

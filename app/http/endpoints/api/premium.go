@@ -4,8 +4,8 @@ import (
 	"strconv"
 
 	"github.com/Miniplays-Tickets/dashboard/botcontext"
-	"github.com/Miniplays-Tickets/dashboard
-	"github.com/Miniplays-Tickets/dashboard"
+	"github.com/Miniplays-Tickets/dashboard/rpc"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/gin-gonic/gin"
 )

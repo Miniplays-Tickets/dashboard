@@ -6,12 +6,12 @@ import (
 	"net/http"
 
 	"github.com/Miniplays-Tickets/dashboard/app"
-	"github.com/Miniplays-Tickets/dashboardntext"
-	dbclient "github.com/Miniplays-Tickets/dashboardase"
-	"github.com/Miniplays-Tickets/dashboard
-	"github.com/Miniplays-Tickets/dashboardache"
-	"github.com/Miniplays-Tickets/dashboard"
-	"github.com/Miniplays-Tickets/dashboard/types"
+	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/rpc"
+	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
+	"github.com/Miniplays-Tickets/dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/utils/types"
 	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/TicketsBot-cloud/database"
 	"github.com/gin-gonic/gin"

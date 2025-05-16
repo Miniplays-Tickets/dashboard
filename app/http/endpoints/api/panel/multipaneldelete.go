@@ -7,8 +7,8 @@ import (
 
 	"github.com/Miniplays-Tickets/dashboard/app"
 	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/utils"
-	dbclient "github.com/Miniplays-Tickets/dashboardase"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/rest"
 	"github.com/rxdn/gdl/rest/request"
