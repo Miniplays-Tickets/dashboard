@@ -38,7 +38,7 @@ func ReloadGuildsHandler(c *gin.Context) {
 			ttl = 0
 		}
 
-		c.JSON(429, utils.ErrorStr("You're doing this too quickly: try again in %d seconds", int(ttl.Seconds())))
+		c.JSON(429, utils.ErrorStr("Du machst es zu Schnell: versuche es in %d Sekunden erneut", int(ttl.Seconds())))
 		return
 	}
 
