@@ -1,7 +1,7 @@
 package types
 
 import (
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/database"
 	"github.com/rxdn/gdl/objects/channel/embed"
 )

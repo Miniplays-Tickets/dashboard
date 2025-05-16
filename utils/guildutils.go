@@ -7,8 +7,8 @@ import (
 	"slices"
 	"sync"
 
-	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
 	"github.com/TicketsBot-cloud/common/collections"
 	"github.com/TicketsBot-cloud/common/permission"
 	"github.com/TicketsBot-cloud/database"

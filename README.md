@@ -93,8 +93,8 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors
 
-<a href="https://github.com/Dev-Miniplays/Ticketsv2-dashboard/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Dev-Miniplays/Ticketsv2-dashboard" alt="contrib.rocks image" />
+<a href="https://github.com/Miniplays-Tickets/dashboard/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Miniplays-Tickets/dashboard" alt="contrib.rocks image" />
 </a>
 
 <!-- LICENSE -->
@@ -113,16 +113,16 @@ Distributed under the MIT license. See `LICENSE` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
-[contributors-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
-[forks-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/network/members
-[stars-shield]: https://img.shields.io/github/stars/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
-[stars-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
-[issues-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/issues
-[license-shield]: https://img.shields.io/github/license/Dev-Miniplays/Ticketsv2-dashboard.svg?style=for-the-badge
-[license-url]: https://github.com/Dev-Miniplays/Ticketsv2-dashboard/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/Miniplays-Tickets/dashboard.svg?style=for-the-badge
+[contributors-url]: https://github.com/Miniplays-Tickets/dashboard/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Miniplays-Tickets/dashboard.svg?style=for-the-badge
+[forks-url]: https://github.com/Miniplays-Tickets/dashboard/network/members
+[stars-shield]: https://img.shields.io/github/stars/Miniplays-Tickets/dashboard.svg?style=for-the-badge
+[stars-url]: https://github.com/Miniplays-Tickets/dashboard/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Miniplays-Tickets/dashboard.svg?style=for-the-badge
+[issues-url]: https://github.com/Miniplays-Tickets/dashboard/issues
+[license-shield]: https://img.shields.io/github/license/Miniplays-Tickets/dashboard.svg?style=for-the-badge
+[license-url]: https://github.com/Miniplays-Tickets/dashboard/blob/master/LICENSE.txt
 
 [Golang]: https://img.shields.io/badge/Go-%2300ADD8?style=for-the-badge&logo=go&logoColor=white
 [Golang-url]: https://go.dev/

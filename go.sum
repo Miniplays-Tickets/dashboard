@@ -44,6 +44,8 @@ github.com/Dev-Miniplays/Tickets-Worker v0.0.0-20250118213159-9f8ea705f203/go.mo
 github.com/Dev-Miniplays/Ticketsv2-worker v0.0.0-20250306234801-8889064d0484 h1:+qanHiOj7uy5UVh15/6MvKF0s2nX1/2elXlQuBTPpuQ=
 github.com/Dev-Miniplays/Ticketsv2-worker v0.0.0-20250306234801-8889064d0484/go.mod h1:S92Eeckdn60RODjNeFJY2bKibQHwoGZH1AwSdEUahrE=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
+github.com/Miniplays-Tickets/worker v0.0.0-20250516184158-e02eb984e5df h1:fW9+RCAE8NAbBkEpsE3CK7mVlLm1usl5H6x4WyqZLr8=
+github.com/Miniplays-Tickets/worker v0.0.0-20250516184158-e02eb984e5df/go.mod h1:pRpwq7Cecc7hvu3VQ8BAvFv9DsCI0twvY5AOeaNAZ4Y=
 github.com/ReneKroon/ttlcache v1.6.0/go.mod h1:DG6nbhXKUQhrExfwwLuZUdH7UnRDDRA1IW+nBuCssvs=
 github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70 h1:bkTKXS4RRLTOC2UbqRnYObI7uGfyW64mo7dYxx8HN+w=
 github.com/TicketsBot-cloud/archiverclient v0.0.0-20250206203822-d4f91573ad70/go.mod h1:BtS3JYHIuRStuUm909E7IDAwg7aAuiS5CNfIH5Y+Ayw=

@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
+	"github.com/Miniplays-Tickets/dashboard/app"
+	"github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/user"
 )

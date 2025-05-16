@@ -3,6 +3,7 @@ package types
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/rxdn/gdl/objects"
 	"github.com/rxdn/gdl/objects/guild/emoji"
 )

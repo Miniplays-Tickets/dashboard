@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/redis"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis_rate/v9"
 )

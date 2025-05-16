@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
+	"github.com/Miniplays-Tickets/dashboard/config"
 	"github.com/go-redis/redis/v8"
 )
 

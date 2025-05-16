@@ -3,7 +3,7 @@ package cache
 import (
 	"context"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
+	"github.com/Miniplays-Tickets/dashboard/config"
 	"github.com/jackc/pgx/v4/pgxpool"
 	gdlcache "github.com/rxdn/gdl/cache"
 )

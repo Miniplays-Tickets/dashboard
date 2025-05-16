@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	wrapper "github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
+	wrapper "github.com/Miniplays-Tickets/dashboard/redis"
 	"github.com/go-redis/redis/v8"
 )
 
