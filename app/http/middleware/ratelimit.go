@@ -58,7 +58,7 @@ func CreateRateLimiter(rlType RateLimitType, max int, period time.Duration) gin.
 		ctx.Header("X-RateLimit-Reset-After", strconv.FormatInt(res.ResetAfter.Milliseconds(), 10))
 
 		if res.Allowed <= 0 {
-			ctx.AbortWithStatusJSON(429, utils.ErrorStr("You are being ratelimited"))
+			ctx.AbortWithStatusJSON(429, utils.ErrorStr("Du wirst aktuell Ratelimited"))
 			return
 		}
 
