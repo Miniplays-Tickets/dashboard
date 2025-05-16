@@ -33,7 +33,7 @@ func GetTicket(c *gin.Context) {
 
 	ticketId, err := strconv.Atoi(c.Param("ticketId"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, utils.ErrorStr("Invalid ticket ID"))
+		c.JSON(http.StatusBadRequest, utils.ErrorStr("Ungültige Ticket ID"))
 		return
 	}
 
@@ -45,12 +45,12 @@ func GetTicket(c *gin.Context) {
 	}
 
 	if ticket.GuildId != guildId {
-		c.JSON(http.StatusForbidden, utils.ErrorStr("Ticket does not belong to guild"))
+		c.JSON(http.StatusForbidden, utils.ErrorStr("Ticket gehört nicht zur Guild"))
 		return
 	}
 
 	if !ticket.Open {
-		c.JSON(http.StatusNotFound, utils.ErrorStr("Ticket is closed"))
+		c.JSON(http.StatusNotFound, utils.ErrorStr("Ticket ist geschlossen"))
 		return
 	}
 
@@ -62,12 +62,12 @@ func GetTicket(c *gin.Context) {
 	}
 
 	if !hasPermission {
-		c.JSON(http.StatusForbidden, utils.ErrorStr("You do not have permission to view this ticket"))
+		c.JSON(http.StatusForbidden, utils.ErrorStr("Du hast keine Berechtigungen dir dieses Transscript anzuschauen"))
 		return
 	}
 
 	if ticket.ChannelId == nil {
-		c.JSON(http.StatusNotFound, utils.ErrorStr("Ticket channel not found"))
+		c.JSON(http.StatusNotFound, utils.ErrorStr("Ticket Channel nicht gefunden"))
 		return
 	}
 
