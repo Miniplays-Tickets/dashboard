@@ -26,6 +26,10 @@
         <NavElement icon="fas fa-ticket-alt" link="/manage/{guildId}/tickets" on:click={closeDropdown}>Tickets</NavElement>
         <NavElement icon="fas fa-ban" link="/manage/{guildId}/blacklist" on:click={closeDropdown}>Blacklist</NavElement>
         <NavElement icon="fas fa-tags" link="/manage/{guildId}/tags" on:click={closeDropdown}>Tags</NavElement>
+
+        {#if isAdmin}
+          <NavElement icon="fas fa-users" link="/manage/{guildId}/staffoverride" on:click={closeDropdown}>Suppprt Zugriff</NavElement>
+        {/if}
       </div>
     </div>
     <div>
