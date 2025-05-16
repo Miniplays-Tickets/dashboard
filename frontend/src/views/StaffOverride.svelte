@@ -7,7 +7,7 @@
     <div class="main-col">
       <Card footer footerRight>
         <span slot="title">Support Zugriff</span>
-        <div slot="body" class="body-wrapper"
+        <div slot="body" class="body-wrapper">
           Du kannst dem Support Team temporären Zugriff auf das Dashboard des Servers geben, sodass sie dir mit Problemen helfen können. 
           Du kannst diesen Zugriff jederzeit auf dieser Webseite entfernen.
         </div>
