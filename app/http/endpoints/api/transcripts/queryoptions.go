@@ -29,7 +29,7 @@ func (o *wrappedQueryOptions) toQueryOptions(guildId uint64) (database.TicketQue
 
 		// TODO: Do this better
 		if len(userIds) == 0 {
-			return database.TicketQueryOptions{}, errors.New("User not found")
+			return database.TicketQueryOptions{}, errors.New("Benutzer nicht gefunden")
 		}
 	}
 
@@ -62,7 +62,7 @@ func (o *wrappedQueryOptions) toQueryOptions(guildId uint64) (database.TicketQue
 
 func usernameToIds(guildId uint64, username string) ([]uint64, error) {
 	if len(username) > 32 {
-		return nil, errors.New("username too long")
+		return nil, errors.New("Benutzername zu lang")
 	}
 
 	botContext, err := botcontext.ContextForGuild(guildId)
