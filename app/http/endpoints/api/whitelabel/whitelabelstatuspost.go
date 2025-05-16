@@ -29,20 +29,20 @@ func WhitelabelStatusPost(c *gin.Context) {
 
 	// Ensure bot exists
 	if bot.BotId == 0 {
-		c.JSON(404, utils.ErrorStr("No bot found"))
+		c.JSON(404, utils.ErrorStr("Kein Bot gefunden"))
 		return
 	}
 
 	// Parse status
 	var data statusUpdateBody
 	if err := c.BindJSON(&data); err != nil {
-		c.JSON(400, utils.ErrorStr("Invalid request body"))
+		c.JSON(400, utils.ErrorStr("Fehler 11"))
 		return
 	}
 
 	// Validate status length
 	if len(data.Status) == 0 || len(data.Status) > 255 {
-		c.JSON(400, utils.ErrorStr("Status must be between 1-255 characters in length"))
+		c.JSON(400, utils.ErrorStr("Status muss zwischen 1-255 Zeichen lang sein"))
 		return
 	}
 
@@ -54,7 +54,7 @@ func WhitelabelStatusPost(c *gin.Context) {
 	}
 
 	if !utils.Contains(validActivities, data.StatusType) {
-		c.JSON(400, utils.ErrorStr("Invalid status type"))
+		c.JSON(400, utils.ErrorStr("Ungültiger Status Typ"))
 		return
 	}
 
