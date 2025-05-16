@@ -62,7 +62,7 @@ func ListSelfTranscripts(ctx *gin.Context) {
 				if err == nil {
 					guildName = guild.Name
 				} else if errors.Is(err, cache2.ErrNotFound) {
-					guildName = "Unbekannter Server
+					guildName = "Unbekannter Server"
 				} else {
 					return err
 				}
