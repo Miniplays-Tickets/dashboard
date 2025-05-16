@@ -34,7 +34,7 @@ func ErrorHandler(c *gin.Context) {
 		if errors.As(c.Errors[0], &apiError) {
 			message = apiError.ExternalMessage
 		} else {
-			message = "An error occurred processing your request"
+			message = "Ein Fehler beim bearbeiten deiner Anfrage ist aufgetreten"
 		}
 
 		c.Writer = cw.ResponseWriter
@@ -49,7 +49,7 @@ func ErrorHandler(c *gin.Context) {
 		c.Writer = cw.ResponseWriter
 
 		c.JSON(-1, ErrorResponse{
-			Error: "An internal server error occurred",
+			Error: "Ein interner Serverfehler ist aufgetreten",
 		})
 
 		return
