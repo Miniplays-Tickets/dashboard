@@ -51,7 +51,7 @@ func AuthenticateGuild(requiredPermissionLevel permission.PermissionLevel) gin.H
 			}
 
 			if permLevel < requiredPermissionLevel {
-				ctx.JSON(403, utils.ErrorStr("Keine Berechtigung"))
+				ctx.JSON(403, utils.ErrorStr("Keine Berechtigungen"))
 				ctx.Abort()
 				return
 			}
