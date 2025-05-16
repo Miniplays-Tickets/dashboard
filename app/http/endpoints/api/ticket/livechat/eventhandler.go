@@ -23,7 +23,7 @@ func (c *Client) HandleEvent(event Event) error {
 	case EventTypeAuth:
 		var data AuthData
 		if err := json.Unmarshal(event.Data, &data); err != nil {
-			c.Write(NewErrorMessage("Malformed event payload"))
+			c.Write(NewErrorMessage("Fehler 14"))
 			_ = c.Ws.Close()
 			c.Flush()
 			return err
@@ -39,49 +39,49 @@ func (c *Client) HandleEvent(event Event) error {
 
 func (c *Client) handleAuthEvent(data AuthData) error {
 	if c.Authenticated {
-		return api.NewErrorWithMessage(http.StatusBadRequest, errors.New("Already authenticated"), "Already authenticated")
+		return api.NewErrorWithMessage(http.StatusBadRequest, errors.New("Bereits Authentifiziert"), "Bereits Authentifiziert")
 	}
 
 	token, err := jwt.Parse(data.Token, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+			return nil, fmt.Errorf("Fehler 15: %v", token.Header["alg"])
 		}
 
 		return []byte(config.Conf.Server.Secret), nil
 	})
 	if err != nil {
-		return api.NewErrorWithMessage(http.StatusUnauthorized, err, "Invalid token")
+		return api.NewErrorWithMessage(http.StatusUnauthorized, err, "Fehler 16")
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
-		return api.NewErrorWithMessage(http.StatusUnauthorized, err, "Invalid token data")
+		return api.NewErrorWithMessage(http.StatusUnauthorized, err, "Fehler 17")
 	}
 
 	userIdStr, ok := claims["userid"].(string)
 	if !ok {
-		return api.NewErrorWithMessage(http.StatusUnauthorized, err, "Invalid token data")
+		return api.NewErrorWithMessage(http.StatusUnauthorized, err, "Fehler 18")
 	}
 
 	userId, err := strconv.ParseUint(userIdStr, 10, 64)
 	if err != nil {
-		return api.NewErrorWithMessage(http.StatusUnauthorized, err, "Invalid token data")
+		return api.NewErrorWithMessage(http.StatusUnauthorized, err, "Fehler 19")
 	}
 
 	// Get the ticket
 	ticket, err := dbclient.Client.Tickets.Get(context.Background(), c.TicketId, c.GuildId)
 	if err != nil {
-		return api.NewErrorWithMessage(http.StatusInternalServerError, err, "Error retrieving ticket data")
+		return api.NewErrorWithMessage(http.StatusInternalServerError, err, "Fehler beim abrufen der Ticket Daten")
 	}
 
 	if ticket.Id == 0 || ticket.GuildId == 0 || ticket.GuildId != c.GuildId {
-		return api.NewErrorWithMessage(http.StatusNotFound, err, "Ticket not found")
+		return api.NewErrorWithMessage(http.StatusNotFound, err, "Ticket nicht gefunden")
 	}
 
 	// Verify the user has permissions to be here
 	hasPermission, requestErr := utils.HasPermissionToViewTicket(context.Background(), c.GuildId, userId, ticket)
 	if requestErr != nil {
-		return api.NewErrorWithMessage(http.StatusInternalServerError, err, "Error retrieving permission data")
+		return api.NewErrorWithMessage(http.StatusInternalServerError, err, "Fehler beim abrufen von Berechtigungen")
 	}
 
 	if !hasPermission {
@@ -91,17 +91,17 @@ func (c *Client) handleAuthEvent(data AuthData) error {
 	// Check premium
 	botContext, err := botcontext.ContextForGuild(c.GuildId)
 	if err != nil {
-		return api.NewErrorWithMessage(http.StatusInternalServerError, err, "Error retrieving bot context")
+		return api.NewErrorWithMessage(http.StatusInternalServerError, err, "Fehler beim abrufen vom Bot context")
 	}
 
 	// Verify the guild is premium
 	premiumTier, err := rpc.PremiumClient.GetTierByGuildId(context.Background(), c.GuildId, true, botContext.Token, botContext.RateLimiter)
 	if err != nil {
-		return api.NewErrorWithMessage(http.StatusInternalServerError, err, "Error retrieving premium tier")
+		return api.NewErrorWithMessage(http.StatusInternalServerError, err, "Fehler beim abrufen vom Premium Tier")
 	}
 
 	if premiumTier == premium.None {
-		return api.NewErrorWithMessage(http.StatusPaymentRequired, err, "Live-chat requires premium to use")
+		return api.NewErrorWithMessage(http.StatusPaymentRequired, err, "Live-chat benötigt Premium")
 	}
 
 	c.Authenticated = true
