@@ -66,7 +66,7 @@ func (c *Client) StartReadLoop() error {
 		}
 
 		if !c.Authenticated && event.Type != EventTypeAuth {
-			if err := c.Ws.WriteJSON(NewErrorMessage("Unauthorized")); err != nil {
+			if err := c.Ws.WriteJSON(NewErrorMessage("Nicht Authentifiziert")); err != nil {
 				return err
 			}
 
