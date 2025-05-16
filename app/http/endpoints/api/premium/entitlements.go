@@ -3,9 +3,9 @@ package api
 import (
 	"net/http"
 
-	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils/types"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/utils/types"
 	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v4"

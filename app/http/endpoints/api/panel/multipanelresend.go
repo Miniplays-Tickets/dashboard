@@ -5,10 +5,10 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
-	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	dbclient "github.com/Miniplays-Tickets/dashboardase"
+	"github.com/Miniplays-Tickets/dashboard
+	"github.com/Miniplays-Tickets/dashboard"
 	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/rest"

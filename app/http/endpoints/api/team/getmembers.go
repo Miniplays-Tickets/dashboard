@@ -6,9 +6,9 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
-	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	syncutils "github.com/TicketsBot-cloud/common/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/user"

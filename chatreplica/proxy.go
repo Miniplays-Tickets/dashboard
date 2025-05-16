@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
+	"github.com/Miniplays-Tickets/dashboard/config"
 	"github.com/getsentry/sentry-go"
 )
 

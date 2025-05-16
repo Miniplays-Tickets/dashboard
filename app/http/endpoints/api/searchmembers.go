@@ -3,8 +3,8 @@ package api
 import (
 	"context"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/objects/member"
 )

@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/app"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/gin-gonic/gin"
 )
 

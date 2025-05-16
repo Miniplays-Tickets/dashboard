@@ -8,12 +8,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
-	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/s3"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/app"
+	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	"github.com/Miniplays-Tickets/dashboard/config"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/s3"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/common/permission"
 	"github.com/gin-gonic/gin"
 )

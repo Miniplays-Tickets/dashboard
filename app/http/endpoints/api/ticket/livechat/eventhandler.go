@@ -8,12 +8,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
-	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/internal/api"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	"github.com/Miniplays-Tickets/dashboard/config"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/internal/api"
+	"github.com/Miniplays-Tickets/dashboard/rpc"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/golang-jwt/jwt"
 )

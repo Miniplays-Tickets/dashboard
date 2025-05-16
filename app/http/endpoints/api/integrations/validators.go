@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"regexp"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/go-playground/validator/v10"
 )
 

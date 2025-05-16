@@ -3,8 +3,8 @@ package api
 import (
 	"net/http"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/app"
+	"github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/gin-gonic/gin"
 )
 

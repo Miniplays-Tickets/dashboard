@@ -3,7 +3,7 @@ package database
 import (
 	"context"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
+	"github.com/Miniplays-Tickets/dashboard/config"
 	"github.com/TicketsBot-cloud/database"
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgconn/stmtcache"
