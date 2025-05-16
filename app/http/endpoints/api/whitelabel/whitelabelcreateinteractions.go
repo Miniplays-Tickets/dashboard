@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Dev-Miniplays/Ticketsv2-worker/bot/command/manager"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/app"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/app"
+	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	"github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/redis"
+	"github.com/Miniplays-Tickets/dashboard/utils"
+	"github.com/Miniplays-Tickets/worker/bot/command/manager"
 	"github.com/gin-gonic/gin"
 	"github.com/rxdn/gdl/rest"
 )

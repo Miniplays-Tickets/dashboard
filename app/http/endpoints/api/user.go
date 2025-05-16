@@ -4,8 +4,8 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/gin-gonic/gin"
 )
 

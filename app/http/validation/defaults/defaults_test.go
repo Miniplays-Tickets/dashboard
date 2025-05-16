@@ -3,7 +3,7 @@ package defaults
 import (
 	"testing"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/stretchr/testify/assert"
 )
 

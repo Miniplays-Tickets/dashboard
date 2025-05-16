@@ -4,8 +4,8 @@ import (
 	"context"
 	"math"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/botcontext"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils/types"
+	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	"github.com/Miniplays-Tickets/dashboard/utils/types"
 	"github.com/TicketsBot-cloud/database"
 	"github.com/rxdn/gdl/objects/channel/embed"
 	"github.com/rxdn/gdl/objects/interaction/component"

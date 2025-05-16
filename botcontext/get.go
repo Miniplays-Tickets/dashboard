@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
-	dbclient "github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/redis"
+	"github.com/Miniplays-Tickets/dashboard/config"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/redis"
 	"github.com/TicketsBot/common/restcache"
 	"github.com/rxdn/gdl/rest/ratelimit"
 )

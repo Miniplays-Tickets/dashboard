@@ -3,7 +3,7 @@ package utils
 import (
 	"fmt"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/log"
+	"github.com/Miniplays-Tickets/dashboard/log"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )

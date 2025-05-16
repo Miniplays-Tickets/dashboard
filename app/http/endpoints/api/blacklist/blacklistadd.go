@@ -3,9 +3,9 @@ package api
 import (
 	"context"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/database"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/rpc/cache"
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/utils"
+	"github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/common/permission"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"

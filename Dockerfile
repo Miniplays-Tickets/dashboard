@@ -3,8 +3,8 @@ FROM golang:alpine AS builder
 
 RUN apk update && apk upgrade && apk add git zlib-dev gcc musl-dev
 
-COPY . /go/src/github.com/Dev-Miniplays/Ticketsv2-Dashboard
-WORKDIR /go/src/github.com/Dev-Miniplays/Ticketsv2-Dashboard
+COPY . /go/src/github.com/Miniplays-Tickets/dashboard
+WORKDIR /go/src/github.com/Miniplays-Tickets/dashboard
 
 RUN git submodule update --init --recursive --remote
 
@@ -23,8 +23,8 @@ FROM alpine:latest
 
 RUN apk update && apk upgrade && apk add curl
 
-COPY --from=builder /go/src/github.com/Dev-Miniplays/Ticketsv2-Dashboard/locale /srv/dashboard/locale
-COPY --from=builder /go/src/github.com/Dev-Miniplays/Ticketsv2-Dashboard/main /srv/dashboard/main
+COPY --from=builder /go/src/github.com/Miniplays-Tickets/dashboard/locale /srv/dashboard/locale
+COPY --from=builder /go/src/github.com/Miniplays-Tickets/dashboard/main /srv/dashboard/main
 
 RUN chmod +x /srv/dashboard/main
 

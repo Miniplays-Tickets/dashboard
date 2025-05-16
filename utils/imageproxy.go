@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Dev-Miniplays/Ticketsv2-dashboard/config"
+	"github.com/Miniplays-Tickets/dashboard/config"
 	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
 )

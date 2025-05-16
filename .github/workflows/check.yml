@@ -1,0 +1,29 @@
+name: Check
+
+env:
+  REGISTRY: ghcr.io
+  PACKAGE_NAME: dashboard
+  GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+  GITHUB_SHA: ${{ github.sha }}
+
+on:
+  pull_request:
+    branches: 
+      - "master"
+      - "beta"
+
+jobs:
+  check-image:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
