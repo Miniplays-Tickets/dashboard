@@ -108,7 +108,7 @@ func LoadAllGuilds(ctx context.Context, accessToken string, userId uint64) ([]Gu
 		return nil, err
 	}
 
-	userGuilds, err := getGuildAllIntersection(ctx, userId, guilds)
+	userGuilds, err := getGuildAllIntersection(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -184,20 +184,13 @@ func getGuildIntersection(ctx context.Context, userId uint64, userGuilds []guild
 		return nil, err
 	}
 
-	intersection := make([]guild.Guild, 0, len(botGuilds))
-	store := ratelimit.NewMemoryStore()
-	rl := ratelimit.NewRateLimiter(store, 1000)
 	botGuildIds := collections.NewSet[uint64]()
 	for _, guildId := range botGuilds {
-		guild, err := rest.GetGuild(ctx, "Bot "+config.Conf.Bot.Token, rl, guildId)
-		if err != nil {
-			continue
-		}
-
-		intersection = append(intersection, guild)
+		botGuildIds.Add(guildId)
 	}
 
 	// Get the intersection of the two sets
+	intersection := make([]guild.Guild, 0, len(botGuilds))
 	for _, guild := range userGuilds {
 		if botGuildIds.Contains(guild.Id) {
 			intersection = append(intersection, guild)
@@ -207,26 +200,21 @@ func getGuildIntersection(ctx context.Context, userId uint64, userGuilds []guild
 	return intersection, nil
 }
 
-func getGuildAllIntersection(ctx context.Context, userId uint64, userGuilds []guild.Guild) ([]guild.Guild, error) {
-	guildIds := make([]uint64, len(userGuilds))
-	for i, guild := range userGuilds {
-		guildIds[i] = guild.Id
-	}
-
-	// Restrict the set of guilds to guilds that the bot is also in
-	botGuilds, err := getExistingGuilds(ctx, guildIds)
+func getGuildAllIntersection(ctx context.Context) ([]guild.Guild, error) {
+	botGuilds, err := getAllExistingGuilds(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	botGuildIds := collections.NewSet[uint64]()
-	for _, guildId := range botGuilds {
-		botGuildIds.Add(guildId)
-	}
-
-	// Get the intersection of the two sets
 	intersection := make([]guild.Guild, 0, len(botGuilds))
-	for _, guild := range userGuilds {
+	store := ratelimit.NewMemoryStore()
+	rl := ratelimit.NewRateLimiter(store, 1000)
+	for _, guildId := range botGuilds {
+		guild, err := rest.GetGuild(ctx, "Bot "+config.Conf.Bot.Token, rl, guildId)
+		if err != nil {
+			continue
+		}
+
 		intersection = append(intersection, guild)
 	}
 
@@ -242,6 +230,29 @@ func getExistingGuilds(ctx context.Context, userGuilds []uint64) ([]uint64, erro
 	}
 
 	rows, err := cache.Instance.Query(ctx, query, userGuildsArray)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var existingGuilds []uint64
+	for rows.Next() {
+		var guildId uint64
+		if err := rows.Scan(&guildId); err != nil {
+			return nil, err
+		}
+
+		existingGuilds = append(existingGuilds, guildId)
+	}
+
+	return existingGuilds, nil
+}
+
+func getAllExistingGuilds(ctx context.Context) ([]uint64, error) {
+	query := `SELECT "guild_id" from guilds WHERE "guild_id" = ANY($1);`
+
+	rows, err := cache.Instance.Query(ctx, query)
 	if err != nil {
 		return nil, err
 	}
