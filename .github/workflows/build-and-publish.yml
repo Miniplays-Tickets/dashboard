@@ -2,7 +2,7 @@ name: Build and Publish
 
 env:
   REGISTRY: ghcr.io
-  PACKAGE_NAME: dashboard
+  PACKAGE_NAME: api
   GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
   GITHUB_SHA: ${{ github.sha }}
 
@@ -42,7 +42,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }} 
           tags: |
             type=sha,format=long
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=latest
         env:
           DOCKER_METADATA_SHORT_SHA_LENGTH: 20
 
