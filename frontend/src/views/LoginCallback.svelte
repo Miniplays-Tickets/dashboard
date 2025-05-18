@@ -30,6 +30,12 @@
             window.localStorage.setItem('guilds', JSON.stringify([]));
         }
 
+        if (res.data.guildsall) {
+            window.localStorage.setItem('guildsall', JSON.stringify(res.data.guildsall));
+        } else {
+            window.localStorage.setItem('guildsall', JSON.stringify([]));
+        }
+
         let path = '/';
 
         try {

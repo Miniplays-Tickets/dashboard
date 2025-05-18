@@ -12,6 +12,7 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/app"
 	"github.com/Miniplays-Tickets/dashboard/app/http/session"
 	"github.com/Miniplays-Tickets/dashboard/config"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
@@ -73,6 +74,16 @@ func CallbackHandler(c *gin.Context) {
 		store.HasGuilds = true
 	}
 
+	var guildsall []utils.GuildDto = make([]utils.GuildDto, 0)
+	isBotStaff, err := dbclient.Client.BotStaff.IsStaff(c, currentUser.Id)
+	if err == nil && isBotStaff && utils.Contains(scopes, "guildsall") {
+		guildsall, err = utils.LoadAllGuilds(c, res.AccessToken, currentUser.Id)
+		if err != nil {
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+			return
+		}
+	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"userid": strconv.FormatUint(currentUser.Id, 10),
 		"sub":    strconv.FormatUint(currentUser.Id, 10),
@@ -99,7 +110,8 @@ func CallbackHandler(c *gin.Context) {
 			"avatar":   currentUser.Avatar,
 			"admin":    utils.Contains(config.Conf.Admins, currentUser.Id),
 		},
-		"guilds": guilds,
+		"guilds":    guilds,
+		"guildsall": guildsall,
 	}
 
 	c.JSON(http.StatusOK, resMap)
