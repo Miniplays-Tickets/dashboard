@@ -250,7 +250,7 @@ func getExistingGuilds(ctx context.Context, userGuilds []uint64) ([]uint64, erro
 }
 
 func getAllExistingGuilds(ctx context.Context) ([]uint64, error) {
-	query := `SELECT "guild_id" from guilds WHERE "guild_id" = ANY($1);`
+	query := `SELECT "guild_id" from guilds;`
 
 	rows, err := cache.Instance.Query(ctx, query)
 	if err != nil {
