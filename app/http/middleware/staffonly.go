@@ -10,22 +10,13 @@ import (
 func StaffOnly(ctx *gin.Context) {
 	userId := ctx.Keys["userid"].(uint64)
 
-	isBotStaff, err := dbclient.Client.BotStaff.IsStaff(ctx, userId)
-	if err != nil {
-		ctx.JSON(401, utils.ErrorStr("Keine Berechtigungen"))
-		ctx.Abort()
+	isBotStaff, _ := dbclient.Client.BotStaff.IsStaff(ctx, userId)
+
+	if isBotStaff || utils.Contains(config.Conf.Admins, userId) {
 		return
 	}
 
-	if !isBotStaff {
-		ctx.JSON(401, utils.ErrorStr("Keine Berechtigungen"))
-		ctx.Abort()
-		return
-	}
-
-	if !utils.Contains(config.Conf.Admins, userId) {
-		ctx.JSON(401, utils.ErrorStr("Keine Berechtigungen"))
-		ctx.Abort()
-		return
-	}
+	ctx.JSON(401, utils.ErrorStr("Keine Berechtigungen"))
+	ctx.Abort()
+	return
 }
