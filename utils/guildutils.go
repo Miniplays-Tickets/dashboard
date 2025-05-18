@@ -7,6 +7,7 @@ import (
 	"slices"
 	"sync"
 
+	"github.com/Miniplays-Tickets/dashboard/config"
 	dbclient "github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
 	"github.com/TicketsBot-cloud/common/collections"
@@ -15,6 +16,7 @@ import (
 	"github.com/jackc/pgtype"
 	"github.com/rxdn/gdl/objects/guild"
 	"github.com/rxdn/gdl/rest"
+	"github.com/rxdn/gdl/rest/ratelimit"
 	errgroup "golang.org/x/sync/errgroup"
 )
 
@@ -182,13 +184,20 @@ func getGuildIntersection(ctx context.Context, userId uint64, userGuilds []guild
 		return nil, err
 	}
 
+	intersection := make([]guild.Guild, 0, len(botGuilds))
+	store := ratelimit.NewMemoryStore()
+	rl := ratelimit.NewRateLimiter(store, 1000)
 	botGuildIds := collections.NewSet[uint64]()
 	for _, guildId := range botGuilds {
-		botGuildIds.Add(guildId)
+		guild, err := rest.GetGuild(ctx, "Bot "+config.Conf.Bot.Token, rl, guildId)
+		if err != nil {
+			continue
+		}
+
+		intersection = append(intersection, guild)
 	}
 
 	// Get the intersection of the two sets
-	intersection := make([]guild.Guild, 0, len(botGuilds))
 	for _, guild := range userGuilds {
 		if botGuildIds.Contains(guild.Id) {
 			intersection = append(intersection, guild)
