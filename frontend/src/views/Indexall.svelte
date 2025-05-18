@@ -9,7 +9,7 @@
         <div id="guild-container">
           <InviteBadge/>
 
-          {#each guilds as guild}
+          {#each guildsall as guild}
             <Guild guild={guild}/>
           {/each}
         </div>
