@@ -198,9 +198,11 @@ func StartServer(logger *zap.Logger, sm *livechat.SocketManager) {
 		guildAuthApiAdmin.DELETE("/integrations/:integrationid", api_integrations.RemoveIntegrationHandler)
 	}
 
+	userGroupAdmin := apiGroup.Group("/user", middleware.AuthenticateToken, middleware.UpdateLastSeen, middleware.AuthenticateGuild(permission.Admin))
 	userGroup := router.Group("/user", middleware.AuthenticateToken, middleware.UpdateLastSeen)
 	{
 		userGroup.POST("/guilds/reload", api.ReloadGuildsHandler)
+		userGroupAdmin.POST("/guilds/reloadall", api.ReloadAllGuildsHandler)
 		userGroup.GET("/permissionlevel", api.GetPermissionLevel)
 
 		{

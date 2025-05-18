@@ -90,6 +90,66 @@ func LoadGuilds(ctx context.Context, accessToken string, userId uint64) ([]Guild
 	return dtos, nil
 }
 
+func LoadAllGuilds(ctx context.Context, accessToken string, userId uint64) ([]GuildDto, error) {
+	authHeader := fmt.Sprintf("Bearer %s", accessToken)
+
+	data := rest.CurrentUserGuildsData{
+		Limit: 200,
+	}
+
+	guilds, err := rest.GetCurrentUserGuilds(ctx, authHeader, nil, data)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := storeGuildsInDb(ctx, userId, guilds); err != nil {
+		return nil, err
+	}
+
+	userGuilds, err := getGuildAllIntersection(ctx, userId, guilds)
+	if err != nil {
+		return nil, err
+	}
+
+	group, ctx := errgroup.WithContext(ctx)
+
+	var mu sync.Mutex
+	dtos := make([]GuildDto, 0, len(userGuilds))
+	for _, guild := range userGuilds {
+		guild := guild
+
+		group.Go(func() error {
+			mu.Lock()
+			dtos = append(dtos, GuildDto{
+				Id:              guild.Id,
+				Name:            guild.Name,
+				Icon:            guild.Icon,
+				PermissionLevel: permission.Admin,
+			})
+			mu.Unlock()
+
+			return nil
+		})
+	}
+
+	if err := group.Wait(); err != nil {
+		return nil, err
+	}
+
+	// Sort the guilds by name, but put the guilds with permission_level=0 last
+	slices.SortFunc(dtos, func(a, b GuildDto) int {
+		if a.PermissionLevel == 0 && b.PermissionLevel > 0 {
+			return 1
+		} else if a.PermissionLevel > 0 && b.PermissionLevel == 0 {
+			return -1
+		}
+
+		return cmp.Compare(a.Name, b.Name)
+	})
+
+	return dtos, nil
+}
+
 // TODO: Remove this function!
 func storeGuildsInDb(ctx context.Context, userId uint64, guilds []guild.Guild) error {
 	var wrappedGuilds []database.UserGuild
@@ -133,6 +193,32 @@ func getGuildIntersection(ctx context.Context, userId uint64, userGuilds []guild
 		if botGuildIds.Contains(guild.Id) {
 			intersection = append(intersection, guild)
 		}
+	}
+
+	return intersection, nil
+}
+
+func getGuildAllIntersection(ctx context.Context, userId uint64, userGuilds []guild.Guild) ([]guild.Guild, error) {
+	guildIds := make([]uint64, len(userGuilds))
+	for i, guild := range userGuilds {
+		guildIds[i] = guild.Id
+	}
+
+	// Restrict the set of guilds to guilds that the bot is also in
+	botGuilds, err := getExistingGuilds(ctx, guildIds)
+	if err != nil {
+		return nil, err
+	}
+
+	botGuildIds := collections.NewSet[uint64]()
+	for _, guildId := range botGuilds {
+		botGuildIds.Add(guildId)
+	}
+
+	// Get the intersection of the two sets
+	intersection := make([]guild.Guild, 0, len(botGuilds))
+	for _, guild := range userGuilds {
+		intersection = append(intersection, guild)
 	}
 
 	return intersection, nil

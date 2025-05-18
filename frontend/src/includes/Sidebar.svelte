@@ -20,9 +20,17 @@
       <Navigate to="/" styles="sidebar-link">
         <div class="sidebar-element">
           <i class="fas fa-server sidebar-icon"></i>
-          <span class="sidebar-text">Servers</span>
+          <span class="sidebar-text">Serverübersicht</span>
         </div>
       </Navigate>
+      {#if userData.admin}
+        <Navigate to="/allservers" styles="sidebar-link">
+          <div class="sidebar-element">
+            <i class="fas fa-server sidebar-icon"></i>
+            <span class="sidebar-text">Admin Serverübersicht</span>
+          </div>
+        </Navigate>
+      {/if}
       <Navigate to="/whitelabel" styles="sidebar-link">
         <div class="sidebar-element">
           <i class="fas fa-edit sidebar-icon"></i>
