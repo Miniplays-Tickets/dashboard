@@ -3,6 +3,7 @@ package utils
 import (
 	"cmp"
 	"context"
+	"database/sql"
 	"fmt"
 	"slices"
 	"sync"
@@ -209,6 +210,31 @@ func getGuildAllIntersection(ctx context.Context) ([]guild.Guild, error) {
 	intersection := make([]guild.Guild, 0, len(botGuilds))
 	store := ratelimit.NewMemoryStore()
 	rl := ratelimit.NewRateLimiter(store, 1000)
+
+	db, err := sql.Open("postgres", config.Conf.Database.Uri)
+	if err == nil {
+		defer db.Close()
+		if err = db.Ping(); err == nil {
+			rows, err := db.Query("SELECT token FROM public.whitelabel")
+			if err == nil {
+				defer rows.Close()
+				for rows.Next() {
+					var token string
+					if err := rows.Scan(&token); err == nil {
+						for _, guildId := range botGuilds {
+							guild, err := rest.GetGuild(ctx, "Bot "+token, rl, guildId)
+							if err != nil {
+								continue
+							}
+
+							intersection = append(intersection, guild)
+						}
+					}
+				}
+			}
+		}
+	}
+
 	for _, guildId := range botGuilds {
 		guild, err := rest.GetGuild(ctx, "Bot "+config.Conf.Bot.Token, rl, guildId)
 		if err != nil {
