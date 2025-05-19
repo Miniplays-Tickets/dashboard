@@ -4,6 +4,7 @@ import (
 	"cmp"
 	"context"
 	"database/sql"
+	_ "github.com/lib/pq"
 	"fmt"
 	"slices"
 	"sync"
