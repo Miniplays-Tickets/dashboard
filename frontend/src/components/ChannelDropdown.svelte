@@ -21,7 +21,7 @@
     export let disabled = false;
     export let channels = [];
     export let withNull = false;
-    export let nullLabel = "Disabled";
+    export let nullLabel = "Deaktiviert";
     export let allowAnnouncementChannel = false;
 
     $: value, ensureStringified();
