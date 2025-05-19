@@ -2,7 +2,7 @@
   <div class="card-wrapper">
     <Card footer={false} fill={false}>
       <span slot="title">
-        Server
+        Admin Serverübersicht
       </span>
 
       <div slot="body" style="width: 100%">

@@ -230,18 +230,10 @@ func getGuildAllIntersection(ctx context.Context) ([]guild.Guild, error) {
 
 							intersection = append(intersection, guild)
 						}
-					} else {
-						return nil, err
 					}
 				}
-			} else {
-				return nil, err
 			}
-		} else {
-			return nil, err
 		}
-	} else {
-		return nil, err
 	}
 
 	for _, guildId := range botGuilds {
