@@ -277,12 +277,12 @@
     }
 
     function updateTeamsItems() {
-        teamsWithDefault = [{id: 'default', name: 'Default'}, ...teams];
+        teamsWithDefault = [{id: 'default', name: 'Standart'}, ...teams];
     }
 
     function applyOverrides() {
         if (data.default_team === true) {
-            $: selectedTeams.push({id: 'default', name: 'Default'});
+            $: selectedTeams.push({id: 'default', name: 'Standart'});
         }
 
         if (data.teams) {
@@ -334,7 +334,7 @@
                   colour: '#2ECC71',
                   author: {},
                   footer: {},
-                  description: 'Thank you for contacting support.\nPlease describe your issue and wait for a response.'
+                  description: 'Danke fürs öffnen eines Tickets, bitte Beschreibe dein Problem, damit dir geholfen werden kann'
               },
               access_control_list: [
                 {

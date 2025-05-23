@@ -73,7 +73,7 @@
             </div>
             <div class="row">
               <div class="col-1-flex">
-              <Textarea label="Willkommensnachricht" placeholder="Danke fürs öffnen eines Tickets" col1 bind:value={data.welcome_message}/>
+              <Textarea label="Willkommensnachricht" placeholder="Danke fürs öffnen eines Tickets, bitte Beschreibe dein Problem, damit dir geholfen werden kann" col1 bind:value={data.welcome_message}/>
               </div>
             </div>
           </div>
