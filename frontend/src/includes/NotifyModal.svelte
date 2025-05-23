@@ -8,7 +8,7 @@
 
         <div slot="footer">
           <Button on:click={closeNotificationModal}>
-            Close
+            Schließen
           </Button>
         </div>
       </Card>
