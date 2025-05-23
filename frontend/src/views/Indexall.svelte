@@ -7,8 +7,6 @@
 
       <div slot="body" style="width: 100%">
         <div id="guild-container">
-          <InviteBadge/>
-
           {#each guildsall as guild}
             <Guild guild={guild}/>
           {/each}
