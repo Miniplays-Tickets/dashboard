@@ -8,7 +8,7 @@
             <div>
                 <label class="form-label">Zeilen zum Anzeigen</label>
                 <ColumnSelector
-                    options={["ID", "Panel", "User", "Opened Time", "Claimed By", "Last Message Time", "Awaiting Response"]}
+                    options={["ID", "Panel", "Benutzer", "Öffnungszeit", "Beansprucht von", "Letzte Nachricht", "Wartet auf Antwort"]}
                     bind:selected={selectedColumns}
                 />
             </div>
@@ -31,11 +31,11 @@
                 <tr>
                     <th class:visible={selectedColumns.includes('ID')}>ID</th>
                     <th class:visible={selectedColumns.includes('Panel')}>Panel</th>
-                    <th class:visible={selectedColumns.includes('User')}>Benuter</th>
-                    <th class:visible={selectedColumns.includes('Opened Time')}>Geöffnet</th>
-                    <th class:visible={selectedColumns.includes('Claimed By')}>Beansprucht von</th>
-                    <th class:visible={selectedColumns.includes('Last Message Time')}>Letzte Nachricht</th>
-                    <th class:visible={selectedColumns.includes('Awaiting Response')}>Wartet auf Antwort</th>
+                    <th class:visible={selectedColumns.includes('Benutzer')}>Benuter</th>
+                    <th class:visible={selectedColumns.includes('Öffnungszeit')}>Öffnungszeit</th>
+                    <th class:visible={selectedColumns.includes('Beansprucht von')}>Beansprucht von</th>
+                    <th class:visible={selectedColumns.includes('Letzte Nachricht')}>Letzte Nachricht</th>
+                    <th class:visible={selectedColumns.includes('Wartet auf Antwort')}>Wartet auf Antwort</th>
                     <th class="visible">Anzeigen</th>
                 </tr>
                 </thead>
@@ -51,7 +51,7 @@
                             {panel_title || 'Unbekanntes Panel'}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('User')}>
+                        <td class:visible={selectedColumns.includes('Benutzer')}>
                             {#if user}
                                 {user.global_name || user.username}
                             {:else}
@@ -59,11 +59,11 @@
                             {/if}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('Opened Time')}>
+                        <td class:visible={selectedColumns.includes('Öffnungszeit')}>
                             {getRelativeTime(new Date(ticket.opened_at))}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('Claimed By')}>
+                        <td class:visible={selectedColumns.includes('Beansprucht von')}>
                             {#if ticket.claimed_by === null}
                                 <b>Nicht Beansprucht</b>
                             {:else if claimer}
@@ -73,7 +73,7 @@
                             {/if}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('Last Message Time')}>
+                        <td class:visible={selectedColumns.includes('Letzte Nachricht')}>
                             {#if ticket.last_response_time}
                                 {getRelativeTime(new Date(ticket.last_response_time))}
                             {:else}
@@ -81,7 +81,7 @@
                             {/if}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('Awaiting Response')}>
+                        <td class:visible={selectedColumns.includes('Wartet auf Antwort')}>
                             {#if ticket.last_response_is_staff}
                                 Nein
                             {:else}
