@@ -203,7 +203,7 @@
 <style>
     .wrapper {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         height: 100%;
         width: 100%;
         gap: 2%;
@@ -213,7 +213,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 50%;
+        width: 100%;
     }
 
     .row {
@@ -241,22 +241,6 @@
 
     .card-body.panels > .controls {
         justify-content: space-between;
-    }
-
-    @media only screen and (max-width: 1400px) {
-        .wrapper {
-            flex-direction: column;
-        }
-
-        .col {
-            width: 100%;
-        }
-    }
-
-    @media only screen and (max-width: 576px) {
-        .row {
-            width: 100%;
-        }
     }
 
     table {
