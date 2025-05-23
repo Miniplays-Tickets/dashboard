@@ -1,16 +1,16 @@
 {#if data}
   <ConfirmationModal icon="fas fa-floppy-disk" on:confirm={() => dispatch("confirm", data)} on:cancel={() => dispatch("cancel", {})}>
-    <span slot="title">Tag Bearbeiter</span>
+    <span slot="title">Tag Bearbeitern</span>
     <div slot="body" class="body-wrapper">
       <div class="row">
         <Input col4 label="Tag ID" placeholder="docs" bind:value={data.id}
                tooltipText='Wenn der Befehl "/tag docs" ist, dann ist die ID "docs"'/>
-        <Checkbox col2 label="Eigener Command Alias erstellen" bind:value={data.use_guild_command}
+        <Checkbox col2 label="Eigenen Command Alias erstellen" bind:value={data.use_guild_command}
                   disabled={!isPremium} premiumBadge={true} />
       </div>
 
       <div class="row">
-        <Textarea col1 label="Nachricht Inhalt" bind:value={data.content} placeholder="Nachricht Inhalt, auserhalb des embeds"/>
+        <Textarea col1 label="Nachrichten Inhalt" bind:value={data.content} placeholder="Nachrichten Inhalt, Außerhalb des Embeds"/>
       </div>
 
       <div class="row">

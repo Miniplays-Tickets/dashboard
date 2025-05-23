@@ -29,7 +29,7 @@
             </table>
         </div>
         <div slot="footer">
-            <Button icon="fas fa-plus" on:click={openCreateModal}>Create Tag</Button>
+            <Button icon="fas fa-plus" on:click={openCreateModal}>Tag Erstellen</Button>
         </div>
     </Card>
 </div>
