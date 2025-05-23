@@ -95,7 +95,7 @@
     .content {
         display: flex;
         justify-content: center;
-        width: 96%;
+        width: 100%;
         height: 100%;
         margin-top: 30px;
     }
@@ -103,7 +103,7 @@
     .main-col {
         display: flex;
         flex-direction: column;
-        width: 64%;
+        width: 100%;
         height: 100%;
     }
 
