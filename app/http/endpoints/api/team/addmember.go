@@ -26,17 +26,17 @@ func AddMember(ctx *gin.Context) {
 
 	entityType, ok := entityTypes[typeParsed]
 	if !ok {
-		ctx.JSON(400, utils.ErrorStr("Invalid entity type"))
+		ctx.JSON(400, utils.ErrorStr("Fehler 23"))
 		return
 	}
 
 	if entityType == entityTypeUser {
-		ctx.JSON(400, utils.ErrorStr("Only roles may be added as support representatives"))
+		ctx.JSON(400, utils.ErrorStr("Nur Rollen können zu Teams hinzugefügt werden"))
 		return
 	}
 
 	if entityType == entityTypeRole && snowflake == guildId {
-		ctx.JSON(400, utils.ErrorStr("You cannot add the @everyone role as staff"))
+		ctx.JSON(400, utils.ErrorStr("Du kannst nicht @everyone zu einem Team hinzufügen"))
 		return
 	}
 
@@ -46,7 +46,7 @@ func AddMember(ctx *gin.Context) {
 	} else {
 		parsed, err := strconv.Atoi(teamId)
 		if err != nil {
-			ctx.JSON(400, utils.ErrorStr("Invalid team ID"))
+			ctx.JSON(400, utils.ErrorStr("Ungültige Team ID"))
 			return
 		}
 
@@ -79,7 +79,7 @@ func addTeamMember(ctx *gin.Context, teamId int, guildId, snowflake uint64, enti
 	}
 
 	if !exists {
-		ctx.JSON(404, utils.ErrorStr("Support team with provided ID not found"))
+		ctx.JSON(404, utils.ErrorStr("Support Team mit der angegebenen ID nicht gefunden"))
 		return
 	}
 

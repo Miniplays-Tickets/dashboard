@@ -1,17 +1,17 @@
 <main>
     <a href="/manage/{guildId}/panels" class="link">
         <i class="fas fa-arrow-left"></i>
-        Back to Panels
+        Zurück zu Panels
     </a>
     <Card footer="{false}">
-        <span slot="title">Create Panel</span>
+        <span slot="title">Panel erstellen</span>
 
         <div slot="body" class="body-wrapper">
             {#if !$loadingScreen}
                 <PanelCreationForm {guildId} {channels} {roles} {emojis} {teams} {forms} {isPremium}
                                    bind:data={panelData} seedDefault={false} />
                 <div class="submit-wrapper">
-                    <Button icon="fas fa-floppy-disk" fullWidth={true} on:click={editPanel}>Save</Button>
+                    <Button icon="fas fa-floppy-disk" fullWidth={true} on:click={editPanel}>Speichern</Button>
                 </div>
             {/if}
         </div>

@@ -5,6 +5,7 @@ import TranscriptViewLayout from './layouts/TranscriptViewLayout.svelte'
 import AdminLayout from './layouts/AdminLayout.svelte';
 
 import Index from './views/Index.svelte'
+import Indexall from './views/Indexall.svelte'
 import LoginCallback from './views/LoginCallback.svelte'
 import Login from './views/Login.svelte'
 import Logout from './views/Logout.svelte'
@@ -43,6 +44,7 @@ import TermsOfService from "./views/legal/TOS.svelte"
 
 export const routes = [
     {name: '/', component: Index, layout: IndexLayout},
+    {name: '/allservers', component: Indexall, layout: IndexLayout},
     {name: '404', path: '404', component: Error404, layout: ErrorLayout},
     {name: '/callback', component: LoginCallback},
     {name: '/login', component: Login},

@@ -1,17 +1,17 @@
 <Card footer="{false}" fill="{false}">
   <span slot="title">
-    Claim Settings
+    Beanspruchungseinstellungen
   </span>
 
   <div slot="body" class="body-wrapper">
     <form class="settings-form" on:submit|preventDefault={updateSettings}>
       <div class="row">
-        <Checkbox label="SUPPORT REPS CAN VIEW CLAIMED TICKETS" col2=true bind:value={data.support_can_view} on:change={validateView} />
-        <Checkbox label="SUPPORT REPS CAN TYPE IN CLAIMED TICKETS" col2=true bind:value={data.support_can_type} on:change={validateType} />
+        <Checkbox label="SUPPORT MITGLIEDER KÖNNEN BEANSPRUCHTE TICKETS ANSEHEN" col2=true bind:value={data.support_can_view} on:change={validateView} />
+        <Checkbox label="SUPPORT MITGLIEDER KÖNNEN IN BEANSPRUCHTE TICKETS SCHREIBEN" col2=true bind:value={data.support_can_type} on:change={validateType} />
       </div>
       <div class="row">
         <div class="col-1">
-          <Button icon="fas fa-paper-plane" fullWidth=true>Submit</Button>
+          <Button icon="fas fa-paper-plane" fullWidth=true>Speichern</Button>
         </div>
       </div>
     </form>
@@ -52,7 +52,7 @@
     async function updateSettings() {
         const res = await axios.post(`${API_URL}/api/${guildId}/claimsettings`, data);
         if (res.status === 200 && res.data.success) {
-            notifySuccess("Your settings have been saved.");
+            notifySuccess("Deine Einstellungen wurden gespeichert.");
         } else {
             notifyError(res.data.error);
         }

@@ -18,7 +18,7 @@ func AuthenticateGuild(requiredPermissionLevel permission.PermissionLevel) gin.H
 		if guildId, ok := ctx.Params.Get("id"); ok {
 			parsed, err := strconv.ParseUint(guildId, 10, 64)
 			if err != nil {
-				ctx.JSON(400, utils.ErrorStr("Invalid guild ID"))
+				ctx.JSON(400, utils.ErrorStr("Ungültige Guild ID"))
 				ctx.Abort()
 				return
 			}
@@ -51,12 +51,12 @@ func AuthenticateGuild(requiredPermissionLevel permission.PermissionLevel) gin.H
 			}
 
 			if permLevel < requiredPermissionLevel {
-				ctx.JSON(403, utils.ErrorStr("Unauthorized"))
+				ctx.JSON(403, utils.ErrorStr("Keine Berechtigungen"))
 				ctx.Abort()
 				return
 			}
 		} else {
-			ctx.JSON(400, utils.ErrorStr("Invalid guild ID"))
+			ctx.JSON(400, utils.ErrorStr("Ungültige Guild ID"))
 			ctx.Abort()
 			return
 		}

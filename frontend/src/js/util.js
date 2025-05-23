@@ -18,15 +18,15 @@ export function notify(title, message) {
 }
 
 export function notifyError(message) {
-    notify('Error', message);
+    notify('Fehler', message);
 }
 
 export function notifySuccess(message) {
-    notify('Success', message);
+    notify('Erfolg', message);
 }
 
 export function notifyRatelimit() {
-    notifyError("You're doing that too fast: please wait a few seconds and try again");
+    notifyError("Du machst dies zu Schnell: bitte warte ein Paar Sekunden und versuche es erneut");
 }
 
 export function closeNotificationModal() {
@@ -111,7 +111,7 @@ export function getRelativeTime(timestamp) {
     // "Math.abs" accounts for both "past" & "future" scenarios
     for (const u in units) {
         if (Math.abs(elapsed) > units[u] || u === 'second') {
-            const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+            const rtf = new Intl.RelativeTimeFormat('de', { numeric: 'auto' });
             return rtf.format(Math.round(elapsed / units[u]), u)
         }
     }

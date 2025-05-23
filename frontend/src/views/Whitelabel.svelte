@@ -2,35 +2,35 @@
     <div class="col">
         {#if active}
             <Card footer="{false}" fill="{false}">
-                <h4 slot="title">Manage Bot</h4>
+                <h4 slot="title">Bot verwalten</h4>
                 <div slot="body" class="full-width">
-                    <p>Your whitelabel bot <b>{bot.username}</b> is active.</p>
+                    <p>Dein Whitelabel Bot <b>{bot.username}</b> ist aktiv.</p>
 
                     <div class="buttons">
                         <Button icon="fas fa-plus" on:click={invite}>
-                            Generate Invite Link
+                            Invite Link Erstellen
                         </Button>
 
                         <Button icon="fas fa-paper-plane" on:click={createSlashCommands}>
-                            Re-create Slash Commands
+                            Slash Commands neu erstellen
                         </Button>
 
                         <Button icon="fas fa-trash-can" on:click={disable} danger>
-                            Disable Whitelabel
+                            Bot Deaktivieren
                         </Button>
                     </div>
                 </div>
             </Card>
 
             <Card footer="{false}" fill="{false}">
-                <h4 slot="title">Custom Status</h4>
+                <h4 slot="title">Eigener Status</h4>
                 <div slot="body" class="full-width">
                     <form class="form-wrapper full-width" on:submit|preventDefault>
                         <div class="row">
-                            <Dropdown col3 label="Status Type" bind:value={bot.status_type}>
-                                <option value="0">Playing</option>
-                                <option value="2">Listening</option>
-                                <option value="3">Watching</option>
+                            <Dropdown col3 label="Status Typ" bind:value={bot.status_type}>
+                                <option value="0">Spielt</option>
+                                <option value="2">Hört</option>
+                                <option value="3">Schaut</option>
                             </Dropdown>
 
                             <div class="col-2-3">
@@ -40,7 +40,7 @@
 
                         <div class="buttons">
                             <Button icon="fas fa-paper-plane" on:click={updateStatus} fullWidth="{true}">
-                                Submit
+                                Speichern
                             </Button>
                         </div>
                     </form>
@@ -55,10 +55,10 @@
 
                         <input name="token" type="text" bind:value={token} class="form-input full-width"
                                placeholder="xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxx">
-                        <p>Note: You will not be able to view the token after submitting it</p>
+                        <p>Info: Du kannst den Bot token nach dem Speichern nicht mehr einsehen</p>
 
                         <div class="buttons">
-                            <Button icon="fas fa-paper-plane" on:click={submitToken} fullWidth="{true}">Submit
+                            <Button icon="fas fa-paper-plane" on:click={submitToken} fullWidth="{true}">Speichern
                             </Button>
                         </div>
                     </form>
@@ -68,7 +68,7 @@
     </div>
     <div class="col">
         <Card footer="{false}" fill="{false}">
-            <h4 slot="title">Error Log</h4>
+            <h4 slot="title">Fehler Log</h4>
             <div slot="body" class="full-width">
                 <table class="error-log">
                     <thead>
@@ -228,7 +228,7 @@
         $: token = '';
 
         await loadBot();
-        notifySuccess(`Started tickets whitelabel on ${res.data.bot.name}`);
+        notifySuccess(`Tickets Whitelabel auf ${res.data.bot.name} gestartet`);
     }
 
     async function updateStatus() {
@@ -248,14 +248,15 @@
             return;
         }
 
-        notifySuccess('Updated status successfully')
+        notifySuccess('Status erfolgreich Aktualisiert')
     }
 
     async function loadBot() {
         const res = await axios.get(`${API_URL}/user/whitelabel/`);
         if (res.status !== 200) {
             if (res.status === 402) {
-                window.location.replace("https://tickets.miniplays.de/premium");
+                notifyError("Du hast kein Whitelabel");
+                window.location.href = '/';
                 return false;
             }
 
@@ -297,7 +298,7 @@
             return;
         }
 
-        notifySuccess('Slash commands have been created. Please note, they may take a few minutes before they are visible.');
+        notifySuccess('Slash Befehle wurden erstellt. Es wird eventuell kurz dauern, bis diese angezeigt werden.have been created. ');
     }
 
     async function disable() {
@@ -308,7 +309,7 @@
         }
 
         active = false;
-        notifySuccess('Whitelabel has been disabled');
+        notifySuccess('Whitelabel wurde Deaktiviert');
     }
 
     withLoadingScreen(async () => {

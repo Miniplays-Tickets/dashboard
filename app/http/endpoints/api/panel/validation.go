@@ -31,12 +31,12 @@ func ApplyPanelDefaults(data *panelBody) {
 
 func DefaultApplicators(data *panelBody) []defaults.DefaultApplicator {
 	return []defaults.DefaultApplicator{
-		defaults.NewDefaultApplicator(defaults.EmptyStringCheck, &data.Title, "Open a ticket!"),
-		defaults.NewDefaultApplicator(defaults.EmptyStringCheck, &data.Content, "By clicking the button, a ticket will be opened for you."),
+		defaults.NewDefaultApplicator(defaults.EmptyStringCheck, &data.Title, "Öffne ein Ticket!"),
+		defaults.NewDefaultApplicator(defaults.EmptyStringCheck, &data.Content, "Durch Klicken auf die Schaltfläche wird ein Ticket für dich eröffnet"),
 		defaults.NewDefaultApplicator[*string](defaults.NilOrEmptyStringCheck, &data.ImageUrl, nil),
 		defaults.NewDefaultApplicator[*string](defaults.NilOrEmptyStringCheck, &data.ThumbnailUrl, nil),
 		defaults.NewDefaultApplicator(defaults.EmptyStringCheck, &data.ButtonLabel, data.Title),
-		defaults.NewDefaultApplicator(defaults.EmptyStringCheck, &data.ButtonLabel, "Open a ticket!"), // Title could have been blank
+		defaults.NewDefaultApplicator(defaults.EmptyStringCheck, &data.ButtonLabel, "Öffne ein Ticket!"), // Title could have been blank
 		defaults.NewDefaultApplicator[*string](defaults.NilOrEmptyStringCheck, &data.NamingScheme, nil),
 	}
 }
@@ -81,7 +81,7 @@ func panelValidators() []validation.Validator[PanelValidationContext] {
 func validateTitle(ctx PanelValidationContext) validation.ValidationFunc {
 	return func() error {
 		if len(ctx.Data.Title) > 80 {
-			return validation.NewInvalidInputError("Panel title must be less than 80 characters")
+			return validation.NewInvalidInputError("Der Titel des Panels darf nicht länger als 80 Zeichen sein")
 		}
 
 		return nil
@@ -91,7 +91,7 @@ func validateTitle(ctx PanelValidationContext) validation.ValidationFunc {
 func validateContent(ctx PanelValidationContext) validation.ValidationFunc {
 	return func() error {
 		if len(ctx.Data.Content) > 4096 {
-			return validation.NewInvalidInputError("Panel content must be less than 4096 characters")
+			return validation.NewInvalidInputError("Der Inhalt des Panels darf nicht länger als 4096 Zeichen sein")
 		}
 
 		return nil
@@ -106,7 +106,7 @@ func validateChannelId(ctx PanelValidationContext) validation.ValidationFunc {
 			}
 		}
 
-		return validation.NewInvalidInputError("Panel channel not found")
+		return validation.NewInvalidInputError("Panel Kanal nicht gefunden")
 	}
 }
 
@@ -128,7 +128,7 @@ func validateEmoji(c PanelValidationContext) validation.ValidationFunc {
 
 		if emoji.IsCustomEmoji {
 			if emoji.Id == nil {
-				return validation.NewInvalidInputError("Custom emoji was missing ID")
+				return validation.NewInvalidInputError("Eingenes emoji hat eine fehlende ID")
 			}
 
 			ctx, cancel := context.WithTimeout(context.Background(), app.DefaultTimeout)
@@ -140,15 +140,15 @@ func validateEmoji(c PanelValidationContext) validation.ValidationFunc {
 			}
 
 			if resolvedEmoji.Id.Value == 0 {
-				return validation.NewInvalidInputError("Emoji not found")
+				return validation.NewInvalidInputError("Emoji nicht gefunden")
 			}
 
 			if resolvedEmoji.Name != emoji.Name {
-				return validation.NewInvalidInputError("Emoji name mismatch")
+				return validation.NewInvalidInputError("Emoji Name stimmt nicht")
 			}
 		} else {
 			if len(emoji.Name) == 0 {
-				return validation.NewInvalidInputError("Emoji name was empty")
+				return validation.NewInvalidInputError("Emoji Name ist leer")
 			}
 
 			// Convert from :emoji: to unicode if we need to
@@ -157,7 +157,7 @@ func validateEmoji(c PanelValidationContext) validation.ValidationFunc {
 
 			unicode, ok := utils.GetEmoji(name)
 			if !ok {
-				return validation.NewInvalidInputError("Invalid emoji")
+				return validation.NewInvalidInputError("Ungültiger emoji")
 			}
 
 			emoji.Name = unicode
@@ -172,7 +172,7 @@ var urlRegex = regexp.MustCompile(`^https?://([-a-zA-Z0-9@:%._+~#=]{1,256})\.[a-
 func validateNullableUrl(url *string) validation.ValidationFunc {
 	return func() error {
 		if url != nil && (len(*url) > 255 || !urlRegex.MatchString(*url)) {
-			return validation.NewInvalidInputError("Invalid image URL. Must end with .gif, .jpg, .jpeg, .png, or .webp")
+			return validation.NewInvalidInputError("Ungültige Bild-URL. Muss mit .gif, .jpg, .jpeg, .png oder .webp enden")
 		}
 
 		return nil
@@ -190,7 +190,7 @@ func validateThumbnailUrl(ctx PanelValidationContext) validation.ValidationFunc 
 func validateButtonStyle(ctx PanelValidationContext) validation.ValidationFunc {
 	return func() error {
 		if ctx.Data.ButtonStyle < component.ButtonStylePrimary && ctx.Data.ButtonStyle > component.ButtonStyleDanger {
-			return validation.NewInvalidInputError("Invalid button style")
+			return validation.NewInvalidInputError("Ungültiger Button Style")
 		}
 
 		return nil
@@ -200,7 +200,7 @@ func validateButtonStyle(ctx PanelValidationContext) validation.ValidationFunc {
 func validateButtonLabel(ctx PanelValidationContext) validation.ValidationFunc {
 	return func() error {
 		if len(ctx.Data.ButtonLabel) > 80 {
-			return validation.NewInvalidInputError("Button label must be less than 80 characters")
+			return validation.NewInvalidInputError("Die Beschriftung des Buttons darf nicht länger als 80 Zeichen sein")
 		}
 
 		return nil
@@ -219,11 +219,11 @@ func validatedNullableFormId(guildId uint64, formId *int) validation.ValidationF
 		}
 
 		if !ok {
-			return validation.NewInvalidInputError("Form not found")
+			return validation.NewInvalidInputError("Formular nicht gefunden")
 		}
 
 		if form.GuildId != guildId {
-			return validation.NewInvalidInputError("Guild ID mismatch when validating form")
+			return validation.NewInvalidInputError("Guild ID stimmt beim Validieren des Formulars nicht überein")
 		}
 
 		return nil
@@ -246,7 +246,7 @@ func validatePendingCategory(ctx PanelValidationContext) validation.ValidationFu
 		}
 
 		if !ctx.IsPremium {
-			return validation.NewInvalidInputError("Awaiting response category is a premium feature")
+			return validation.NewInvalidInputError("Die Kategorie „Auf Antwort warten“ ist eine Premium-Funktion")
 		}
 
 		for _, ch := range ctx.Channels {
@@ -255,7 +255,7 @@ func validatePendingCategory(ctx PanelValidationContext) validation.ValidationFu
 			}
 		}
 
-		return validation.NewInvalidInputError("Invalid awaiting response category")
+		return validation.NewInvalidInputError("Ungültige Kategorie „Auf Antwort warten“")
 	}
 }
 
@@ -273,7 +273,7 @@ func validateTeams(ctx PanelValidationContext) validation.ValidationFunc {
 		}
 
 		if !ok {
-			return validation.NewInvalidInputError("Invalid support team")
+			return validation.NewInvalidInputError("Ungültiges Team")
 		}
 
 		return nil
@@ -290,19 +290,19 @@ func validateNamingScheme(ctx PanelValidationContext) validation.ValidationFunc 
 		}
 
 		if len(*ctx.Data.NamingScheme) > 100 {
-			return validation.NewInvalidInputError("Naming scheme must be less than 100 characters")
+			return validation.NewInvalidInputError("Das Namensschema darf nicht länger als 100 Zeichen sein")
 		}
 
 		// Validate placeholders used
 		validPlaceholders := []string{"id", "username", "nickname", "id_padded"}
 		for _, match := range placeholderPattern.FindAllStringSubmatch(*ctx.Data.NamingScheme, -1) {
 			if len(match) < 2 { // Infallible
-				return errors.New("Infallible: Regex match length was < 2")
+				return errors.New("Fehler 26")
 			}
 
 			placeholder := match[1]
 			if !utils.Contains(validPlaceholders, placeholder) {
-				return validation.NewInvalidInputError(fmt.Sprintf("Invalid naming scheme placeholder: %s", placeholder))
+				return validation.NewInvalidInputError(fmt.Sprintf("Ungültiger Platzhalter im Namensschema: %s", placeholder))
 			}
 		}
 
@@ -321,17 +321,17 @@ func validateAccessControlList(ctx PanelValidationContext) validation.Validation
 		acl := ctx.Data.AccessControlList
 
 		if len(acl) == 0 {
-			return validation.NewInvalidInputError("Access control list is empty")
+			return validation.NewInvalidInputError("Die Zugriffskontrollliste ist leer")
 		}
 
 		if len(acl) > 10 {
-			return validation.NewInvalidInputError("Access control list cannot have more than 10 roles")
+			return validation.NewInvalidInputError("Die Zugriffskontrollliste kann nicht mehr als 10 Rollen haben")
 		}
 
 		roles := utils.ToSet(utils.Map(ctx.Roles, utils.RoleToId))
 
 		if roles.Size() != len(ctx.Roles) {
-			return validation.NewInvalidInputError("Duplicate roles in access control list")
+			return validation.NewInvalidInputError("Doppelte Rollen in der Zugriffskontrollliste")
 		}
 
 		everyoneRoleFound := false
@@ -341,16 +341,16 @@ func validateAccessControlList(ctx PanelValidationContext) validation.Validation
 			}
 
 			if rule.Action != database.AccessControlActionDeny && rule.Action != database.AccessControlActionAllow {
-				return validation.NewInvalidInputErrorf("Invalid access control action \"%s\"", rule.Action)
+				return validation.NewInvalidInputErrorf("Ungültige Zugriffskontrollaktion \"%s\"", rule.Action)
 			}
 
 			if !roles.Contains(rule.RoleId) {
-				return validation.NewInvalidInputErrorf("Invalid role %d in access control list not found in the guild", rule.RoleId)
+				return validation.NewInvalidInputErrorf("Ungültige Rolle %d in der Zugriffskontrollliste, nicht in der Guild gefunden", rule.RoleId)
 			}
 		}
 
 		if !everyoneRoleFound {
-			return validation.NewInvalidInputError("Access control list does not contain @everyone rule")
+			return validation.NewInvalidInputError("Zugriffskontrollliste enthält nicht @everyone")
 		}
 
 		return nil
@@ -361,18 +361,18 @@ func validateEmbed(e *types.CustomEmbed) error {
 	if e == nil || e.Title != nil || e.Description != nil || len(e.Fields) > 0 || e.ImageUrl != nil || e.ThumbnailUrl != nil {
 		if e.ImageUrl != nil && (len(*e.ImageUrl) > 255 || !urlRegex.MatchString(*e.ImageUrl)) {
 			if *e.ImageUrl != "%avatar_url%" {
-				return validation.NewInvalidInputError("Invalid image URL. Must end with .gif, .jpg, .jpeg, .png, or .webp")
+				return validation.NewInvalidInputError("Ungültige Bild-URL. Sie muss mit .gif, .jpg, .jpeg, .png oder .webp enden")
 			}
 		}
 
 		if e.ThumbnailUrl != nil && (len(*e.ThumbnailUrl) > 255 || !urlRegex.MatchString(*e.ThumbnailUrl)) {
 			if *e.ThumbnailUrl != "%avatar_url%" {
-				return validation.NewInvalidInputError("Invalid image URL. Must end with .gif, .jpg, .jpeg, .png, or .webp")
+				return validation.NewInvalidInputError("Ungültige Bild-URL. Sie muss mit .gif, .jpg, .jpeg, .png oder .webp enden")
 			}
 		}
 
 		return nil
 	}
 
-	return validation.NewInvalidInputError("Your embed message does not contain any content")
+	return validation.NewInvalidInputError("Deine eingebettete Nachricht enthält keinen Inhalt")
 }

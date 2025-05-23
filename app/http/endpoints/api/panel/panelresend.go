@@ -38,18 +38,18 @@ func ResendPanel(ctx *gin.Context) {
 	}
 
 	if panel.PanelId == 0 {
-		ctx.JSON(404, utils.ErrorStr("Panel not found"))
+		ctx.JSON(404, utils.ErrorStr("Panel nicht gefunden"))
 		return
 	}
 
 	// check guild ID matches
 	if panel.GuildId != guildId {
-		ctx.JSON(403, utils.ErrorStr("Guild ID doesn't match"))
+		ctx.JSON(403, utils.ErrorStr("Guild ID stimmt nicht"))
 		return
 	}
 
 	if panel.ForceDisabled {
-		ctx.JSON(400, utils.ErrorStr("This panel is disabled and cannot be modified: please reactivate premium to re-enable it"))
+		ctx.JSON(400, utils.ErrorStr("Dieses Panel ist Deaktivert und kann nicht bearbeitet werden: Reaktiviere Premium um dieses Panel wieder zu aktivieren"))
 		return
 	}
 
@@ -74,7 +74,7 @@ func ResendPanel(ctx *gin.Context) {
 	if err != nil {
 		var unwrapped request.RestError
 		if errors.As(err, &unwrapped) && unwrapped.StatusCode == 403 {
-			ctx.JSON(500, utils.ErrorStr("I do not have permission to send messages in the provided channel"))
+			ctx.JSON(500, utils.ErrorStr("Ich habe keine Berechtigung, Nachrichten in dem angegebenen Kanal zu senden"))
 		} else {
 			ctx.JSON(500, utils.ErrorJson(err))
 		}

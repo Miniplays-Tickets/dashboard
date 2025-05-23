@@ -8,7 +8,7 @@
         <!-- on:click required to close dropdown again -->
 
         {#if isAdmin}
-          <NavElement icon="fas fa-cogs" link="/manage/{guildId}/settings" on:click={closeDropdown}>Settings
+          <NavElement icon="fas fa-cogs" link="/manage/{guildId}/settings" on:click={closeDropdown}>Einstellungen
           </NavElement>
         {/if}
 
@@ -17,22 +17,28 @@
 
         {#if isAdmin}
           <NavElement icon="fas fa-mouse-pointer" link="/manage/{guildId}/panels" on:click={closeDropdown}>Ticket Panels</NavElement>
-          <NavElement icon="fas fa-poll-h" link="/manage/{guildId}/forms" on:click={closeDropdown}>Forms</NavElement>
-          <NavElement icon="fas fa-users" link="/manage/{guildId}/teams" on:click={closeDropdown}>Staff Teams</NavElement>
+          <NavElement icon="fas fa-poll-h" link="/manage/{guildId}/forms" on:click={closeDropdown}>Formulare</NavElement>
+          <NavElement icon="fas fa-users" link="/manage/{guildId}/teams" on:click={closeDropdown}>Teams</NavElement>
+          <!--
           <NavElement icon="fas fa-robot" link="/manage/{guildId}/integrations" on:click={closeDropdown}>Integrations</NavElement>
+          -->
           <NavElement icon="fas fa-file-import" link="/manage/{guildId}/import" on:click={closeDropdown}>Import</NavElement>
         {/if}
 
         <NavElement icon="fas fa-ticket-alt" link="/manage/{guildId}/tickets" on:click={closeDropdown}>Tickets</NavElement>
         <NavElement icon="fas fa-ban" link="/manage/{guildId}/blacklist" on:click={closeDropdown}>Blacklist</NavElement>
         <NavElement icon="fas fa-tags" link="/manage/{guildId}/tags" on:click={closeDropdown}>Tags</NavElement>
+
+        {#if isAdmin}
+          <NavElement icon="fas fa-users" link="/manage/{guildId}/staffoverride" on:click={closeDropdown}>Suppprt Zugriff</NavElement>
+        {/if}
       </div>
     </div>
     <div>
       <div class="nav-section" class:dropdown={$dropdown}>
-        <NavElement icon="fas fa-book" link="https://docs.ticketsbot.cloud">Documentation</NavElement>
-        <NavElement icon="fas fa-server" link="/#">Servers</NavElement>
-        <NavElement icon="fas fa-sign-out-alt" link="/logout">Logout</NavElement>
+        <NavElement icon="fas fa-book" link="https://docs.ticketsbot.cloud">Dokumentation</NavElement>
+        <NavElement icon="fas fa-server" link="/#">Server</NavElement>
+        <NavElement icon="fas fa-sign-out-alt" link="/logout">Abmelden</NavElement>
       </div>
     </div>
   </div>

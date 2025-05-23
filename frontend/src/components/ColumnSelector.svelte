@@ -40,7 +40,7 @@
     import Button from "./Button.svelte";
     import { createEventDispatcher } from 'svelte';
 
-    export let label = "Select Columns";
+    export let label = "Zeilen zum Anzeigen";
     export let options = [];
     export let selected = [];
 

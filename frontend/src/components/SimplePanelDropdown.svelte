@@ -1,7 +1,7 @@
 <Dropdown {col1} {col2} {col3} {col4} bind:value label={label}>
   {#if allowNone}
     <option value=null>
-      None
+      Nichts
     </option>
   {/if}
 

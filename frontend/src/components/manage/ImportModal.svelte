@@ -1,7 +1,7 @@
 <div class="modal" transition:fade>
   <div class="modal-wrapper">
     <Card footer={true} footerRight={true} fill={false}>
-      <span slot="title">Import Data</span>
+      <span slot="title">Import von Einstellungen, Tickets & Transcripts</span>
 
       <div slot="body" class="body-wrapper">
         Please upload your exported data file to import settings and transcripts.
@@ -10,13 +10,13 @@
         <form>
           <div class="row">
             <div class="label-wrapper">
-              <label for="import_data" class="form-label"> Data Export .zip</label>
+              <label for="import_data" class="form-label">Daten Export Datei (.zip)</label>
             </div>
             <input type="file" id="import_data" style="display: block; width: 100%;" accept=".zip" />
           </div>
           <div class="row">
             <div class="label-wrapper">
-              <label for="import_data" class="form-label"> Transcripts Export .zip</label>
+              <label for="import_data" class="form-label">Transcripts Export Datei (.zip)</label>
             </div>
             <input type="file" id="import_transcripts" style="display: block; width: 100%;" accept=".zip" />
           </div>
@@ -25,15 +25,15 @@
           <div>
             <br />
             <br />
-            <p style="text-align: center;">We are currently loading your data in, please do not navigate away from this page.</p>
+            <p style="text-align: center;"> Deine Daten werden gerade hochgeladen, bitte verlasse diese Seite nicht.</p>
           </div>
         {/if}
       </div>
 
       <div slot="footer" class="footer-wrapper">
-        <Button danger={true} on:click={dispatchClose}>Cancel</Button>
+        <Button danger={true} on:click={dispatchClose}>Abbrechen</Button>
         <div style="">
-          <Button on:click={dispatchConfirm} disabled={queryLoading}>Confirm</Button>
+          <Button on:click={dispatchConfirm} disabled={queryLoading}>Bestätigen</Button>
         </div>
       </div>
     </Card>

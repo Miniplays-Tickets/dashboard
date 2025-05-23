@@ -114,11 +114,11 @@ var (
 func (s *Settings) Validate(ctx context.Context, guildId uint64, premiumTier premium.PremiumTier) error {
 	// Sync checks
 	if s.ClaimSettings.SupportCanType && !s.ClaimSettings.SupportCanView {
-		return errors.New("Must be able to view channel to type")
+		return errors.New("Du musst den Kanal sehen können, um tippen zu können")
 	}
 
 	if s.Settings.UseThreads && s.TicketNotificationChannel == nil {
-		return errors.New("You must select a ticket notification channel")
+		return errors.New("Du musst einen Ticket Benachrigungskanal auswählen")
 	}
 
 	if !s.Settings.UseThreads {
@@ -127,18 +127,18 @@ func (s *Settings) Validate(ctx context.Context, guildId uint64, premiumTier pre
 
 	if s.Language != nil {
 		if _, ok := i18n.MappedByIsoShortCode[*s.Language]; !ok {
-			return errors.New("Invalid language")
+			return errors.New("Ungültige Sprache")
 		}
 	}
 
 	// Validate colours
 	if len(s.Colours) > len(activeColours) {
-		return errors.New("Invalid colour")
+		return errors.New("Ungültige Farbe")
 	}
 
 	for colour := range s.Colours {
 		if !utils.Exists(activeColours, colour) {
-			return errors.New("Invalid colour")
+			return errors.New("Ungültige Farbe")
 		}
 	}
 
@@ -170,7 +170,7 @@ func (s *Settings) Validate(ctx context.Context, guildId uint64, premiumTier pre
 
 	if s.AutoCloseSettings.SinceLastMessage > int64((time.Hour*24*60).Seconds()) ||
 		s.AutoCloseSettings.SinceOpenWithNoResponse > int64((time.Hour*24*60).Seconds()) {
-		return errors.New("Autoclose time period cannot be longer than 60 days")
+		return errors.New("Der Zeitraum für das automatische Schließen darf 60 Tage nicht überschreiten")
 	}
 
 	// Async checks
@@ -187,7 +187,7 @@ func (s *Settings) Validate(ctx context.Context, guildId uint64, premiumTier pre
 			}
 
 			if guildId != panel.GuildId {
-				return fmt.Errorf("guild ID doesn't match")
+				return fmt.Errorf("Guild ID stimmt nicht")
 			}
 		}
 
@@ -204,7 +204,7 @@ func (s *Settings) Validate(ctx context.Context, guildId uint64, premiumTier pre
 		}
 
 		if !valid {
-			return fmt.Errorf("Invalid thread auto archive duration")
+			return fmt.Errorf("Ungültige Dauer für das automatische Archivieren des Threads")
 		}
 
 		return nil
@@ -217,15 +217,15 @@ func (s *Settings) Validate(ctx context.Context, guildId uint64, premiumTier pre
 
 			ch, err := cache.Instance.GetChannel(ctx, *s.Settings.OverflowCategoryId)
 			if err != nil {
-				return fmt.Errorf("Invalid overflow category")
+				return fmt.Errorf("Ungültige Überlauf Kategorie")
 			}
 
 			if ch.GuildId != guildId {
-				return fmt.Errorf("Overflow category guild ID does not match")
+				return fmt.Errorf("Überlauf Kategorie Guild ID stimmt nicht")
 			}
 
 			if ch.Type != channel.ChannelTypeGuildCategory {
-				return fmt.Errorf("Overflow category is not a category")
+				return fmt.Errorf("Überlauf Kategorie ist keine Kategorie")
 			}
 		}
 
@@ -239,15 +239,15 @@ func (s *Settings) Validate(ctx context.Context, guildId uint64, premiumTier pre
 
 			ch, err := cache.Instance.GetChannel(ctx, *s.Settings.TicketNotificationChannel)
 			if err != nil {
-				return fmt.Errorf("Invalid ticket notification channel")
+				return fmt.Errorf("Ungültiger Ticket Benachrichtigungskanal")
 			}
 
 			if ch.GuildId != guildId {
-				return fmt.Errorf("Ticket notification channel guild ID does not match")
+				return fmt.Errorf("Ticket Benachrichtigungskanall Guild ID stimmt nicht")
 			}
 
 			if ch.Type != channel.ChannelTypeGuildText {
-				return fmt.Errorf("Ticket notification channel is not a text channel")
+				return fmt.Errorf("Ticket Benachrichtigungskanal ist kein Text Kanal")
 			}
 		}
 

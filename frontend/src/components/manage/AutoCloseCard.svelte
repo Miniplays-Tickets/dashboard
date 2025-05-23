@@ -1,27 +1,27 @@
 <Card footer="{false}">
   <span slot="title">
-    Auto Close
+    Auto Schließen
   </span>
 
   <div slot="body" class="body-wrapper">
     <form class="form-wrapper" on:submit|preventDefault={submit}>
       <div class="row do-margin">
-        <Checkbox col4={true} label="Enabled" bind:value={data.enabled}/>
-        <Checkbox col4={true} label="Close On User Leave" bind:value={data.on_user_leave}/>
+        <Checkbox col4={true} label="Aktiviert" bind:value={data.enabled}/>
+        <Checkbox col4={true} label="Schließen wenn Benutzer Server verlässt" bind:value={data.on_user_leave}/>
       </div>
       <div class="row" style="justify-content: space-between">
         <div class="col-2" style="flex-direction: row">
-          <Duration label="Since Open With No Response" badge="Premium" disabled={!isPremium}
+          <Duration label="Offen ohne Antwort" badge="Premium" disabled={!isPremium}
                     bind:days={sinceOpenDays} bind:hours={sinceOpenHours} bind:minutes={sinceOpenMinutes}/>
         </div>
         <div class="col-2" style="flex-direction: row">
-          <Duration label="Since Last Message" badge="Premium" disabled={!isPremium}
+          <Duration label="Seit Letzter Nachricht" badge="Premium" disabled={!isPremium}
                     bind:days={sinceLastDays} bind:hours={sinceLastHours} bind:minutes={sinceLastMinutes}/>
         </div>
       </div>
       <div class="row">
         <div class="col-1">
-          <Button icon="fas fa-paper-plane" fullWidth=true>Submit</Button>
+          <Button icon="fas fa-paper-plane" fullWidth=true>Speichern</Button>
         </div>
       </div>
     </form>

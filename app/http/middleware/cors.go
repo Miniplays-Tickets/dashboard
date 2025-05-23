@@ -14,7 +14,7 @@ func Cors(config config.Config) func(*gin.Context) {
 
 	return func(ctx *gin.Context) {
 		ctx.Header("Access-Control-Allow-Origin", config.Server.BaseUrl)
-		ctx.Header("Access-Control-Allow-Origin", "*")
+		//ctx.Header("Access-Control-Allow-Origin", "*")
 		ctx.Header("Access-Control-Allow-Methods", strings.Join(methods, ", "))
 		ctx.Header("Access-Control-Allow-Headers", strings.Join(headers, ", "))
 		ctx.Header("Access-Control-Allow-Credentials", "true")

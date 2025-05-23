@@ -35,13 +35,13 @@ func UpdatePanel(c *gin.Context) {
 
 	var data panelBody
 	if err := c.BindJSON(&data); err != nil {
-		c.JSON(400, utils.ErrorStr("Invalid request body"))
+		c.JSON(400, utils.ErrorStr("Fehler 26"))
 		return
 	}
 
 	panelId, err := strconv.Atoi(c.Param("panelid"))
 	if err != nil {
-		c.JSON(400, utils.ErrorStr("Missing panel ID"))
+		c.JSON(400, utils.ErrorStr("Fehlende Panel ID"))
 		return
 	}
 
@@ -54,12 +54,12 @@ func UpdatePanel(c *gin.Context) {
 
 	// check guild ID matches
 	if existing.GuildId != guildId {
-		c.JSON(400, utils.ErrorStr("Guild ID does not match"))
+		c.JSON(400, utils.ErrorStr("Guild ID stimmt nicht"))
 		return
 	}
 
 	if existing.ForceDisabled {
-		c.JSON(400, utils.ErrorStr("This panel is disabled and cannot be modified: please reactivate premium to re-enable it"))
+		c.JSON(400, utils.ErrorStr("Dieses Panel ist Deaktivert und kann nicht bearbeitet werden: Reaktiviere Premium um dieses Panel wieder zu aktivieren"))
 		return
 	}
 
@@ -111,11 +111,11 @@ func UpdatePanel(c *gin.Context) {
 	if err := validate.Struct(data); err != nil {
 		var validationErrors validator.ValidationErrors
 		if !errors.As(err, &validationErrors) {
-			c.JSON(500, utils.ErrorStr("An error occurred while validating the panel"))
+			c.JSON(500, utils.ErrorStr("Beim Validieren des Panels ist ein Fehler aufgetreten"))
 			return
 		}
 
-		formatted := "Your input contained the following errors:\n" + utils.FormatValidationErrors(validationErrors)
+		formatted := "Deine Eingabe enthielt die folgenden Fehler:\n" + utils.FormatValidationErrors(validationErrors)
 		c.JSON(400, utils.ErrorStr(formatted))
 		return
 	}
@@ -159,7 +159,7 @@ func UpdatePanel(c *gin.Context) {
 			var unwrapped request.RestError
 			if errors.As(err, &unwrapped) {
 				if unwrapped.StatusCode == 403 {
-					c.JSON(403, utils.ErrorStr("I do not have permission to send messages in the specified channel"))
+					c.JSON(403, utils.ErrorStr("Ich habe keine Berechtigung, Nachrichten in dem angegebenen Kanal zu senden"))
 					return
 				} else if unwrapped.StatusCode == 404 {
 					// Swallow error
@@ -327,11 +327,11 @@ func UpdatePanel(c *gin.Context) {
 			var unwrapped request.RestError
 			if errors.As(err, &unwrapped) {
 				if unwrapped.StatusCode == http.StatusForbidden {
-					c.JSON(400, utils.ErrorStr("I do not have permission to send messages in the specified channel"))
+					c.JSON(400, utils.ErrorStr("Ich habe keine Berechtigung, Nachrichten in dem angegebenen Kanal zu senden"))
 				} else {
 					log.Logger.Error("Body", zap.Any("body", messageData))
-					log.Logger.Error("Error sending panel message", zap.Any("errs", unwrapped.ApiError.Errors))
-					c.JSON(400, utils.ErrorStr("Error sending panel message: "+unwrapped.ApiError.Message))
+					log.Logger.Error("Fehler beim Senden der Panel-Nachricht", zap.Any("errs", unwrapped.ApiError.Errors))
+					c.JSON(400, utils.ErrorStr("Fehler beim Senden der Panel-Nachricht: "+unwrapped.ApiError.Message))
 				}
 			} else {
 				_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))

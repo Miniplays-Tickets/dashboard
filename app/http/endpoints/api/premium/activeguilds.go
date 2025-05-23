@@ -32,7 +32,7 @@ func SetActiveGuilds(ctx *gin.Context) {
 	}
 
 	if legacyEntitlement == nil || legacyEntitlement.IsLegacy {
-		ctx.JSON(http.StatusBadRequest, utils.ErrorStr("Not a premium user"))
+		ctx.JSON(http.StatusBadRequest, utils.ErrorStr("Kein Premium Benutzer"))
 		return
 	}
 
@@ -52,12 +52,12 @@ func SetActiveGuilds(ctx *gin.Context) {
 	}
 
 	if !ok {
-		ctx.JSON(http.StatusBadRequest, utils.ErrorStr("Not a multi-server subscription"))
+		ctx.JSON(http.StatusBadRequest, utils.ErrorStr("Kein Multi Server Abo"))
 		return
 	}
 
 	if len(body.SelectedGuilds) > limit {
-		ctx.JSON(http.StatusBadRequest, utils.ErrorStr("Too many guilds selected"))
+		ctx.JSON(http.StatusBadRequest, utils.ErrorStr("Zu viele Guilds ausgewählt"))
 		return
 	}
 
@@ -70,7 +70,7 @@ func SetActiveGuilds(ctx *gin.Context) {
 		}
 
 		if permissionLevel < permission.Admin {
-			ctx.JSON(http.StatusForbidden, utils.ErrorStr("Missing permissions in guild %d", guildId))
+			ctx.JSON(http.StatusForbidden, utils.ErrorStr("Fehlende Berechtigungen in Guild %d", guildId))
 			return
 		}
 	}
@@ -128,7 +128,7 @@ func SetActiveGuilds(ctx *gin.Context) {
 			}
 
 			if entitlement == nil {
-				ctx.JSON(http.StatusInternalServerError, utils.ErrorStr("Entitlement %s not found", existingEntitlement.EntitlementId.String()))
+				ctx.JSON(http.StatusInternalServerError, utils.ErrorStr("Entitlement %s nicht gefunden", existingEntitlement.EntitlementId.String()))
 				return
 			}
 

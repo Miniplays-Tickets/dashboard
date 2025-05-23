@@ -1,22 +1,22 @@
 <div class="modal" transition:fade>
   <div class="modal-wrapper">
     <Card footer="{true}" footerRight="{true}" fill="{false}">
-      <span slot="title">Grant Permissions To Tickets Team</span>
+      <span slot="title">Gebe Zugriff an das Bot Support Team</span>
 
       <div slot="body" class="body-wrapper">
-        Grant permission for
+        Gebe Zugriff für
         <Dropdown bind:value={timePeriod}>
-          <option value="1">1 hour</option>
-          <option value="6">6 hours</option>
-          <option value="24">1 day</option>
-          <option value="72">3 days</option>
+          <option value="1">1 Stunde</option>
+          <option value="6">6 Stunden</option>
+          <option value="24">1 Tag</option>
+          <option value="72">3 Tage</option>
         </Dropdown>
       </div>
 
       <div slot="footer" class="footer-wrapper">
-        <Button danger={true} on:click={dispatchClose}>Cancel</Button>
+        <Button danger={true} on:click={dispatchClose}>Abbrechen</Button>
         <div style="">
-          <Button on:click={dispatchConfirm}>Confirm</Button>
+          <Button on:click={dispatchConfirm}>Bestätigen</Button>
         </div>
       </div>
     </Card>

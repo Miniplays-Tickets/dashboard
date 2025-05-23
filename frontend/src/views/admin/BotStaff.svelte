@@ -1,18 +1,18 @@
 <div class="wrapper">
   <div class="content">
     <Card footer="{false}" fill="{false}">
-      <h4 slot="title">Bot Staff</h4>
+      <h4 slot="title">Bot Support Team</h4>
       <div slot="body" class="full-width body-wrapper">
         <form class="form-wrapper" on:submit|preventDefault={addStaff}>
-          <Input label="User ID" placeholder="585576154958921739" bind:value={tempUserId} />
-          <Button type="submit">Add</Button>
+          <Input label="Benutzer ID" placeholder="585576154958921739" bind:value={tempUserId} />
+          <Button type="submit">Hinzufügen</Button>
         </form>
 
         <table class="nice">
           <thead>
           <tr>
-            <th>Username</th>
-            <th>Remove</th>
+            <th>Benutzername</th>
+            <th>Entfernen</th>
           </tr>
           </thead>
           <tbody>
@@ -21,7 +21,7 @@
               <td>{user.username} ({user.id})</td>
               <td>
                 <Button type="button" danger on:click={() => removeStaff(user.id)}>
-                  Delete
+                  Entfernen
                 </Button>
               </td>
             </tr>

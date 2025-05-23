@@ -1,21 +1,21 @@
   <div class="content">
     <Card footer={false}>
-      <span slot="title">Support Teams</span>
+      <span slot="title">Teams</span>
       <div slot="body" class="body-wrapper">
         <div class="section">
-          <h2 class="section-title">Create Team</h2>
+          <h2 class="section-title">Team erstellen</h2>
 
           <form on:submit|preventDefault={createTeam}>
             <div class="row" style="max-height: 40px"> <!-- hacky -->
               <Input placeholder="Team Name" col4={true} bind:value={createName}/>
               <div style="margin-left: 30px">
-                <Button icon="fas fa-paper-plane">Submit</Button>
+                <Button icon="fas fa-paper-plane">Speichern</Button>
               </div>
             </div>
           </form>
         </div>
         <div class="section">
-          <h2 class="section-title">Manage Teams</h2>
+          <h2 class="section-title">Teams Verwalten</h2>
 
           <div class="col-1" style="flex-direction: row; gap: 12px">
             <Dropdown col3 label="Team" bind:value={activeTeam} on:change={(e) => updateActiveTeam(e.target.value)}>
@@ -27,14 +27,14 @@
             {#if activeTeam !== 'default'}
               <div style="margin-top: auto; margin-bottom: 0.5em">
                 <Button danger={true} type="button"
-                    on:click={() => deleteTeam(activeTeam)}>Delete {getTeam(activeTeam)?.name}</Button>
+                    on:click={() => deleteTeam(activeTeam)}>Team {getTeam(activeTeam)?.name} löschen</Button>
               </div>
             {/if}
           </div>
 
           <div class="manage">
             <div class="col">
-              <h3>Manage Members</h3>
+              <h3>Mitglieder verwalten</h3>
 
               <table class="nice">
                 <tbody>
@@ -44,10 +44,10 @@
                       <td>{member.name}</td>
                     {:else if member.type === ROLE_TYPE}
                       {@const role = roles.find(role => role.id === member.id)}
-                      <td>{role === undefined ? "Unknown Role" : role.name}</td>
+                      <td>{role === undefined ? "Unbekannte Rolle" : role.name}</td>
                     {/if}
                     <td style="display: flex; flex-direction: row-reverse">
-                      <Button type="button" danger={true} on:click={() => removeMember(activeTeam, member)}>Delete
+                      <Button type="button" danger={true} on:click={() => removeMember(activeTeam, member)}>Entfernen
                       </Button>
                     </td>
                   </tr>
@@ -57,7 +57,7 @@
             </div>
 
             <div class="col">
-              <h3>Add Role</h3>
+              <h3>Rolle hinzufügen</h3>
               <div class="user-select">
                 <div class="col-1" style="display: flex; flex: 1">
                   <RoleSelect {guildId} {roles} bind:value={selectedRole}/>
@@ -65,7 +65,7 @@
 
                 <div style="margin-left: 10px">
                   <Button type="button" icon="fas fa-plus" disabled={selectedRole === null || selectedRole == undefined}
-                          on:click={addRole}>Add To Team
+                          on:click={addRole}>Hinzufügen zum Team
                   </Button>
                 </div>
               </div>
@@ -96,7 +96,7 @@
     const USER_TYPE = 0;
     const ROLE_TYPE = 1;
 
-    let defaultTeam = {id: 'default', name: 'Default'};
+    let defaultTeam = {id: 'default', name: 'Standart'};
 
     let createName;
     let teams = [defaultTeam];
@@ -132,7 +132,7 @@
             return;
         }
 
-        notifySuccess(`${selectedRole.name} has been added to the support team ${getTeam(activeTeam).name}`);
+        notifySuccess(`Die Rolle ${selectedRole.name} wurde zum Team ${getTeam(activeTeam).name} hinzugefügt`);
 
         let entity = {
             id: selectedRole.id,
@@ -153,10 +153,10 @@
         members = members.filter((member) => member.id !== entity.id);
 
         if (entity.type === USER_TYPE) {
-            notifySuccess(`${entity.name} has been removed from the team`);
+            notifySuccess(`${entity.name} wurde vom Team entfernt`);
         } else {
             const role = roles.find((role) => role.id === entity.id);
-            notifySuccess(`${role === undefined ? "Unknown role" : role.name} has been removed from the team`);
+            notifySuccess(`${role === undefined ? "Unbekannte Rolle" : role.name} wurde vom Team entfernt`);
         }
     }
 
@@ -171,7 +171,7 @@
             return;
         }
 
-        notifySuccess(`Team ${createName} has been created`);
+        notifySuccess(`Team ${createName} wurde erstellt`);
         createName = '';
         teams = [...teams, res.data];
     }
@@ -183,7 +183,7 @@
             return;
         }
 
-        notifySuccess(`Team deleted successfully`);
+        notifySuccess(`Team erfolgreich gelöscht`);
 
         activeTeam = defaultTeam.id;
         teams = teams.filter((team) => team.id !== id);

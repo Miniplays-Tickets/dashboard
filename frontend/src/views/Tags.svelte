@@ -12,7 +12,7 @@
                 <thead>
                 <tr>
                     <th>Tag</th>
-                    <th style="text-align: right">Actions</th>
+                    <th style="text-align: right">Aktionen</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -20,8 +20,8 @@
                     <tr>
                         <td>{id}</td>
                         <td class="actions">
-                            <Button type="button" on:click={() => openEditModal(id)}>Edit</Button>
-                            <Button type="button" danger={true} on:click={() => deleteTag(id)}>Delete</Button>
+                            <Button type="button" on:click={() => openEditModal(id)}>Bearbeiten</Button>
+                            <Button type="button" danger={true} on:click={() => deleteTag(id)}>Löschen</Button>
                         </td>
                     </tr>
                 {/each}
@@ -29,7 +29,7 @@
             </table>
         </div>
         <div slot="footer">
-            <Button icon="fas fa-plus" on:click={openCreateModal}>Create Tag</Button>
+            <Button icon="fas fa-plus" on:click={openCreateModal}>Tag Erstellen</Button>
         </div>
     </Card>
 </div>
@@ -76,7 +76,7 @@
     async function createTag(e) {
         const data = e.detail;
         if (!data.id || data.id.length === 0) {
-            notifyError("Tag ID is required");
+            notifyError("Tag ID wird benötigt");
             return;
         }
 
@@ -110,7 +110,7 @@
         }
 
         if (!data.id || data.id.length === 0) {
-            notifyError("Tag ID is required");
+            notifyError("Tag ID wird benötigt");
             return;
         }
 
@@ -130,7 +130,7 @@
         editData = undefined;
         editId = undefined;
 
-        notifySuccess("Tag edited successfully");
+        notifySuccess("Tag erfolgreich bearbeitet");
     }
 
     async function deleteTag(id) {
@@ -144,7 +144,7 @@
             return;
         }
 
-        notifySuccess(`Tag deleted successfully`);
+        notifySuccess(`Tag erfolgreich gelöscht`);
         delete tags[id];
         tags = tags;
     }

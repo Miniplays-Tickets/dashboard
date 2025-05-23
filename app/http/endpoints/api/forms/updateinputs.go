@@ -47,7 +47,7 @@ func UpdateInputs(c *gin.Context) {
 
 	formId, err := strconv.Atoi(c.Param("form_id"))
 	if err != nil {
-		c.JSON(400, utils.ErrorStr("Invalid form ID"))
+		c.JSON(400, utils.ErrorStr("Ungültige Formular ID"))
 		return
 	}
 
@@ -60,18 +60,18 @@ func UpdateInputs(c *gin.Context) {
 	if err := validate.Struct(data); err != nil {
 		var validationErrors validator.ValidationErrors
 		if !errors.As(err, &validationErrors) {
-			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "An error occurred while validating the integration"))
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Beim Validieren der Integration ist ein Fehler aufgetreten"))
 			return
 		}
 
-		formatted := "Your input contained the following errors:\n" + utils.FormatValidationErrors(validationErrors)
+		formatted := "Deine Eingabe enthielt die folgenden Fehler:\n" + utils.FormatValidationErrors(validationErrors)
 		c.JSON(400, utils.ErrorStr(formatted))
 		return
 	}
 
 	fieldCount := len(data.Create) + len(data.Update)
 	if fieldCount <= 0 || fieldCount > 5 {
-		c.JSON(400, utils.ErrorStr("Forms must have between 1 and 5 inputs"))
+		c.JSON(400, utils.ErrorStr("Formulare müssen zwischen 1 und 5 Eingabefelder haben"))
 		return
 	}
 
@@ -83,12 +83,12 @@ func UpdateInputs(c *gin.Context) {
 	}
 
 	if !ok {
-		c.JSON(404, utils.ErrorStr("Form not found"))
+		c.JSON(404, utils.ErrorStr("Formular nicht gefunden"))
 		return
 	}
 
 	if form.GuildId != guildId {
-		c.JSON(403, utils.ErrorStr("Form does not belong to this guild"))
+		c.JSON(403, utils.ErrorStr("Das Formular gehört nicht zu dieser Guild"))
 		return
 	}
 
@@ -101,7 +101,7 @@ func UpdateInputs(c *gin.Context) {
 	// Verify that the UPDATE inputs exist
 	for _, input := range data.Update {
 		if !utils.ExistsMap(existingInputs, input.Id, idMapper) {
-			c.JSON(400, utils.ErrorStr("Input (to be updated) not found"))
+			c.JSON(400, utils.ErrorStr("Eingabe (zum Aktualisieren) nicht gefunden"))
 			return
 		}
 	}
@@ -109,7 +109,7 @@ func UpdateInputs(c *gin.Context) {
 	// Verify that the DELETE inputs exist
 	for _, id := range data.Delete {
 		if !utils.ExistsMap(existingInputs, id, idMapper) {
-			c.JSON(400, utils.ErrorStr("Input (to be deleted) not found"))
+			c.JSON(400, utils.ErrorStr("Eingabe (zum Löschen) nicht gefunden"))
 			return
 		}
 	}
@@ -117,7 +117,7 @@ func UpdateInputs(c *gin.Context) {
 	// Ensure no overlap between DELETE and UPDATE
 	for _, id := range data.Delete {
 		if utils.ExistsMap(data.Update, id, idMapperBody) {
-			c.JSON(400, utils.ErrorStr("Delete and update overlap"))
+			c.JSON(400, utils.ErrorStr("Löschen und Aktualisieren überschneiden sich"))
 			return
 		}
 	}
@@ -132,20 +132,20 @@ func UpdateInputs(c *gin.Context) {
 
 	// Now verify that the contents match exactly
 	if len(remainingExisting) != len(data.Update) {
-		c.JSON(400, utils.ErrorStr("All inputs must be included in the update array"))
+		c.JSON(400, utils.ErrorStr("Alle Eingaben müssen im Aktualisierungsarray enthalten sein"))
 		return
 	}
 
 	for _, input := range data.Update {
 		if !utils.Exists(remainingExisting, input.Id) {
-			c.JSON(400, utils.ErrorStr("All inputs must be included in the update array"))
+			c.JSON(400, utils.ErrorStr("Alle Eingaben müssen im Aktualisierungsarray enthalten sein"))
 			return
 		}
 	}
 
 	// Verify that the positions are unique, and are in ascending order
 	if !arePositionsCorrect(data) {
-		c.JSON(400, utils.ErrorStr("Positions must be unique and in ascending order"))
+		c.JSON(400, utils.ErrorStr("Positionen müssen eindeutig und aufsteigend sortiert sein"))
 		return
 	}
 
@@ -206,7 +206,7 @@ func saveInputs(ctx context.Context, formId int, data updateInputsBody, existing
 	for _, input := range data.Update {
 		existing := utils.FindMap(existingInputs, input.Id, idMapper)
 		if existing == nil {
-			return fmt.Errorf("input %d does not exist", input.Id)
+			return fmt.Errorf("Eingabe %d exisitiert nicht", input.Id)
 		}
 
 		wrapped := database.FormInput{

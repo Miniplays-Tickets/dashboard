@@ -8,10 +8,10 @@
     </header>
     <nav>
         <ul class="nav-list">
-            <ManageSidebarLink {currentRoute} title="← Back to servers" href="/" />
+            <ManageSidebarLink {currentRoute} title="← Zurück zur Serverübersicht" href="/" />
 
             {#if isAdmin}
-                <ManageSidebarLink {currentRoute} title="Settings" icon="fa-cogs" href="/manage/{guildId}/settings" />
+                <ManageSidebarLink {currentRoute} title="Einstellungen" icon="fa-cogs" href="/manage/{guildId}/settings" />
             {/if}
 
             <ManageSidebarLink {currentRoute} title="Transcripts" icon="fa-copy" href="/manage/{guildId}/transcripts" />
@@ -19,22 +19,28 @@
             {#if isAdmin}
                 <ManageSidebarLink {currentRoute} routePrefix="/manage/{guildId}/panels" title="Ticket Panels" icon="fa-mouse-pointer" href="/manage/{guildId}/panels" />
 
-                <ManageSidebarLink {currentRoute} title="Forms" icon="fa-poll-h" href="/manage/{guildId}/forms" />
+                <ManageSidebarLink {currentRoute} title="Formulare" icon="fa-poll-h" href="/manage/{guildId}/forms" />
                 <ManageSidebarLink {currentRoute} title="Staff Teams" icon="fa-users" href="/manage/{guildId}/teams" />
+                <!--
                 <ManageSidebarLink {currentRoute} title="Integrations" icon="fa-robot" href="/manage/{guildId}/integrations" />
+                -->
                 <ManageSidebarLink {currentRoute} title="Import" icon="fa-file-import" href="/manage/{guildId}/import" />
             {/if}
 
             <ManageSidebarLink {currentRoute} title="Tickets" icon="fa-ticket-alt" href="/manage/{guildId}/tickets" />
             <ManageSidebarLink {currentRoute} title="Blacklist" icon="fa-ban" href="/manage/{guildId}/blacklist" />
             <ManageSidebarLink {currentRoute} title="Tags" icon="fa-tags" href="/manage/{guildId}/tags" />
+
+            {#if isAdmin}
+                <ManageSidebarLink {currentRoute} title="Support Zugriff" icon="fa-users" href="/manage/{guildId}/staffoverride" />
+            {/if}
         </ul>
     </nav>
     <nav class="bottom">
         <hr/>
         <ul class="nav-list">
-            <ManageSidebarLink {currentRoute} title="Documentation" icon="fa-book" href="https://docs.ticketsbot.cloud" newWindow />
-            <ManageSidebarLink {currentRoute} title="Logout" icon="fa-sign-out-alt" href="/logout" />
+            <ManageSidebarLink {currentRoute} title="Dokumentation" icon="fa-book" href="https://docs.ticketsbot.cloud" newWindow />
+            <ManageSidebarLink {currentRoute} title="Abmelden" icon="fa-sign-out-alt" href="/logout" />
         </ul>
     </nav>
 </section>
@@ -156,7 +162,7 @@
                 window.localStorage.setItem('guilds', JSON.stringify(guilds));
             }
         } else {
-            console.error(`Guild with id ${id} not found`);
+            console.error(`Guild mit ID ${id} nicht gefunden`);
         }
     }
 

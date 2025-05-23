@@ -1,28 +1,28 @@
 <div class="content">
     <Card footer footerRight>
-        <span slot="title">Forms</span>
+        <span slot="title">Formulare</span>
         <div slot="body" class="body-wrapper">
             <div class="section">
-                <h2 class="section-title">Create New Form</h2>
+                <h2 class="section-title">Neues Formular erstellen</h2>
 
                 <form on:submit|preventDefault={createForm}>
                     <div class="row" id="creation-row">
-                        <Input placeholder="Form Title" col3={true} bind:value={newTitle}/>
+                        <Input placeholder="Formular Titel" col3={true} bind:value={newTitle}/>
                         <div id="create-button-wrapper">
-                            <Button icon="fas fa-paper-plane" fullWidth={windowWidth <= 950}>Create</Button>
+                            <Button icon="fas fa-paper-plane" fullWidth={windowWidth <= 950}>Erstellen</Button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="section">
-                <h2 class="section-title">Manage Forms</h2>
+                <h2 class="section-title">Formulare verwalten</h2>
 
                 {#if editingTitle && activeFormId !== null}
                     <div class="row form-name-edit-wrapper">
-                        <Input col4 label="Form Title" placeholder="Form Title" bind:value={renamedTitle}/>
+                        <Input col4 label="Form Title" placeholder="Formular Titel" bind:value={renamedTitle}/>
                         <div class="form-name-save-wrapper">
                             <Button icon="fas fa-floppy-disk" fullWidth={windowWidth <= 950} on:click={updateTitle}>
-                                Save
+                                Speichern
                             </Button>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                     <div class="row form-select-row">
                         <div class="multiselect-super">
                             <Dropdown col1 bind:value={activeFormId}>
-                                <option value={null}>Select a form...</option>
+                                <option value={null}>Formular auswählen...</option>
                                 {#each forms as form}
                                     <option value="{form.form_id}">{form.title}</option>
                                 {/each}
@@ -38,9 +38,9 @@
                         </div>
 
                         {#if activeFormId !== null}
-                            <Button on:click={() => editingTitle = true}>Rename Form</Button>
+                            <Button on:click={() => editingTitle = true}>Formular umbenennen</Button>
                             <Button danger type="button"
-                                    on:click={() => deleteForm(activeFormId)}>Delete {activeFormTitle}</Button>
+                                    on:click={() => deleteForm(activeFormId)}>Formular {activeFormTitle} löschen</Button>
                         {/if}
                     </div>
                 {/if}
@@ -64,7 +64,7 @@
                             <hr class="fill">
                             <div class="row add-input-container" class:add-input-disabled={formLength >= 5}>
                                 <i class="fas fa-plus"></i>
-                                <a on:click={addInput}>New Field</a>
+                                <a on:click={addInput}>Neues Feld</a>
                             </div>
                             <hr class="fill">
                         </div>
@@ -75,7 +75,7 @@
 
         <div slot="footer">
             <Button type="submit" icon="fas fa-floppy-disk" disabled={formLength === 0} on:click={saveInputs}>
-                Save
+                Speichern
             </Button>
         </div>
     </Card>
@@ -125,7 +125,7 @@
     async function updateTitle() {
         const res = await axios.patch(`${API_URL}/api/${guildId}/forms/${activeFormId}`, {title: renamedTitle});
         if (res.status !== 200) {
-            notifyError('Failed to update form title');
+            notifyError('Fehler beim Aktualisieren des Formulartitels');
             return;
         }
 
@@ -133,7 +133,7 @@
         getForm(activeFormId).title = renamedTitle;
         forms = forms;
 
-        notifySuccess('Form title updated');
+        notifySuccess('Formular Titel Aktualisiert');
     }
 
     async function createForm() {
@@ -147,7 +147,7 @@
             return;
         }
 
-        notifySuccess(`Form ${newTitle} has been created`);
+        notifySuccess(`Formular ${newTitle} wurde erstellt`);
         newTitle = '';
 
         let form = res.data;
@@ -167,7 +167,7 @@
             return;
         }
 
-        notifySuccess(`Form deleted successfully`);
+        notifySuccess(`Formular erfolgreich gelöscht`);
 
         forms = forms.filter(form => form.form_id !== id);
         if (forms.length > 0) {
@@ -256,7 +256,7 @@
         await loadForms();
         activeFormId = formId;
 
-        notifySuccess('Form updated successfully');
+        notifySuccess('Formular erfolgreich aktualisiert');
     }
 
     async function loadForms() {

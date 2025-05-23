@@ -7,6 +7,6 @@ import (
 
 func VerifyXTicketsHeader(ctx *gin.Context) {
 	if ctx.GetHeader("x-tickets") != "true" {
-		ctx.AbortWithStatusJSON(400, utils.ErrorStr("Missing x-tickets header"))
+		ctx.AbortWithStatusJSON(400, utils.ErrorStr("Fehlender x-tickets header"))
 	}
 }

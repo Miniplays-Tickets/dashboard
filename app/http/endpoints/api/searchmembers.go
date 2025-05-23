@@ -20,7 +20,7 @@ func SearchMembers(ctx *gin.Context) {
 
 	query := ctx.Query("query")
 	if len(query) > 32 {
-		ctx.JSON(400, utils.ErrorStr("Invalid query"))
+		ctx.JSON(400, utils.ErrorStr("Ungültige query"))
 		return
 	}
 

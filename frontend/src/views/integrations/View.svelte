@@ -2,29 +2,32 @@
   <div class="content">
     <div class="col-left">
       <Card footer footerRight>
-        <span slot="title">About {integration.name}</span>
+        <span slot="title">Über {integration.name}</span>
         <div slot="body" class="body-wrapper">
           <span class="description">{integration.description}</span>
 
-          <p style="padding-top: 5px">When a user opens a ticket, a request containing the ticket opener's user ID will
-            be sent to the following URL, controlled by the integration author:</p>
+          <p style="padding-top: 5px">
+            Wenn ein Benutzer ein Ticket öffnet, eine Anfrage, 
+            welche die Benutzer ID des Ticket Öffners wird zu der folgenden URL gesendet, welche dem Integration Author gehört:
+          </p>
           <input readonly value={integration.webhook_url} class="form-input"/>
 
 
           {#if privacy_policy_url === null}
-            <p>The integration author has not provided a privacy policy.</p>
+            <p>Der Integration Author hat keine Privacy Policy zur Verfügung gestellt.</p>
           {:else}
-            <p>The integration author has provided a privacy policy, accessible at
+            <p>
+              Der Integration Author hat eine Privacy Policy zur Verfügung gestellt, abrufbar unter
               <a href="{privacy_policy_url}" class="link-blue">{privacy_policy_url}</a>
             </p>
           {/if}
         </div>
         <div slot="footer">
           {#if isActive}
-            <Button on:click={removeIntegration} danger>Remove from server</Button>
+            <Button on:click={removeIntegration} danger>Entfernen vom Server</Button>
           {:else}
             <Button on:click={() => navigateTo(`/manage/${guildId}/integrations/activate/${integrationId}`)}>
-              Add to server
+              Hinzufügen zum Server
             </Button>
           {/if}
         </div>
@@ -34,8 +37,8 @@
       <Card footer={false} fill={false}>
         <span slot="title">Placeholders</span>
         <div slot="body">
-          <p>The following placeholders are available to user in welcome messages through the <i>{integration.name}</i>
-            integration:</p>
+          <p>Die folgenden Placeholder sind für den Benutzer in der Willkommensnachricht durch die <i>{integration.name}</i>
+            Integration:</p>
 
           <div class="placeholders">
             {#if integration.placeholders}
@@ -115,7 +118,7 @@
         ]);
 
         if (freshlyCreated) {
-            notifySuccess("Your integration has been created successfully!");
+            notifySuccess("Deine Integration wurde erfolgreich erstellt!");
         }
     });
 </script>

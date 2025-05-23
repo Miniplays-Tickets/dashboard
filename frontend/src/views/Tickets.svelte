@@ -2,41 +2,41 @@
     <Card footer={false}>
         <span slot="title">
             <i class="fas fa-filter"></i>
-            Filters
+            Filter
         </span>
         <div slot="body" class="filter-wrapper">
             <div>
-                <label class="form-label">Show Columns</label>
+                <label class="form-label">Zeilen zum Anzeigen</label>
                 <ColumnSelector
-                    options={["ID", "Panel", "User", "Opened Time", "Claimed By", "Last Message Time", "Awaiting Response"]}
+                    options={["ID", "Panel", "Benutzer", "Öffnungszeit", "Beansprucht von", "Letzte Nachricht", "Wartet auf Antwort"]}
                     bind:selected={selectedColumns}
                 />
             </div>
 
-            <Dropdown col2 label="Sort Tickets By..." bind:value={sortMethod}>
-                <option value="id_asc">Ticket ID (Ascending) / Oldest First</option>
-                <option value="id_desc">Ticket ID (Descending) / Newest First</option>
-                <option value="unclaimed">Unclaimed & Awaiting Response First</option>
+            <Dropdown col2 label="Sortiere Tickets in..." bind:value={sortMethod}>
+                <option value="id_asc">Ticket ID (Steigend) / Älteste zuerst</option>
+                <option value="id_desc">Ticket ID (Absteigend) / Neuste zuerst</option>
+                <option value="unclaimed">Nicht Beansprucht & Wartet auf Antwort</option>
             </Dropdown>
 
-            <Checkbox label="Only Show Unclaimed Tickets & Tickets Claimed By Me" bind:value={onlyShowMyTickets} />
+            <Checkbox label="Zeige nur unbeanspruchte Tickets & Tickets von mir Beansprucht" bind:value={onlyShowMyTickets} />
         </div>
     </Card>
 
     <Card footer={false}>
-        <span slot="title">Open Tickets</span>
+        <span slot="title">Offene Tickets</span>
         <div slot="body" class="body-wrapper">
             <table class="nice">
                 <thead>
                 <tr>
                     <th class:visible={selectedColumns.includes('ID')}>ID</th>
                     <th class:visible={selectedColumns.includes('Panel')}>Panel</th>
-                    <th class:visible={selectedColumns.includes('User')}>User</th>
-                    <th class:visible={selectedColumns.includes('Opened Time')}>Opened</th>
-                    <th class:visible={selectedColumns.includes('Claimed By')}>Claimed By</th>
-                    <th class:visible={selectedColumns.includes('Last Message Time')}>Last Message</th>
-                    <th class:visible={selectedColumns.includes('Awaiting Response')}>Awaiting Response</th>
-                    <th class="visible">View</th>
+                    <th class:visible={selectedColumns.includes('Benutzer')}>Benuter</th>
+                    <th class:visible={selectedColumns.includes('Öffnungszeit')}>Öffnungszeit</th>
+                    <th class:visible={selectedColumns.includes('Beansprucht von')}>Beansprucht von</th>
+                    <th class:visible={selectedColumns.includes('Letzte Nachricht')}>Letzte Nachricht</th>
+                    <th class:visible={selectedColumns.includes('Wartet auf Antwort')}>Wartet auf Antwort</th>
+                    <th class="visible">Anzeigen</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,24 +48,24 @@
                     <tr>
                         <td class:visible={selectedColumns.includes('ID')}>{ticket.id}</td>
                         <td class:visible={selectedColumns.includes('Panel')}>
-                            {panel_title || 'Unknown Panel'}
+                            {panel_title || 'Unbekanntes Panel'}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('User')}>
+                        <td class:visible={selectedColumns.includes('Benutzer')}>
                             {#if user}
                                 {user.global_name || user.username}
                             {:else}
-                                Unknown
+                                Unbekannt
                             {/if}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('Opened Time')}>
+                        <td class:visible={selectedColumns.includes('Öffnungszeit')}>
                             {getRelativeTime(new Date(ticket.opened_at))}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('Claimed By')}>
+                        <td class:visible={selectedColumns.includes('Beansprucht von')}>
                             {#if ticket.claimed_by === null}
-                                <b>Unclaimed</b>
+                                <b>Nicht Beansprucht</b>
                             {:else if claimer}
                                 {claimer.global_name || claimer.username}
                             {:else}
@@ -73,25 +73,25 @@
                             {/if}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('Last Message Time')}>
+                        <td class:visible={selectedColumns.includes('Letzte Nachricht')}>
                             {#if ticket.last_response_time}
                                 {getRelativeTime(new Date(ticket.last_response_time))}
                             {:else}
-                                Never
+                                Nie
                             {/if}
                         </td>
 
-                        <td class:visible={selectedColumns.includes('Awaiting Response')}>
+                        <td class:visible={selectedColumns.includes('Wartet auf Antwort')}>
                             {#if ticket.last_response_is_staff}
-                                No
+                                Nein
                             {:else}
-                                <b>Yes</b>
+                                <b>Ja</b>
                             {/if}
                         </td>
 
                         <td class="visible">
                             <Navigate to="/manage/{guildId}/tickets/view/{ticket.id}" styles="link">
-                                <Button type="button">View</Button>
+                                <Button type="button">Anzeigen</Button>
                             </Navigate>
                         </td>
                     </tr>

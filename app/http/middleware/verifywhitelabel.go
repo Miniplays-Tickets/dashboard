@@ -33,7 +33,7 @@ func VerifyWhitelabel(isApi bool) func(ctx *gin.Context) {
 				if isApi {
 					ctx.AbortWithStatusJSON(402, gin.H{
 						"success": false,
-						"error":   "You must have the whitelabel premium tier",
+						"error":   "Du musst Whitelabel besitzen!",
 					})
 				} else {
 					ctx.Redirect(302, fmt.Sprintf("%s/premium", config.Conf.Server.MainSite))

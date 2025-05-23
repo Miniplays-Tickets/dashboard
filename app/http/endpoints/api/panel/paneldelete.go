@@ -27,7 +27,7 @@ func DeletePanel(c *gin.Context) {
 
 	panelId, err := strconv.Atoi(c.Param("panelid"))
 	if err != nil {
-		c.JSON(400, utils.ErrorStr("Missing panel ID"))
+		c.JSON(400, utils.ErrorStr("Fehlende Panel ID"))
 		return
 	}
 
@@ -38,13 +38,13 @@ func DeletePanel(c *gin.Context) {
 	}
 
 	if panel.PanelId == 0 {
-		c.JSON(404, utils.ErrorStr("Panel not found"))
+		c.JSON(404, utils.ErrorStr("Panel nicht gefunden"))
 		return
 	}
 
 	// verify panel belongs to guild
 	if panel.GuildId != guildId {
-		c.JSON(403, utils.ErrorStr("Guild ID doesn't match"))
+		c.JSON(403, utils.ErrorStr("Guild ID stimmt nicht"))
 		return
 	}
 

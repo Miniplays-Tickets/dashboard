@@ -1,5 +1,5 @@
 <svelte:head>
-  <title>Tickets Dashboard</title>
+  <title>Miniplays Tickets Dashboard</title>
 
   <!-- Meta -->
   <meta charset="utf-8">

@@ -16,7 +16,7 @@ type testCtx struct {
 func validateGreaterThanZero(ctx testCtx) ValidationFunc {
 	return func() error {
 		if ctx.a <= 0 {
-			return NewInvalidInputError("a must be greater than 0")
+			return NewInvalidInputError("Fehler 3")
 		}
 
 		return nil
@@ -26,7 +26,7 @@ func validateGreaterThanZero(ctx testCtx) ValidationFunc {
 func validateStringNotEmpty(ctx testCtx) ValidationFunc {
 	return func() error {
 		if len(ctx.b) == 0 {
-			return NewInvalidInputError("b must be greater than 0")
+			return NewInvalidInputError("Fehler 4")
 		}
 
 		return nil
@@ -53,30 +53,30 @@ func TestSingleFail(t *testing.T) {
 	ctx := testCtx{a: 1, b: ""}
 	err := Validate(context.Background(), ctx, validateGreaterThanZero, validateStringNotEmpty)
 	if err == nil {
-		t.Fatal("expected error")
+		t.Fatal("Fehler 5")
 	}
 
 	var validationError *InvalidInputError
 	if !errors.As(err, &validationError) {
-		t.Fatal("expected InvalidInputError error")
+		t.Fatal("Fehler 6")
 	}
 
-	assert.Equal(t, "b must be greater than 0", validationError.Message)
+	assert.Equal(t, "Fehler 7", validationError.Message)
 }
 
 func TestDualFail(t *testing.T) {
 	ctx := testCtx{a: 0, b: ""}
 	err := Validate(context.Background(), ctx, validateGreaterThanZero, validateStringNotEmpty)
 	if err == nil {
-		t.Error("expected error")
+		t.Error("Fehler 8")
 	}
 
 	var validationError *InvalidInputError
 	if !errors.As(err, &validationError) {
-		t.Error("expected InvalidInputError error")
+		t.Error("Fehler 9")
 	}
 
-	if validationError.Message != "a must be greater than 0" && validationError.Message != "b must be greater than 0" {
-		t.Errorf("got wrong error message: %s", validationError.Message)
+	if validationError.Message != "Fehler 3" && validationError.Message != "Fehler 4" && validationError.Message != "Fehler 7" {
+		t.Errorf("Fehler 10: %s", validationError.Message)
 	}
 }

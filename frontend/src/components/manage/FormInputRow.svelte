@@ -1,7 +1,7 @@
 <form on:submit|preventDefault={forwardCreate} class="input-form">
   <div class="row">
     <div class="sub-row" style="flex: 1">
-      <Input col3={true} label="Label" bind:value={data.label} placeholder="Name of the field" />
+      <Input col3={true} label="Titel" bind:value={data.label} placeholder="Name des Feldes" />
     </div>
     <div class="sub-row buttons-row">
       {#if windowWidth > 950}
@@ -19,28 +19,28 @@
         {/if}
         {#if withDeleteButton}
           <form on:submit|preventDefault={forwardDelete} class="button-form">
-            <Button icon="fas fa-trash" danger={true}>Delete</Button>
+            <Button icon="fas fa-trash" danger={true}>Löschen</Button>
           </form>
         {/if}
       {/if}
     </div>
   </div>
   <div class="row settings-row">
-    <Textarea col2={true} label="Placeholder" bind:value={data.placeholder} minHeight="120px"
-           placeholder="Placeholder text for the field, just like this text" />
+    <Textarea col2={true} label="Platzhalter" bind:value={data.placeholder} minHeight="120px"
+           placeholder="Platzhalter Text für das Feld, wie dieser hier" />
     <div class="col-2 properties-group">
       <div class="row">
-        <Dropdown col2={true} label="Style" bind:value={data.style} on:change={updateStyle}>
-          <option value=1 selected>Short</option>
-          <option value=2>Multi-line</option>
+        <Dropdown col2={true} label="Aussehen" bind:value={data.style} on:change={updateStyle}>
+          <option value=1 selected>Kurz</option>
+          <option value=2>Mehrzeilig</option>
         </Dropdown>
       </div>
       <div class="row" style="gap: 10px">
-        <Checkbox label="Required" bind:value={data.required}/>
+        <Checkbox label="Benötigt" bind:value={data.required}/>
         {#if data.style == 1}
-          <DoubleRangeSlider label="Answer Length Range" bind:start={data.min_length} bind:end={data.max_length} min={0} max={255} />
+          <DoubleRangeSlider label="Antwortlängenbereich" bind:start={data.min_length} bind:end={data.max_length} min={0} max={255} />
         {:else}
-          <DoubleRangeSlider label="Answer Length Range" bind:start={data.min_length} bind:end={data.max_length} min={0} max={1024} />
+          <DoubleRangeSlider label="Antwortlängenbereich" bind:start={data.min_length} bind:end={data.max_length} min={0} max={1024} />
         {/if}
       </div>
     </div>
@@ -70,7 +70,7 @@
         <div class="col-2-force">
           {#if withDeleteButton}
             <form on:submit|preventDefault={forwardDelete} class="button-form">
-              <Button icon="fas fa-trash" danger={true}>Delete</Button>
+              <Button icon="fas fa-trash" danger={true}>Löschen</Button>
             </form>
           {/if}
         </div>
