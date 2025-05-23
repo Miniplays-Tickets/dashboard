@@ -311,6 +311,10 @@
         margin-top: 12px;
     }
 
+    .col-4 {
+        width: 100% !important;
+    }
+
     .col {
         display: flex;
         flex-direction: column;
