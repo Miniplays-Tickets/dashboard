@@ -1,5 +1,5 @@
 <div class="super">
-  <RoleSelect {guildId} placeholder="Add another role..."
+  <RoleSelect {guildId} placeholder="Andere Rolle hinzufügen..."
               roles={roles.filter((r) => !acl.find((s) => s.role_id === r.id))} disabled={acl.length >= maxAclSize}
               on:change={(e) => addToACL(e.detail)} bind:value={roleSelectorValue}/>
 
@@ -17,7 +17,7 @@
             <span>{role ? role.name : 'Deleted Role'}</span>
           </div>
           {#key rerender}
-            <Toggle on="Allow" off="Deny"
+            <Toggle on="Erlauben" off="Verbieten"
                     hideLabel
                     toggledColor="#66bb6a"
                     untoggledColor="#e84141"

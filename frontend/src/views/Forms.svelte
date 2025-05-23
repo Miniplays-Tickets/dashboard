@@ -40,7 +40,7 @@
                         {#if activeFormId !== null}
                             <Button on:click={() => editingTitle = true}>Formular umbenennen</Button>
                             <Button danger type="button"
-                                    on:click={() => deleteForm(activeFormId)}>{activeFormTitle} löschen</Button>
+                                    on:click={() => deleteForm(activeFormId)}>Formular {activeFormTitle} löschen</Button>
                         {/if}
                     </div>
                 {/if}

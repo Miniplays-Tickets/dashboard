@@ -4,14 +4,14 @@
         <div slot="content" class="col-1">
             <div class="row">
                 <div class="col-2">
-                    <label class="form-label">Mention On Open</label>
+                    <label class="form-label">Erwähnung beim Öffnen</label>
                     <div class="col-1">
                         <WrappedSelect items={mentionItems}
                                        bind:selectedValue={selectedMentions}
                                        on:input={updateMentions}
                                        optionIdentifier="id"
                                        nameMapper={mentionNameMapper}
-                                       placeholder="Select roles..."
+                                       placeholder="Rollen auswählen..."
                                        isMulti={true} />
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                             on:input={updateTeams}
                             optionIdentifier="id"
                             nameMapper={nameMapper}
-                            placeholder="Select teams..."
+                            placeholder="Teams auswählen..."
                             isMulti={true}>
                         <div slot="item" let:item>{item.name}</div>
                         <div slot="selection" let:selection>{selection.name}</div>
@@ -30,20 +30,20 @@
                 </div>
             </div>
             <div class="incomplete-row">
-                <CategoryDropdown label="Ticket Category" col3 {channels} bind:value={data.category_id}/>
+                <CategoryDropdown label="Ticket kategorie" col3 {channels} bind:value={data.category_id}/>
 
-                <Dropdown col4 label="Form" bind:value={data.form_id}>
-                    <option value=null>None</option>
+                <Dropdown col4 label="Formular" bind:value={data.form_id}>
+                    <option value=null>Keins</option>
                     {#each forms as form}
                         <option value={form.form_id}>{form.title}</option>
                     {/each}
                 </Dropdown>
 
                 <div>
-                    <label for="naming-scheme-wrapper" class="form-label">Naming Scheme</label>
+                    <label for="naming-scheme-wrapper" class="form-label">Benennungsschema</label>
                     <div class="row" id="naming-scheme-wrapper">
                         <div>
-                            <label class="form-label">Use Server Default</label>
+                            <label class="form-label">Benutze Server Standart</label>
                             <Toggle hideLabel
                                     toggledColor="#66bb6a"
                                     untoggledColor="#ccc"
@@ -54,7 +54,7 @@
 
                 {#if !data.use_server_default_naming_scheme}
                     <Input col4
-                           label="Naming Scheme"
+                           label=Benennungsschema"
                            bind:value={data.naming_scheme}
                            placeholder="ticket-%id%"
                            tooltipText="Click here for the full placeholder list"
@@ -62,13 +62,13 @@
                 {/if}
             </div>
             <div class="incomplete-row">
-                <Dropdown col3 label="Exit Survey Form" premiumBadge={true} bind:value={data.exit_survey_form_id} disabled={!isPremium}>
+                <Dropdown col3 label="Abschlussbefragungsformular" premiumBadge={true} bind:value={data.exit_survey_form_id} disabled={!isPremium}>
                     <option value=null>None</option>
                     {#each forms as form}
                         <option value={form.form_id}>{form.title}</option>
                     {/each}
                 </Dropdown>
-                <Dropdown col3 label="Awaiting Response Category" premiumBadge={true} bind:value={data.pending_category} disabled={!isPremium}>
+                <Dropdown col3 label="Erwartet Antwort Kategorie" premiumBadge={true} bind:value={data.pending_category} disabled={!isPremium}>
                     <option value="">Disabled</option>
                     {#each channels as channel}
                         {#if channel.type === 4}
@@ -81,48 +81,48 @@
     </Collapsible>
 
     <Collapsible defaultOpen>
-        <span slot="header">Panel Message</span>
+        <span slot="header">Panel Nachricht</span>
         <div slot="content" class="col-1">
             <div class="row">
                 <div class="col-1-3">
-                    <Input label="Panel Title" placeholder="Open a ticket!" col1=true bind:value={data.title}/>
+                    <Input label="Panel Titel" placeholder="Öffne ein Ticket!" col1=true bind:value={data.title}/>
                 </div>
                 <div class="col-2-3">
-                        <Textarea col1=true label="Panel Content" placeholder="By clicking the button, a ticket will be opened for you."
+                        <Textarea col1=true label="Panel Inhalt" placeholder="Wenn du diesen Button drückst, wird für dich ein Ticket eröffnet."
                                   bind:value={data.content}/>
                 </div>
             </div>
 
             <div class="row">
-                <Colour col4=true label="Panel Colour" on:change={updateColour} bind:value={tempColour}/>
-                <ChannelDropdown label="Panel Channel" allowAnnouncementChannel col4 {channels} bind:value={data.channel_id}/>
+                <Colour col4=true label="Panel Farbe" on:change={updateColour} bind:value={tempColour}/>
+                <ChannelDropdown label="Panel Kanal" allowAnnouncementChannel col4 {channels} bind:value={data.channel_id}/>
                 <div class="col-2">
                     <div class="row" style="justify-content: flex-start; gap: 10px">
                         <div style="white-space: nowrap">
-                            <Checkbox label="Disable Panel" bind:value={data.disabled}></Checkbox>
+                            <Checkbox label="Deaktiviere Panel" bind:value={data.disabled}></Checkbox>
                         </div>
                         {#if data.disabled}
-                            <b style="display: flex; align-self: center">You will be unable to open any tickets with this panel</b>
+                            <b style="display: flex; align-self: center">Es können keine Tickets mit diesem Panel geöffnet werden</b>
                         {/if}
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <Dropdown col4=true label="Button Colour" bind:value={data.button_style}>
-                    <option value="1">Blue</option>
-                    <option value="2">Grey</option>
-                    <option value="3">Green</option>
-                    <option value="4">Red</option>
+                <Dropdown col4=true label="Button Farbe" bind:value={data.button_style}>
+                    <option value="1">Blau</option>
+                    <option value="2">Grau</option>
+                    <option value="3">Grün</option>
+                    <option value="4">Rot</option>
                 </Dropdown>
 
-                <Input col4={true} label="Button Text" placeholder="Open a ticket!" bind:value={data.button_label} />
+                <Input col4={true} label="Button Text" placeholder="Öffne ein Ticket!" bind:value={data.button_label} />
 
                 <div class="col-2" style="z-index: 1">
                     <label for="emoji-pick-wrapper" class="form-label">Button Emoji</label>
                     <div id="emoji-pick-wrapper" class="row" style="gap: 2%">
                         <div class="col">
-                            <label class="form-label" style="margin-bottom: 0 !important; white-space: nowrap;">Custom Emoji</label>
+                            <label class="form-label" style="margin-bottom: 0 !important; white-space: nowrap;">Eigenes Emoji</label>
                             <Toggle hideLabel
                                     toggledColor="#66bb6a"
                                     untoggledColor="#ccc"
@@ -147,14 +147,14 @@
             </div>
 
             <div class="row">
-                <Input col2={true} label="Large Image URL" badge="Optional" bind:value={data.image_url} placeholder="https://example.com/image.png" />
-                <Input col2={true} label="Small Image URL" badge="Optional" bind:value={data.thumbnail_url} placeholder="https://example.com/image.png" />
+                <Input col2={true} label="Großes Bild URL" badge="Optional" bind:value={data.image_url} placeholder="https://example.com/image.png" />
+                <Input col2={true} label="Kleines Bild URL" badge="Optional" bind:value={data.thumbnail_url} placeholder="https://example.com/image.png" />
             </div>
         </div>
     </Collapsible>
 
     <Collapsible>
-        <span slot="header">Welcome Message</span>
+        <span slot="header">Willkommensnachricht</span>
         <div slot="content" class="col-1">
             <div class="row">
                 <EmbedForm bind:data={data.welcome_message} />
@@ -163,11 +163,10 @@
     </Collapsible>
 
     <Collapsible>
-        <span slot="header">Access Control</span>
+        <span slot="header">Zugriffskontrolle</span>
         <div slot="content" class="col-1">
             <div class="row">
-                <p>Control who can open tickets with from this panel. Rules are evaluated from <em>top to bottom</em>,
-                    stopping after the first match.</p>
+                <p>Konfigurieren, wer tickets von diesem Panel öffnen kann. Es wird von oben nach unden Ausgewertet.</p>
             </div>
             <div class="row">
                 <AccessControlList {guildId} {roles} bind:acl={data.access_control_list} />
