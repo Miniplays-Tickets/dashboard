@@ -96,7 +96,7 @@
     const USER_TYPE = 0;
     const ROLE_TYPE = 1;
 
-    let defaultTeam = {id: 'default', name: 'Default'};
+    let defaultTeam = {id: 'default', name: 'Standart'};
 
     let createName;
     let teams = [defaultTeam];
