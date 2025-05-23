@@ -54,7 +54,7 @@
 
                 {#if !data.use_server_default_naming_scheme}
                     <Input col4
-                           label=Benennungsschema"
+                           label="Benennungsschema"
                            bind:value={data.naming_scheme}
                            placeholder="ticket-%id%"
                            tooltipText="Click here for the full placeholder list"
