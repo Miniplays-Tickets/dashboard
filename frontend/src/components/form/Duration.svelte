@@ -6,17 +6,17 @@
   <div class="row fields">
     <div class="parent">
       <input class="form-input" type="number" min=0 {disabled} bind:value={days}/>
-      <div class="period" class:disabled>D</div>
+      <div class="period" class:disabled>Tage</div>
     </div>
 
     <div class="parent">
       <input class="form-input" type="number" min=0 {disabled} bind:value={hours}/>
-      <div class="period" class:disabled>H</div>
+      <div class="period" class:disabled>Stunden</div>
     </div>
 
     <div class="parent">
       <input class="form-input" type="number" min=0 {disabled} bind:value={minutes}/>
-      <div class="period" class:disabled>M</div>
+      <div class="period" class:disabled>Minuten</div>
     </div>
   </div>
 </div>
