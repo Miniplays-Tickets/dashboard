@@ -82,7 +82,7 @@
     }
 
     button.active {
-        background: white;
+        background: #9b59b6;
         color: var(--primary);
         font-weight: bold;
         border: 2px solid var(--primary);
