@@ -58,7 +58,7 @@
 
     let guildsall = window.localStorage.getItem('guildsall') ? JSON.parse(window.localStorage.getItem('guildsall')) : [];
     let currentPage = 1;
-    let itemsPerPage = 10; 
+    let itemsPerPage = 15; 
     
     $: totalPages = Math.ceil(guildsall.length / itemsPerPage);
     
