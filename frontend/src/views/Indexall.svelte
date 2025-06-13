@@ -19,21 +19,22 @@
         </div>
 
         <div class="pagination-controls">
-          <button on:click={prevPage} disabled={currentPage === 1}>
-            ⬅️ Zurück
-          </button>
-          
-          {#each Array(totalPages) as _, i}
-            <button 
-              class:active={currentPage === i + 1}
-              on:click={() => goToPage(i + 1)}>
-              {i + 1}
-            </button>
-          {/each}
-          
-          <button on:click={nextPage} disabled={currentPage === totalPages}>
-            Weiter ➡️
-          </button>
+            <Button icon="fas fa-arrow-left" on:click={prevPage} disabled={currentPage === 1}>
+                Zurück
+            </Button>
+            
+            {#each Array(totalPages) as _, i}
+                <Button
+                    on:click={() => goToPage(i + 1)}
+                    type="button"
+                    active={currentPage === i + 1}
+                    noShadow>
+                        {i + 1}
+                </Button>
+            {/each}
+            <Button icon="fas fa-arrow-right" on:click={nextPage} disabled={currentPage === totalPages}>
+                Weiter
+            </Button>
         </div>
       </div>
     </Card>
