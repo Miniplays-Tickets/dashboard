@@ -70,7 +70,9 @@
     .card-wrapper {
         display: block;
         width: 75%;
+        height: 90%;
         margin-top: 5%;
+        margin-bottom: 5%;
     }
 
     #guild-container {
