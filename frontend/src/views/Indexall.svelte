@@ -6,7 +6,7 @@
       </span>
 
       <div slot="body" style="width: 100%">
-        <div id="guild-container">
+        <div id="guild-container" bind:this={guildContainer}>
           {#each paginatedGuilds as guild (guild.id)}
             <Guild guild={guild}/>
           {/each}
@@ -60,6 +60,7 @@
     let paginationControls;
     let guildCountLabel;
     let cardWrapper;
+    let guildContainer;
 
     let guildsall = window.localStorage.getItem('guildsall') ? JSON.parse(window.localStorage.getItem('guildsall')) : [];
     let currentPage = 1;
