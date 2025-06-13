@@ -7,7 +7,7 @@
 
       <div slot="body" style="width: 100%">
         <div id="guild-container">
-          {#each paginatedGuilds as guild}
+          {#each paginatedGuilds as guild (guild.id)}
             <Guild guild={guild}/>
           {/each}
         </div>
