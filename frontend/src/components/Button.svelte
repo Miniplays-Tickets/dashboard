@@ -82,8 +82,8 @@
     }
 
     button.active {
-        background: #9b59b6;
-        color: var(--primary);
+        background: var(--primary);
+        color: white;
         font-weight: bold;
         border: 2px solid var(--primary);
     }
