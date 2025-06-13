@@ -1,7 +1,7 @@
 <div class="content">
   <div class="card-wrapper">
     <Card footer={false} fill={false}>
-      <span slot="title">
+      <span slot="title" bind:this={guildCountLabel}>
         Admin Serverübersicht
       </span>
 
@@ -58,6 +58,7 @@
 
     let refreshContainer;
     let paginationControls;
+    let guildCountLabel;
 
     let guildsall = window.localStorage.getItem('guildsall') ? JSON.parse(window.localStorage.getItem('guildsall')) : [];
     let currentPage = 1;
@@ -111,7 +112,8 @@
 
         const reservedHeight =
             (refreshContainer?.offsetHeight || 0) +
-            (paginationControls?.offsetHeight || 0);
+            (paginationControls?.offsetHeight || 0) +
+            (guildCountLabel?.offsetHeight || 0);
 
         const usableHeight = containerHeight - reservedHeight;
         const rows = Math.floor(usableHeight / badgeHeight) || 1;
