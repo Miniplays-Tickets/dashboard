@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="card-wrapper">
+  <div class="card-wrapper" bind:this="{cardWrapper}">
     <Card footer={false} fill={false}>
       <span slot="title" bind:this={guildCountLabel}>
         Admin Serverübersicht
@@ -59,6 +59,7 @@
     let refreshContainer;
     let paginationControls;
     let guildCountLabel;
+    let cardWrapper;
 
     let guildsall = window.localStorage.getItem('guildsall') ? JSON.parse(window.localStorage.getItem('guildsall')) : [];
     let currentPage = 1;
@@ -103,19 +104,17 @@
 
     function recalcItemsPerPage() {
         if (!guildContainer) return;
-
-        const containerHeight = guildContainer.clientHeight;
-
         const badgeHeight = 110;
-
         const cardsPerRow = window.innerWidth > 950 ? 3 : 1;
 
         const reservedHeight =
             (refreshContainer?.offsetHeight || 0) +
             (paginationControls?.offsetHeight || 0) +
-            (guildCountLabel?.offsetHeight || 0);
+            (guildCountLabel?.offsetHeight || 0) +
+            (cardWrapper?.offsetTop || 0) +
+            50;
 
-        const usableHeight = containerHeight - reservedHeight;
+        const usableHeight = window.innerHeight - reservedHeight;
         const rows = Math.floor(usableHeight / badgeHeight) || 1;
 
         itemsPerPage = cardsPerRow * rows;
