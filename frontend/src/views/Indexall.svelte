@@ -43,6 +43,7 @@
 
 <script>
     import axios from 'axios';
+    import { onMount } from 'svelte';
     import {fade} from 'svelte/transition';
     import {notifyError, withLoadingScreen} from '../js/util'
     import {setDefaultHeaders} from '../includes/Auth.svelte'
@@ -57,7 +58,7 @@
 
     let guildsall = window.localStorage.getItem('guildsall') ? JSON.parse(window.localStorage.getItem('guildsall')) : [];
     let currentPage = 1;
-    const itemsPerPage = 10; 
+    let itemsPerPage = 10; 
     
     $: totalPages = Math.ceil(guildsall.length / itemsPerPage);
     
@@ -95,6 +96,29 @@
             window.localStorage.setItem('guildsall', JSON.stringify(guildsall));
         });
     }
+
+    function recalcItemsPerPage() {
+        if (!guildContainer) return;
+
+        const containerHeight = guildContainer.clientHeight;
+
+        const badgeHeight = 110;
+
+        const cardsPerRow = window.innerWidth > 950 ? 3 : 1;
+
+        const rows = Math.floor(containerHeight / badgeHeight) || 1;
+
+        itemsPerPage = cardsPerRow * rows;
+        currentPage = 1;
+    }
+
+    onMount(() => {
+        recalcItemsPerPage();
+
+        window.addEventListener('resize', () => {
+            recalcItemsPerPage();
+        });
+    });
 
     loadingScreen.set(false);
 </script>
