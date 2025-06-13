@@ -1,4 +1,4 @@
-<button on:click isTrigger="1" class:fullWidth class:danger class:iconOnly class:shadow={!noShadow} {disabled} {type} bind:clientWidth>
+<button on:click isTrigger="1" class:fullWidth class:danger class:iconOnly class:shadow={!noShadow} class:active={active} {disabled} {type} bind:clientWidth>
   {#if icon !== undefined}
     <i class="{icon}"></i>
   {/if}
@@ -17,6 +17,7 @@
     export let danger = false;
     export let iconOnly = false;
     export let noShadow = false;
+    export let active = false;
     export let clientWidth;
 </script>
 
@@ -78,5 +79,12 @@
     .iconOnly {
         width: 40px;
         height: 40px;
+    }
+
+    button.active {
+        background: var(--primary);
+        color: white;
+        font-weight: bold;
+        border: 2px solid var(--primary);
     }
 </style>
