@@ -169,20 +169,11 @@
             width: 100%;
         }
     }
+    
     .pagination-controls {
         margin-top: 1rem;
         display: flex;
         gap: 0.5rem;
         justify-content: center;
-    }
-
-    .pagination-controls button.active {
-        font-weight: bold;
-        background: #ddd;
-    }
-
-    .pagination-controls button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
     }
 </style>
