@@ -7,7 +7,7 @@
 
       <div slot="body" style="width: 100%">
         <div id="guild-container">
-          {#each guildsall as guild}
+          {#each paginatedGuilds as guild}
             <Guild guild={guild}/>
           {/each}
         </div>
@@ -16,6 +16,24 @@
           <Button icon="fas fa-sync" on:click={refreshGuilds}>
             Liste Aktuallisieren
           </Button>
+        </div>
+
+        <div class="pagination-controls">
+          <button on:click={prevPage} disabled={currentPage === 1}>
+            ⬅️ Zurück
+          </button>
+          
+          {#each Array(totalPages) as _, i}
+            <button 
+              class:active={currentPage === i + 1}
+              on:click={() => goToPage(i + 1)}>
+              {i + 1}
+            </button>
+          {/each}
+          
+          <button on:click={nextPage} disabled={currentPage === totalPages}>
+            Weiter ➡️
+          </button>
         </div>
       </div>
     </Card>
@@ -37,6 +55,27 @@
     setDefaultHeaders();
 
     let guildsall = window.localStorage.getItem('guildsall') ? JSON.parse(window.localStorage.getItem('guildsall')) : [];
+    let currentPage = 1;
+    const itemsPerPage = 10; 
+    
+    $: totalPages = Math.ceil(guildsall.length / itemsPerPage);
+    
+    $: paginatedGuilds = guildsall.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+
+    function nextPage() {
+      if (currentPage < totalPages) currentPage++;
+    }
+    
+    function prevPage() {
+      if (currentPage > 1) currentPage--;
+    }
+    
+    function goToPage(page) {
+      if (page >= 1 && page <= totalPages) currentPage = page;
+    }
 
     async function refreshGuilds() {
         await withLoadingScreen(async () => {
@@ -94,5 +133,21 @@
         .card-wrapper {
             width: 100%;
         }
+    }
+    .pagination-controls {
+        margin-top: 1rem;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .pagination-controls button.active {
+        font-weight: bold;
+        background: #ddd;
+    }
+
+    .pagination-controls button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 </style>
