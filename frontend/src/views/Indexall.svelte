@@ -12,13 +12,13 @@
           {/each}
         </div>
 
-        <div class="flex-container" id="refresh-container">
+        <div class="flex-container" id="refresh-container" bind:this={refreshContainer}>
           <Button icon="fas fa-sync" on:click={refreshGuilds}>
             Liste Aktuallisieren
           </Button>
         </div>
 
-        <div class="pagination-controls">
+        <div class="pagination-controls" bind:this={paginationControls}>
             <Button icon="fas fa-arrow-left" on:click={prevPage} disabled={currentPage === 1}>
                 Zurück
             </Button>
@@ -55,6 +55,9 @@
     import {loadingScreen, permissionLevelCache} from "../js/stores";
 
     setDefaultHeaders();
+
+    let refreshContainer;
+    let paginationControls;
 
     let guildsall = window.localStorage.getItem('guildsall') ? JSON.parse(window.localStorage.getItem('guildsall')) : [];
     let currentPage = 1;
@@ -106,7 +109,12 @@
 
         const cardsPerRow = window.innerWidth > 950 ? 3 : 1;
 
-        const rows = Math.floor(containerHeight / badgeHeight) || 1;
+        const reservedHeight =
+            (refreshContainer?.offsetHeight || 0) +
+            (paginationControls?.offsetHeight || 0);
+
+        const usableHeight = containerHeight - reservedHeight;
+        const rows = Math.floor(usableHeight / badgeHeight) || 1;
 
         itemsPerPage = cardsPerRow * rows;
         currentPage = 1;
