@@ -16,7 +16,7 @@
 
         <div class="flex-container" id="refresh-container" bind:this={refreshContainer}>
           <Button icon="fas fa-sync" on:click={refreshGuilds}>
-            Liste Aktuallisieren
+            Liste Aktualisieren
           </Button>
         </div>
 
