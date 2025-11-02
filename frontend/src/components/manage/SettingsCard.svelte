@@ -1,181 +1,3 @@
-{#if data}
-  <Card footer="{false}" fill="{false}">
-  <span slot="title">
-    Einstellungen
-  </span>
-
-    <div slot="body" class="body-wrapper">
-      <form class="settings-form" on:submit|preventDefault={updateSettings}>
-        <Collapsible defaultOpen>
-          <span slot="header">Allgemein</span>
-          <div slot="content" class="col-1">
-            <div class="row">
-              <Number label="Gleichzeitige Tickets per Benutzer" min=1 max=10 bind:value={data.ticket_limit}/>
-              <Dropdown label="Sprache" bind:value={data.language}>
-                <option value=null selected="selected">Server Standart</option>
-                {#if data.locales}
-                  {#each data.locales as locale}
-                    <option value={locale.iso_short_code}>{locale.local_name}</option>
-                  {/each}
-                {/if}
-              </Dropdown>
-              <Checkbox label="Benutzern erlauben Tickets zu schließen" bind:value={data.users_can_close}/>
-              <Checkbox label="Ticket Schießen Bestätigen" bind:value={data.close_confirmation}/>
-              <Checkbox label="Aktiviere Benutzer Bewertungen" bind:value={data.feedback_enabled}/>
-              <Checkbox label="Anonymisierung von Dashboard Antworten" bind:value={data.anonymise_dashboard_responses} />
-            </div>
-          </div>
-        </Collapsible>
-
-        <Collapsible defaultOpen tooltip="Drücke hier, um mehr über den Thread Modus herauszufinden" tooltipUrl="https://docs.ticketsbot.cloud/features/thread-mode">
-          <span slot="header" class="header">Thread Modus</span>
-          <div slot="content" class="col-1">
-            <div class="row">
-              <Checkbox label="Aktiviert" bind:value={data.use_threads}/>
-              <ChannelDropdown label="Ticket Benachrichtungskanal" col4 {channels} disabled={!data.use_threads} bind:value={data.ticket_notification_channel}/>
-            </div>
-          </div>
-        </Collapsible>
-
-        <Collapsible defaultOpen>
-          <span slot="header">Tickets</span>
-          <div slot="content" class="col-1">
-            <div class="row">
-              <ChannelDropdown label="Transcripts Kanal" col4 channels={channels} withNull={true}
-                               bind:value={data.archive_channel}/>
-              <Dropdown label="Overflow Category" col4 bind:value={data.overflow_category_id}>
-                <option value=-1>Deaktiviert</option>
-                <option value=-2>Nicht Kategorisiert (Wird ganz oben in der Channel Liste angezeigt)</option>
-                {#each channels as channel}
-                  {#if channel.type === 4}
-                    <option value={channel.id}>
-                      {channel.name}
-                    </option>
-                  {/if}
-                {/each}
-              </Dropdown>
-              <Checkbox label="Speichere Ticket Transcripts" bind:value={data.store_transcripts}/>
-              <Checkbox label="Verstecke Claim Knopf" bind:value={data.hide_claim_button}/>
-            </div>
-
-            <div class="row">
-            </div>
-          </div>
-        </Collapsible>
-
-        <Collapsible>
-          <span slot="header">/open Befehl</span>
-          <div slot="content" class="col-1">
-            <div class="row">
-              <Checkbox label="Deaktiviere /open Befehl" bind:value={data.disable_open_command}/>
-              <CategoryDropdown label="Kanal Kategorie" col3 channels={channels} bind:value={data.category}/>
-              <NamingScheme bind:value={data.naming_scheme}/>
-            </div>
-            <div class="row">
-              <div class="col-1-flex">
-              <Textarea label="Willkommensnachricht" placeholder="Danke fürs öffnen eines Tickets, bitte Beschreibe dein Problem, damit dir geholfen werden kann" col1 bind:value={data.welcome_message}/>
-              </div>
-            </div>
-          </div>
-        </Collapsible>
-
-        <Collapsible>
-          <span slot="header">Kontext Menu (Ticket Starten Auswahlmenü)</span>
-          <div slot="content" class="col-1">
-            <div class="row">
-              <Dropdown col3 label="Benötigtes Rechte Level" bind:value={data.context_menu_permission_level}>
-                <option value="0">Alle</option>
-                <option value="1">Support Mitglieder</option>
-                <option value="2">Admins</option>
-              </Dropdown>
-
-              <Checkbox label="Nachrichten Sender zum Ticket Hinzufügen" bind:value={data.context_menu_add_sender}/>
-              <SimplePanelDropdown label="Benutze Einstellungen vom Panel" col3 allowNone={true} bind:panels bind:value={data.context_menu_panel}/>
-            </div>
-          </div>
-        </Collapsible>
-
-        <Collapsible>
-          <span slot="header">Beanspruchung</span>
-          <div slot="content" class="col-1">
-            <div class="row">
-              <Checkbox label="SUPPORT MITGLIEDER KÖNNEN BEANSPRUCHTE TICKETS ANSEHEN" bind:value={data.claim_settings.support_can_view} on:change={validateView}/>
-              <Checkbox label="SUPPORT MITGLIEDER KÖNNEN IN BEANSPRUCHTE TICKETS SCHREIBEN" bind:value={data.claim_settings.support_can_type} on:change={validateType}/>
-            </div>
-          </div>
-        </Collapsible>
-
-        <Collapsible>
-          <span slot="header">Auto Schließen</span>
-          <div slot="content" class="col-1">
-            <div class="row">
-              <Checkbox label="Aktiviert" bind:value={data.auto_close.enabled}/>
-              <Checkbox label="Schließen wenn Benutzer Server verlässt" disabled={!data.auto_close.enabled} bind:value={data.auto_close.on_user_leave}/>
-            </div>
-
-            <div class="row" style="justify-content: space-between">
-              <div class="col-2" style="flex-direction: row">
-                <Duration disabled={!isPremium || !data.auto_close.enabled} bind:days={sinceOpenDays} bind:hours={sinceOpenHours} bind:minutes={sinceOpenMinutes}>
-                  <div slot="header" class="header">
-                    <label class="form-label" style="margin-bottom: unset">Offen ohne Antwort</label>
-                    <PremiumBadge/>
-                  </div>
-                </Duration>
-              </div>
-              <div class="col-2" style="flex-direction: row">
-                <Duration disabled={!isPremium || !data.auto_close.enabled} bind:days={sinceLastDays}
-                          bind:hours={sinceLastHours}
-                          bind:minutes={sinceLastMinutes}>
-                  <div slot="header" class="header">
-                    <label class="form-label" style="margin-bottom: unset">Seit Letzter Nachricht</label>
-                    <PremiumBadge/>
-                  </div>
-                </Duration>
-              </div>
-            </div>
-          </div>
-        </Collapsible>
-
-        <Collapsible tooltip="Festlegen, welche Berechtigungen Benutzer in Ticket Kanälen haben">
-          <span slot="header">Ticket Berechtigungen</span>
-          <div slot="content" class="row">
-            <Toggle label="Datein Anhängen" bind:value={data.ticket_permissions.attach_files}/>
-            <Toggle label="Links Einbetten" bind:value={data.ticket_permissions.embed_links}/>
-            <Toggle label="Reaktionen hinzufügen" bind:value={data.ticket_permissions.add_reactions}/>
-          </div>
-        </Collapsible>
-
-        <Collapsible>
-          <div slot="header" class="header">
-            <span>Farb Schema</span>
-            <PremiumBadge/>
-          </div>
-          <div slot="content" class="col-1">
-            <div class="row">
-              <Colour col4 label="Erfolg" bind:value={data.colours["0"]} disabled={!isPremium}/>
-              <Colour col4 label="Fehlschlag" bind:value={data.colours["1"]} disabled={!isPremium}/>
-            </div>
-          </div>
-        </Collapsible>
-
-        <div class="row">
-          <div class="col-1">
-            <Button icon="fas fa-paper-plane" fullWidth=true>Speichern</Button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </Card>
-{/if}
-
-<svelte:head>
-  <style>
-      body {
-          overflow-y: scroll;
-      }
-  </style>
-</svelte:head>
-
 <script>
     import ChannelDropdown from "../ChannelDropdown.svelte";
     import Card from "../Card.svelte";
@@ -184,10 +6,15 @@
     import Checkbox from "../form/Checkbox.svelte";
     import Textarea from "../form/Textarea.svelte";
 
-    import {setDefaultHeaders} from '../../includes/Auth.svelte'
+    import { setDefaultHeaders } from "../../includes/Auth.svelte";
     import axios from "axios";
-    import {notify, notifyError, notifySuccess, withLoadingScreen} from "../../js/util";
-    import {API_URL} from "../../js/constants";
+    import {
+        notify,
+        notifyError,
+        notifySuccess,
+        withLoadingScreen,
+    } from "../../js/util";
+    import { API_URL } from "../../js/constants";
     import CategoryDropdown from "../CategoryDropdown.svelte";
     import Button from "../Button.svelte";
     import NamingScheme from "../NamingScheme.svelte";
@@ -197,9 +24,10 @@
     import Duration from "../form/Duration.svelte";
     import Colour from "../form/Colour.svelte";
     import PremiumBadge from "../PremiumBadge.svelte";
-    import {toDays, toHours, toMinutes} from "../../js/timeutil";
+    import { toDays, toHours, toMinutes } from "../../js/timeutil";
     import Toggle from "../form/Toggle.svelte";
     import IconBadge from "../IconBadge.svelte";
+    import { DOCS_URL } from "../../js/constants";
 
     export let guildId;
 
@@ -208,11 +36,16 @@
     let channels = [];
     let panels = [];
     let isPremium = false;
+    let loaded = false;
 
     let data;
 
-    let sinceOpenDays = 0, sinceOpenHours = 0, sinceOpenMinutes = 0;
-    let sinceLastDays = 0, sinceLastHours = 0, sinceLastMinutes = 0;
+    let sinceOpenDays = 0,
+        sinceOpenHours = 0,
+        sinceOpenMinutes = 0;
+    let sinceLastDays = 0,
+        sinceLastHours = 0,
+        sinceLastMinutes = 0;
 
     function validateView() {
         if (!data.support_can_view && data.support_can_type) {
@@ -271,15 +104,42 @@
         data = res.data;
     }
 
+    async function loadData() {
+        await Promise.all([
+            loadPanels(),
+            loadChannels(),
+            loadPremium(),
+            loadSettings(),
+        ]);
+
+        if (
+            data.archive_channel &&
+            !channels.some((c) => c.id === data.archive_channel)
+        ) {
+            await loadChannels(true);
+
+            const tmp = data.archive_channel;
+            data.archive_channel = null;
+
+            setTimeout(() => {
+                data.archive_channel = tmp;
+            }, 100);
+        }
+
+        doOverrides();
+    }
+
     async function updateSettings() {
         // Svelte hack - I can't even remember what this does
-        let mapped = Object.fromEntries(Object.entries(data).map(([k, v]) => {
-            if (v === "null") {
-                return [k, null];
-            } else {
-                return [k, v];
-            }
-        }));
+        let mapped = Object.fromEntries(
+            Object.entries(data).map(([k, v]) => {
+                if (v === "null") {
+                    return [k, null];
+                } else {
+                    return [k, v];
+                }
+            }),
+        );
 
         // "Normalise" data.overflow_category_id
         // Svelte doesn't always keep its promise of using integers, so == instead of ===
@@ -287,20 +147,29 @@
             mapped.overflow_enabled = false;
             mapped.overflow_category_id = null;
         } else if (mapped.overflow_category_id == -2) {
-            mapped.overflow_enabled = true
+            mapped.overflow_enabled = true;
             mapped.overflow_category_id = null;
         } else {
             mapped.overflow_enabled = true;
         }
 
         // Normalise autoclose
-        data.auto_close.since_open_with_no_response = sinceOpenDays * 86400 + sinceOpenHours * 3600 + sinceOpenMinutes * 60;
-        data.auto_close.since_last_message = sinceLastDays * 86400 + sinceLastHours * 3600 + sinceLastMinutes * 60;
+        data.auto_close.since_open_with_no_response =
+            sinceOpenDays * 86400 +
+            sinceOpenHours * 3600 +
+            sinceOpenMinutes * 60;
+        data.auto_close.since_last_message =
+            sinceLastDays * 86400 +
+            sinceLastHours * 3600 +
+            sinceLastMinutes * 60;
 
-        const res = await axios.post(`${API_URL}/api/${guildId}/settings`, mapped);
+        const res = await axios.post(
+            `${API_URL}/api/${guildId}/settings`,
+            mapped,
+        );
         if (res.status === 200) {
             if (showValidations(res.data)) {
-                notifySuccess('Deine Einstellungen wurden gespeichert');
+                notifySuccess("Your settings have been saved.");
             } else {
                 // Load valid data
                 await loadData();
@@ -313,34 +182,49 @@
     function showValidations(data) {
         let success = true;
 
-        if (data.error !== null) {
+        if (data.error) {
             success = false;
-            notify("Warnung", data.error);
+            notify("Warning", data.error);
         }
 
         if (!data.welcome_message) {
             success = false;
-            notify("Warnung", "Your welcome message has not been saved.\nWelcome messages must be between 1 - 1000 characters in length.")
+            notify(
+                "Warning",
+                "Welcome message is required for the /open command\nThe welcome message must be between 1 - 1000 characters in length.",
+            );
         }
 
         if (!data.ticket_limit) {
             success = false;
-            notify("Warnung", "Your ticket limit has not been saved.\nTicket limits must be in the range 1 - 10.")
+            notify(
+                "Warning",
+                "Ticket limit is required and must be between 1-10.\nThis controls how many tickets each user can have open simultaneously.",
+            );
         }
 
         if (!data.archive_channel) {
             success = false;
-            notify("Warnung", "Dein Archiv Kanal wurde noch nicht gespeichert.")
+            notify(
+                "Warning",
+                "Transcript channel is required.\nPlease select a text channel where ticket transcripts will be posted when tickets are closed.",
+            );
         }
 
         if (!data.category) {
             success = false;
-            notify("Warnung", "Deine Kanal Kategorie wurde noch nicht gespeichert.")
+            notify(
+                "Warning",
+                "Channel category is required for the /open command.\nPlease select a category where new tickets will be created.",
+            );
         }
 
         if (!data.naming_scheme) {
             success = false;
-            notify("Warnung", "Your archive channel has not been saved.")
+            notify(
+                "Warning",
+                "Naming scheme is required for the /open command.\nPlease select how ticket channels should be named.",
+            );
         }
 
         return success;
@@ -381,8 +265,12 @@
         // Auto close overrides
         if (data.auto_close.since_open_with_no_response) {
             sinceOpenDays = toDays(data.auto_close.since_open_with_no_response);
-            sinceOpenHours = toHours(data.auto_close.since_open_with_no_response);
-            sinceOpenMinutes = toMinutes(data.auto_close.since_open_with_no_response);
+            sinceOpenHours = toHours(
+                data.auto_close.since_open_with_no_response,
+            );
+            sinceOpenMinutes = toMinutes(
+                data.auto_close.since_open_with_no_response,
+            );
         }
 
         if (data.auto_close.since_last_message) {
@@ -393,27 +281,325 @@
     }
 
     withLoadingScreen(async () => {
-        await Promise.all([
-            loadPanels(),
-            loadChannels(),
-            loadPremium(),
-            loadSettings()
-        ]);
-
-        if (data.archive_channel && !channels.some(c => c.id === data.archive_channel)) {
-            await loadChannels(true);
-
-            const tmp = data.archive_channel;
-            data.archive_channel = null;
-
-            setTimeout(() => {
-                data.archive_channel = tmp;
-            }, 100);
-        }
-
-        doOverrides(); // Depends on channels
+        await loadData();
+        loaded = true;
     });
 </script>
+
+{#if data && loaded}
+    <Card footer={false} fill={false}>
+        <span slot="title"> Settings </span>
+
+        <div slot="body" class="body-wrapper">
+            <form
+                class="settings-form"
+                on:submit|preventDefault={updateSettings}
+            >
+                <Collapsible defaultOpen>
+                    <span slot="header">General</span>
+                    <div slot="content" class="col-1">
+                        <div class="row">
+                            <Number
+                                label="per user simultaneous ticket limit"
+                                min="1"
+                                max="10"
+                                bind:value={data.ticket_limit}
+                            />
+                            <Dropdown
+                                label="Language"
+                                bind:value={data.language}
+                            >
+                                <option value="null" selected="selected"
+                                    >Server Default</option
+                                >
+                                {#if data.locales}
+                                    {#each data.locales as locale}
+                                        <option value={locale.iso_short_code}
+                                            >{locale.local_name}</option
+                                        >
+                                    {/each}
+                                {/if}
+                            </Dropdown>
+                            <Checkbox
+                                label="allow users to close tickets"
+                                bind:value={data.users_can_close}
+                            />
+                            <Checkbox
+                                label="ticket close confirmation"
+                                bind:value={data.close_confirmation}
+                            />
+                            <Checkbox
+                                label="Enable User Feedback"
+                                bind:value={data.feedback_enabled}
+                            />
+                            <Checkbox
+                                label="Anonymise Dashboard Responses"
+                                bind:value={data.anonymise_dashboard_responses}
+                            />
+                        </div>
+                    </div>
+                </Collapsible>
+
+                <Collapsible
+                    defaultOpen
+                    tooltip="Click here to find out more about thread mode"
+                    tooltipUrl={`${DOCS_URL}/features/thread-mode`}
+                >
+                    <span slot="header" class="header">Thread Mode</span>
+                    <div slot="content" class="col-1">
+                        <div class="row">
+                            <Checkbox
+                                label="Enabled"
+                                bind:value={data.use_threads}
+                            />
+                            <ChannelDropdown
+                                label="Ticket Notification Channel"
+                                col4
+                                {channels}
+                                disabled={!data.use_threads}
+                                bind:value={data.ticket_notification_channel}
+                            />
+                        </div>
+                    </div>
+                </Collapsible>
+
+                <Collapsible defaultOpen>
+                    <span slot="header">Tickets</span>
+                    <div slot="content" class="col-1">
+                        <div class="row">
+                            <ChannelDropdown
+                                label="Transcripts Channel"
+                                col4
+                                {channels}
+                                withNull={true}
+                                bind:value={data.archive_channel}
+                            />
+                            <Dropdown
+                                label="Overflow Category"
+                                col4
+                                bind:value={data.overflow_category_id}
+                            >
+                                <option value="-1">Disabled</option>
+                                <option value="-2"
+                                    >Uncategorised (Appears at top of channel
+                                    list)</option
+                                >
+                                {#each channels as channel}
+                                    {#if channel.type === 4}
+                                        <option value={channel.id}>
+                                            {channel.name}
+                                        </option>
+                                    {/if}
+                                {/each}
+                            </Dropdown>
+                            <Checkbox
+                                label="Store Ticket Transcripts"
+                                bind:value={data.store_transcripts}
+                            />
+                            <Checkbox
+                                label="Hide Claim Button"
+                                bind:value={data.hide_claim_button}
+                            />
+                        </div>
+
+                        <div class="row"></div>
+                    </div>
+                </Collapsible>
+
+                <Collapsible>
+                    <span slot="header">/open Command</span>
+                    <div slot="content" class="col-1">
+                        <div class="row">
+                            <Checkbox
+                                label="Disable /open Command"
+                                bind:value={data.disable_open_command}
+                            />
+                            <CategoryDropdown
+                                label="Channel Category"
+                                col3
+                                {channels}
+                                bind:value={data.category}
+                            />
+                            <NamingScheme bind:value={data.naming_scheme} />
+                        </div>
+                        <div class="row">
+                            <div class="col-1-flex">
+                                <Textarea
+                                    label="welcome message"
+                                    placeholder="Thanks for opening a ticket!"
+                                    col1
+                                    bind:value={data.welcome_message}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </Collapsible>
+
+                <Collapsible>
+                    <span slot="header"
+                        >Context Menu (Start Ticket Dropdown)</span
+                    >
+                    <div slot="content" class="col-1">
+                        <div class="row">
+                            <Dropdown
+                                col3
+                                label="Required Permission Level"
+                                bind:value={data.context_menu_permission_level}
+                            >
+                                <option value="0">Everyone</option>
+                                <option value="1">Support Representative</option
+                                >
+                                <option value="2">Administrator</option>
+                            </Dropdown>
+
+                            <Checkbox
+                                label="Add Message Sender To Ticket"
+                                bind:value={data.context_menu_add_sender}
+                            />
+                            <SimplePanelDropdown
+                                label="Use Settings From Panel"
+                                col3
+                                allowNone={true}
+                                bind:panels
+                                bind:value={data.context_menu_panel}
+                            />
+                        </div>
+                    </div>
+                </Collapsible>
+
+                <Collapsible>
+                    <span slot="header">Claiming</span>
+                    <div slot="content" class="col-1">
+                        <div class="row">
+                            <Checkbox
+                                label="SUPPORT REPS CAN VIEW CLAIMED TICKETS"
+                                bind:value={
+                                    data.claim_settings.support_can_view
+                                }
+                                on:change={validateView}
+                            />
+                            <Checkbox
+                                label="SUPPORT REPS CAN TYPE IN CLAIMED TICKETS"
+                                bind:value={
+                                    data.claim_settings.support_can_type
+                                }
+                                on:change={validateType}
+                            />
+                        </div>
+                    </div>
+                </Collapsible>
+
+                <Collapsible>
+                    <span slot="header">Auto Close</span>
+                    <div slot="content" class="col-1">
+                        <div class="row">
+                            <Checkbox
+                                label="Enabled"
+                                id="autoclose-enabled"
+                                bind:value={data.auto_close.enabled}
+                            />
+                            <Checkbox
+                                label="Close On User Leave"
+                                disabled={!data.auto_close.enabled}
+                                bind:value={data.auto_close.on_user_leave}
+                            />
+                        </div>
+
+                        <div class="row" style="justify-content: space-between">
+                            <div class="col-2" style="flex-direction: row">
+                                <Duration
+                                    label="Since Open With No Response"
+                                    disabled={!isPremium ||
+                                        !data.auto_close.enabled}
+                                    bind:days={sinceOpenDays}
+                                    bind:hours={sinceOpenHours}
+                                    bind:minutes={sinceOpenMinutes}
+                                >
+                                    <PremiumBadge slot="header" />
+                                </Duration>
+                            </div>
+                            <div class="col-2" style="flex-direction: row">
+                                <Duration
+                                    label="Since Last Message"
+                                    disabled={!isPremium ||
+                                        !data.auto_close.enabled}
+                                    bind:days={sinceLastDays}
+                                    bind:hours={sinceLastHours}
+                                    bind:minutes={sinceLastMinutes}
+                                >
+                                    <PremiumBadge slot="header" />
+                                </Duration>
+                            </div>
+                        </div>
+                    </div>
+                </Collapsible>
+
+                <Collapsible
+                    tooltip="Define which permissions are given to users in ticket channels"
+                >
+                    <span slot="header">Ticket Permissions</span>
+                    <div
+                        slot="content"
+                        class="row"
+                        style="padding-bottom: 10px;"
+                    >
+                        <Checkbox
+                            label="Attach Files"
+                            bind:value={data.ticket_permissions.attach_files}
+                        />
+                        <Checkbox
+                            label="Embed Links"
+                            bind:value={data.ticket_permissions.embed_links}
+                        />
+                        <Checkbox
+                            label="Add Reactions"
+                            bind:value={data.ticket_permissions.add_reactions}
+                        />
+                    </div>
+                </Collapsible>
+
+                <Collapsible>
+                    <div slot="header" class="header">
+                        <span>Colour Scheme</span>
+                        <PremiumBadge />
+                    </div>
+                    <div slot="content" class="col-1">
+                        <div class="row">
+                            <Colour
+                                col4
+                                label="Success"
+                                bind:value={data.colours["0"]}
+                                disabled={!isPremium}
+                            />
+                            <Colour
+                                col4
+                                label="Failure"
+                                bind:value={data.colours["1"]}
+                                disabled={!isPremium}
+                            />
+                        </div>
+                    </div>
+                </Collapsible>
+
+                <div class="row">
+                    <div class="col-1">
+                        <Button icon="fas fa-paper-plane" fullWidth="true"
+                            >Submit</Button
+                        >
+                    </div>
+                </div>
+            </form>
+        </div>
+    </Card>
+{/if}
+
+<svelte:head>
+    <style>
+        body {
+            overflow-y: scroll;
+        }
+    </style>
+</svelte:head>
 
 <style>
     :global(.body-wrapper) {

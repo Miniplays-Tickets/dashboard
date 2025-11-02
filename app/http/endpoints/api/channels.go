@@ -7,9 +7,9 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/redis"
 	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
 	"github.com/Miniplays-Tickets/dashboard/utils"
+	"github.com/TicketsBot-cloud/gdl/objects/channel"
+	"github.com/TicketsBot-cloud/gdl/rest"
 	"github.com/gin-gonic/gin"
-	"github.com/rxdn/gdl/objects/channel"
-	"github.com/rxdn/gdl/rest"
 )
 
 func ChannelsHandler(ctx *gin.Context) {
@@ -17,7 +17,7 @@ func ChannelsHandler(ctx *gin.Context) {
 
 	botContext, err := botcontext.ContextForGuild(guildId)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Unable to connect to Discord. Please try again later."))
 		return
 	}
 
@@ -25,25 +25,25 @@ func ChannelsHandler(ctx *gin.Context) {
 	if ctx.Query("refresh") == "true" {
 		hasToken, err := redis.Client.TakeChannelRefreshToken(ctx, guildId)
 		if err != nil {
-			ctx.JSON(500, utils.ErrorJson(err))
+			ctx.JSON(500, utils.ErrorStr("Failed to take channel refresh token for guild %d. Please try again."))
 			return
 		}
 
 		if hasToken {
 			channels, err = rest.GetGuildChannels(ctx, botContext.Token, botContext.RateLimiter, guildId)
 			if err != nil {
-				ctx.JSON(500, utils.ErrorJson(err))
+				ctx.JSON(500, utils.ErrorStr("Unable to load channels from Discord. Please try again."))
 				return
 			}
 
 			if err := cache.Instance.StoreChannels(ctx, channels); err != nil {
-				ctx.JSON(500, utils.ErrorJson(err))
+				ctx.JSON(500, utils.ErrorStr("Failed to store channels in cache for guild %d. Please try again."))
 				return
 			}
 		} else {
 			channels, err = cache.Instance.GetGuildChannels(ctx, guildId)
 			if err != nil {
-				ctx.JSON(500, utils.ErrorJson(err))
+				ctx.JSON(500, utils.ErrorStr("Unable to load channels. Please try again."))
 				return
 			}
 		}
@@ -51,7 +51,7 @@ func ChannelsHandler(ctx *gin.Context) {
 		var err error
 		channels, err = botContext.GetGuildChannels(ctx, guildId)
 		if err != nil {
-			ctx.JSON(500, utils.ErrorJson(err))
+			ctx.JSON(500, utils.ErrorStr("Unable to load channels. Please try again."))
 			return
 		}
 	}

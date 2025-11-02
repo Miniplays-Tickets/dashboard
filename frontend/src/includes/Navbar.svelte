@@ -36,9 +36,9 @@
     </div>
     <div>
       <div class="nav-section" class:dropdown={$dropdown}>
-        <NavElement icon="fas fa-book" link="https://docs.ticketsbot.cloud">Dokumentation</NavElement>
-        <NavElement icon="fas fa-server" link="/#">Server</NavElement>
-        <NavElement icon="fas fa-sign-out-alt" link="/logout">Abmelden</NavElement>
+        <NavElement icon="fas fa-book" link={DOCS_URL}>Documentation</NavElement>
+        <NavElement icon="fas fa-server" link="/#">Servers</NavElement>
+        <NavElement icon="fas fa-sign-out-alt" link="/logout">Logout</NavElement>
       </div>
     </div>
   </div>
@@ -46,6 +46,7 @@
 
 <script>
     import NavElement from "../components/NavElement.svelte";
+    import {DOCS_URL} from "../js/constants";
     import Badge from "../components/Badge.svelte";
 
     export let guildId;
@@ -68,7 +69,9 @@
         display: none;
         justify-content: center;
         width: 100%;
-        background-color: #272727;
+        background-color: var(--background-secondary);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
     }
 
     .wrapper {
@@ -127,7 +130,7 @@
 
         .navbar.dropdown, .wrapper.dropdown {
             height: 100%;
-            overflow: hidden;
+            overflow: scroll;
         }
 
         .wrapper.dropdown {

@@ -10,8 +10,8 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
 	"github.com/Miniplays-Tickets/dashboard/utils"
+	cache2 "github.com/TicketsBot-cloud/gdl/cache"
 	"github.com/gin-gonic/gin"
-	cache2 "github.com/rxdn/gdl/cache"
 )
 
 func WhitelabelGetGuilds(c *gin.Context) {
@@ -19,7 +19,7 @@ func WhitelabelGetGuilds(c *gin.Context) {
 
 	bot, err := database.Client.Whitelabel.GetByUserId(c, userId)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to load whitelabel bots"))
 		return
 	}
 
@@ -31,7 +31,7 @@ func WhitelabelGetGuilds(c *gin.Context) {
 
 	ids, err := database.Client.WhitelabelGuilds.GetGuilds(c, bot.BotId)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to load whitelabel bots"))
 		return
 	}
 
@@ -50,7 +50,7 @@ func WhitelabelGetGuilds(c *gin.Context) {
 			if errors.Is(err, cache2.ErrNotFound) {
 				continue
 			} else {
-				_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+				_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to load whitelabel bots"))
 				return
 			}
 		}

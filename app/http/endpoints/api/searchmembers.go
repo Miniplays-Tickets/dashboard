@@ -5,8 +5,8 @@ import (
 
 	"github.com/Miniplays-Tickets/dashboard/botcontext"
 	"github.com/Miniplays-Tickets/dashboard/utils"
+	"github.com/TicketsBot-cloud/gdl/objects/member"
 	"github.com/gin-gonic/gin"
-	"github.com/rxdn/gdl/objects/member"
 )
 
 func SearchMembers(ctx *gin.Context) {
@@ -14,7 +14,7 @@ func SearchMembers(ctx *gin.Context) {
 
 	botCtx, err := botcontext.ContextForGuild(guildId)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Unable to connect to Discord. Please try again later."))
 		return
 	}
 
@@ -34,7 +34,7 @@ func SearchMembers(ctx *gin.Context) {
 	}
 
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to process request. Please try again."))
 		return
 	}
 

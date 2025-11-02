@@ -4,7 +4,6 @@ import (
 	"cmp"
 	"context"
 	"database/sql"
-	_ "github.com/lib/pq"
 	"fmt"
 	"slices"
 	"sync"
@@ -15,10 +14,10 @@ import (
 	"github.com/TicketsBot-cloud/common/collections"
 	"github.com/TicketsBot-cloud/common/permission"
 	"github.com/TicketsBot-cloud/database"
+	"github.com/TicketsBot-cloud/gdl/objects/guild"
+	"github.com/TicketsBot-cloud/gdl/rest"
+	"github.com/TicketsBot-cloud/gdl/rest/ratelimit"
 	"github.com/jackc/pgtype"
-	"github.com/rxdn/gdl/objects/guild"
-	"github.com/rxdn/gdl/rest"
-	"github.com/rxdn/gdl/rest/ratelimit"
 	errgroup "golang.org/x/sync/errgroup"
 )
 

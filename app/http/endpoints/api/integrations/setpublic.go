@@ -8,9 +8,9 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/config"
 	dbclient "github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/utils"
+	"github.com/TicketsBot-cloud/gdl/objects/channel/embed"
+	"github.com/TicketsBot-cloud/gdl/rest"
 	"github.com/gin-gonic/gin"
-	"github.com/rxdn/gdl/objects/channel/embed"
-	"github.com/rxdn/gdl/rest"
 )
 
 func SetIntegrationPublicHandler(ctx *gin.Context) {
@@ -24,7 +24,7 @@ func SetIntegrationPublicHandler(ctx *gin.Context) {
 
 	integration, ok, err := dbclient.Client.CustomIntegrations.Get(ctx, integrationId)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to process request. Please try again."))
 		return
 	}
 
@@ -67,12 +67,12 @@ func SetIntegrationPublicHandler(ctx *gin.Context) {
 	)
 
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to process request. Please try again."))
 		return
 	}
 
 	if err := dbclient.Client.CustomIntegrations.SetPublic(ctx, integration.Id); err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to process request. Please try again."))
 		return
 	}
 

@@ -7,6 +7,10 @@ import css from 'rollup-plugin-css-only';
 import replace from "@rollup/plugin-replace";
 import {babel} from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
+import dotenv from 'dotenv';
+
+// Load .env fiel
+dotenv.config();
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -71,11 +75,19 @@ export default {
 
         replace({
             env: JSON.stringify({
-				CLIENT_ID: process.env.CLIENT_ID,
-				REDIRECT_URI: process.env.REDIRECT_URI,
-				API_URL: process.env.API_URL,
-				WS_URL: process.env.WS_URL,
-			})
+                CLIENT_ID: process.env.CLIENT_ID,
+                REDIRECT_URI: process.env.REDIRECT_URI,
+                FRONTPAGE_URL: process.env.FRONTPAGE_URL,
+                DOCS_URL: process.env.DOCS_URL,
+                API_URL: process.env.API_URL,
+                WS_URL: process.env.WS_URL,
+                INVITE_URL: process.env.INVITE_URL,
+                TITLE: process.env.TITLE,
+                DESCRIPTION: process.env.DESCRIPTION,
+                FAVICON: process.env.FAVICON,
+                FAVICON_TYPE: process.env.FAVICON_TYPE,
+                WHITELABEL_DISABLED: process.env.WHITELABEL_DISABLED,
+            })
         }),
 
         // In dev mode, call `npm run start` once

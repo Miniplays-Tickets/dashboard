@@ -9,9 +9,9 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
 	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/database"
+	cache2 "github.com/TicketsBot-cloud/gdl/cache"
+	gdlutils "github.com/TicketsBot-cloud/gdl/utils"
 	"github.com/gin-gonic/gin"
-	cache2 "github.com/rxdn/gdl/cache"
-	gdlutils "github.com/rxdn/gdl/utils"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -21,7 +21,7 @@ func ListSelfTranscripts(ctx *gin.Context) {
 
 	page, err := strconv.Atoi(ctx.Query("page"))
 	if err != nil {
-		ctx.JSON(400, utils.ErrorJson(err))
+		ctx.JSON(400, utils.ErrorStr("Failed to fetch records. Please try again."))
 		return
 	}
 
@@ -40,7 +40,7 @@ func ListSelfTranscripts(ctx *gin.Context) {
 
 	tickets, err := dbclient.Client.Tickets.GetByOptions(ctx, opts)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to fetch records. Please try again."))
 		return
 	}
 
@@ -79,7 +79,7 @@ func ListSelfTranscripts(ctx *gin.Context) {
 	}
 
 	if err := group.Wait(); err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to fetch records. Please try again."))
 		return
 	}
 

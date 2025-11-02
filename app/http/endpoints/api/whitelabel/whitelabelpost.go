@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/Miniplays-Tickets/dashboard/app"
+	"github.com/Miniplays-Tickets/dashboard/config"
 	dbclient "github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/redis"
 	"github.com/Miniplays-Tickets/dashboard/utils"
@@ -17,10 +18,10 @@ import (
 	"github.com/TicketsBot-cloud/common/tokenchange"
 	"github.com/TicketsBot-cloud/common/whitelabeldelete"
 	"github.com/TicketsBot-cloud/database"
+	"github.com/TicketsBot-cloud/gdl/objects/application"
+	"github.com/TicketsBot-cloud/gdl/rest"
+	"github.com/TicketsBot-cloud/gdl/rest/request"
 	"github.com/gin-gonic/gin"
-	"github.com/rxdn/gdl/objects/application"
-	"github.com/rxdn/gdl/rest"
-	"github.com/rxdn/gdl/rest/request"
 )
 
 func WhitelabelPost() func(*gin.Context) {
@@ -36,7 +37,7 @@ func WhitelabelPost() func(*gin.Context) {
 
 		// Get token
 		var data whitelabelPostBody
-		if err := c.BindJSON(&data); err != nil {
+		if err := c.ShouldBindJSON(&data); err != nil {
 			c.JSON(http.StatusBadRequest, utils.ErrorStr("Fehler 12"))
 			return
 		}
@@ -49,7 +50,7 @@ func WhitelabelPost() func(*gin.Context) {
 			} else if errors.As(err, &restError) && restError.StatusCode == http.StatusUnauthorized {
 				c.JSON(http.StatusBadRequest, utils.ErrorStr("Ungültiger token"))
 			} else {
-				_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+				_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to parse request data"))
 			}
 
 			return
@@ -58,7 +59,7 @@ func WhitelabelPost() func(*gin.Context) {
 		// Check if this is a different token
 		existing, err := dbclient.Client.Whitelabel.GetByUserId(c, userId)
 		if err != nil {
-			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to process request"))
 			return
 		}
 
@@ -75,7 +76,7 @@ func WhitelabelPost() func(*gin.Context) {
 			PublicKey: bot.VerifyKey,
 			Token:     data.Token,
 		}); err != nil {
-			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to process request"))
 			return
 		}
 
@@ -91,18 +92,17 @@ func WhitelabelPost() func(*gin.Context) {
 				application.FlagIntentGatewayGuildMembersLimited,
 				application.FlagGatewayMessageContentLimited,
 			)),
-			// TODO: Don't hardcode URL
-			InteractionsEndpointUrl: utils.Ptr(fmt.Sprintf("https://ticketsgateway.miniplays.de/handle/%d", bot.Id)),
+			InteractionsEndpointUrl: utils.Ptr(fmt.Sprintf("%s/handle/%d", config.Conf.Bot.InteractionsBaseUrl, bot.Id)),
 		}
 
 		if _, err := rest.EditCurrentApplication(context.Background(), data.Token, nil, editData); err != nil {
 			// TODO: Use a transaction
 			if _, err := dbclient.Client.Whitelabel.Delete(c, bot.Id); err != nil {
-				_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+				_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to process request"))
 				return
 			}
 
-			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to process request"))
 			return
 		}
 
@@ -113,12 +113,12 @@ func WhitelabelPost() func(*gin.Context) {
 		}
 
 		if err := tokenchange.PublishTokenChange(redis.Client.Client, tokenChangeData); err != nil {
-			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to process request"))
 			return
 		}
 
 		if err := createInteractions(cm, bot.Id, data.Token); err != nil {
-			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to process request"))
 			return
 		}
 

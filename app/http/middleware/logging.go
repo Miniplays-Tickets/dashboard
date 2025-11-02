@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -48,6 +49,6 @@ func Logging(logger *zap.Logger) gin.HandlerFunc {
 			fields = append(fields, zap.Any("errors", c.Errors.Errors()))
 		}
 
-		logger.Log(level, "Incoming HTTP request", fields...)
+		logger.Log(level, fmt.Sprintf("%s: %s", c.Request.Method, path), fields...)
 	}
 }

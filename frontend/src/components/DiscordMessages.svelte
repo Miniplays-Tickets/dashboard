@@ -2,7 +2,7 @@
     <div class="modal" transition:fade>
         <div class="modal-wrapper">
             <Card footer footerRight fill={false}>
-                <span slot="title">Tag senden</span>
+                <span slot="title">Send Tag</span>
 
                 <div slot="body" class="modal-inner">
                     <Dropdown col2 label="Select a tag..." bind:value={selectedTag}>
@@ -13,7 +13,7 @@
                 </div>
 
                 <div slot="footer" style="gap: 12px">
-                    <Button danger icon="fas fa-times" on:click={() => tagSelectorModal = false}>Schließen</Button>
+                    <Button danger icon="fas fa-times" on:click={() => tagSelectorModal = false}>Close</Button>
                     <Button icon="fas fa-paper-plane" on:click={sendTag}>Send</Button>
                 </div>
             </Card>
@@ -77,7 +77,6 @@
                                 {/each}
                             </div>
                         {/if}
-
                         {#if message.attachments?.length > 0}
                             <div class="attachment-wrapper">
                                 {#each message.attachments.filter(a => isImage(a.filename)) as attachment}
@@ -114,7 +113,7 @@
             {#if isPremium}
                 <i class="fas fa-paper-plane send-button" on:click={sendMessage}/>
                 <div class="tag-selector">
-                    <Button type="button" noShadow on:click={openTagSelector}>Tag auswählen</Button>
+                    <Button type="button" noShadow on:click={openTagSelector}>Select Tag</Button>
                 </div>
             {/if}
         </form>

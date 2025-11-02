@@ -1,90 +1,29 @@
-<div class="content">
-  <div class="card-wrapper" bind:this="{cardWrapper}">
-    <Card footer={false} fill={false}>
-      <span slot="title" bind:this={guildCountLabel}>
-        Serverübersicht
-      </span>
-
-      <div slot="body" style="width: 100%">
-        <div id="guild-container" bind:this={guildContainer}>
-          <InviteBadge/>
-
-          {#each paginatedGuilds as guild (guild.id)}
-            <Guild guild={guild}/>
-          {/each}
-        </div>
-
-        <div class="flex-container" id="refresh-container" bind:this={refreshContainer}>
-          <Button icon="fas fa-sync" on:click={refreshGuilds}>
-            Liste Aktualisieren
-          </Button>
-        </div>
-
-        <div class="pagination-controls" bind:this={paginationControls}>
-            <Button icon="fas fa-arrow-left" on:click={prevPage} disabled={currentPage === 1}>
-                Zurück
-            </Button>
-            
-            {#each Array(totalPages) as _, i}
-                <Button
-                    on:click={() => goToPage(i + 1)}
-                    type="button"
-                    active={currentPage === i + 1}
-                    noShadow>
-                        {i + 1}
-                </Button>
-            {/each}
-            <Button icon="fas fa-arrow-right" on:click={nextPage} disabled={currentPage === totalPages}>
-                Weiter
-            </Button>
-        </div>
-      </div>
-    </Card>
-  </div>
-</div>
-
 <script>
-    import axios from 'axios';
-    import { onMount } from 'svelte';
-    import {fade} from 'svelte/transition';
-    import {notifyError, withLoadingScreen} from '../js/util'
-    import {setDefaultHeaders} from '../includes/Auth.svelte'
-    import {API_URL} from "../js/constants.js";
-    import Guild from '../components/Guild.svelte'
-    import Card from '../components/Card.svelte'
-    import InviteBadge from '../components/InviteBadge.svelte'
-    import Button from '../components/Button.svelte'
-    import {loadingScreen, permissionLevelCache} from "../js/stores";
+    import axios from "axios";
+    import { fade } from "svelte/transition";
+    import { notifyError, withLoadingScreen } from "../js/util";
+    import { setDefaultHeaders } from "../includes/Auth.svelte";
+    import { API_URL } from "../js/constants.js";
+    import Guild from "../components/Guild.svelte";
+    import Card from "../components/Card.svelte";
+    import InviteBadge from "../components/InviteBadge.svelte";
+    import Button from "../components/Button.svelte";
+    import NoPermissionModal from "../components/NoPermissionModal.svelte";
+    import { loadingScreen, permissionLevelCache } from "../js/stores";
 
     setDefaultHeaders();
 
-    let refreshContainer;
-    let paginationControls;
-    let guildCountLabel;
-    let cardWrapper;
-    let guildContainer;
+    let showNoPermissionModal = false;
 
-    let guilds = window.localStorage.getItem('guilds') ? JSON.parse(window.localStorage.getItem('guilds')) : [];
-    let currentPage = 1;
-    let itemsPerPage = 15; 
-    
-    $: totalPages = Math.ceil(guilds.length / itemsPerPage);
-    
-    $: paginatedGuilds = guilds.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
-
-    function nextPage() {
-      if (currentPage < totalPages) currentPage++;
-    }
-    
-    function prevPage() {
-      if (currentPage > 1) currentPage--;
-    }
-    
-    function goToPage(page) {
-      if (page >= 1 && page <= totalPages) currentPage = page;
+    let guilds = window.localStorage.getItem("guilds")
+        ? JSON.parse(window.localStorage.getItem("guilds"))
+        : [];
+    if (guilds.length > 0) {
+        guilds = guilds.sort((a, b) => {
+            if (a.permission_level > 0 && b.permission_level <= 0) return -1;
+            if (a.permission_level <= 0 && b.permission_level > 0) return 1;
+            return a.name?.localeCompare(b.name);
+        });
     }
 
     async function refreshGuilds() {
@@ -95,50 +34,88 @@
                 return;
             }
 
-            if (!res.data.success && res.data['reauthenticate_required'] === true) {
+            if (
+                !res.data.success &&
+                res.data["reauthenticate_required"] === true
+            ) {
                 window.location.href = "/login";
                 return;
             }
 
             guilds = res.data.guilds;
-            window.localStorage.setItem('guilds', JSON.stringify(guilds));
+            window.localStorage.setItem("guilds", JSON.stringify(guilds));
         });
     }
 
-    function recalcItemsPerPage() {
-        if (!guildContainer) return;
-        const badgeHeight = 110;
-        const cardsPerRow = window.innerWidth > 950 ? 3 : 1;
-
-        const reservedHeight =
-            (refreshContainer?.offsetHeight || 0) +
-            (paginationControls?.offsetHeight || 0) +
-            (guildCountLabel?.offsetHeight || 0) +
-            (cardWrapper?.offsetTop || 0) +
-            50;
-
-        const usableHeight = window.innerHeight - reservedHeight;
-        const rows = Math.floor(usableHeight / badgeHeight) || 1;
-
-        itemsPerPage = (cardsPerRow * rows) - 1;
-        currentPage = 1;
+    function openNoPermissionModal() {
+        showNoPermissionModal = true;
     }
 
-    onMount(() => {
-        recalcItemsPerPage();
-
-        window.addEventListener('resize', () => {
-            recalcItemsPerPage();
-        });
-    });
+    function closeNoPermissionModal() {
+        showNoPermissionModal = false;
+    }
 
     loadingScreen.set(false);
 </script>
 
+<div class="content">
+    <div class="card-wrapper">
+        <Card footer={false} fill={false}>
+            <span slot="title"> Servers </span>
+
+            <div slot="body" style="width: 100%">
+                <span>
+                    <h2>Your Servers</h2>
+                </span>
+                <div id="guild-container">
+                    <InviteBadge />
+
+                    {#each guilds as guild}
+                        {#if guild.permission_level > 0}
+                            <Guild {guild} />
+                        {/if}
+                    {/each}
+                </div>
+
+                <br />
+                <span>
+                    <h2>Other Servers</h2>
+                    <i>You do not have access to managing these servers. <button
+                        class="help-link"
+                        on:click={openNoPermissionModal}
+                        aria-label="Learn how to get access"
+                    >
+                        Click here to learn why
+                    </button>.</i>
+                </span>
+
+                <div id="guild-container">
+                    {#each guilds as guild}
+                        {#if guild.permission_level === 0}
+                            <Guild {guild} />
+                        {/if}
+                    {/each}
+                </div>
+
+                <div id="refresh-container">
+                    <Button icon="fas fa-sync" on:click={refreshGuilds}>
+                        Refresh list
+                    </Button>
+                </div>
+            </div>
+        </Card>
+    </div>
+</div>
+
+{#if showNoPermissionModal}
+    <NoPermissionModal
+        on:close={closeNoPermissionModal}
+    />
+{/if}
+
 <style>
     .content {
         display: flex;
-        height: 100%;
         width: 100%;
         justify-content: center;
     }
@@ -146,9 +123,7 @@
     .card-wrapper {
         display: block;
         width: 75%;
-        height: 90%;
         margin-top: 5%;
-        margin-bottom: 5%;
     }
 
     #guild-container {
@@ -156,6 +131,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-evenly;
+        padding-top: 10px;
     }
 
     #refresh-container {
@@ -166,16 +142,32 @@
         color: white;
     }
 
+    .help-link {
+        background: none;
+        border: none;
+        color: #5865f2;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        font-style: italic;
+        font-size: inherit;
+        text-decoration: underline;
+        transition: color 0.2s;
+    }
+
+    .help-link:hover {
+        color: #7289da;
+    }
+
+    .help-link:focus {
+        outline: 2px solid #5865f2;
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
     @media (max-width: 576px) {
         .card-wrapper {
             width: 100%;
         }
-    }
-
-    .pagination-controls {
-        margin-top: 1rem;
-        display: flex;
-        gap: 0.5rem;
-        justify-content: center;
     }
 </style>

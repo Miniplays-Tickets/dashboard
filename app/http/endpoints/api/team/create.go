@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+
 	dbclient "github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/database"
@@ -15,8 +17,8 @@ func CreateTeam(ctx *gin.Context) {
 	guildId := ctx.Keys["guildid"].(uint64)
 
 	var data body
-	if err := ctx.BindJSON(&data); err != nil {
-		ctx.JSON(400, utils.ErrorJson(err))
+	if err := ctx.ShouldBindJSON(&data); err != nil {
+		ctx.JSON(400, utils.ErrorStr("Invalid request data. Please check your input and try again."))
 		return
 	}
 
@@ -27,7 +29,7 @@ func CreateTeam(ctx *gin.Context) {
 
 	_, exists, err := dbclient.Client.SupportTeam.GetByName(ctx, guildId, data.Name)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr(fmt.Sprintf("Failed to fetch team from database: %v", err)))
 		return
 	}
 
@@ -38,7 +40,7 @@ func CreateTeam(ctx *gin.Context) {
 
 	id, err := dbclient.Client.SupportTeam.Create(ctx, guildId, data.Name)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to create team. Please try again."))
 		return
 	}
 

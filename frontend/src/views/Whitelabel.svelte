@@ -1,64 +1,284 @@
+<script>
+    import {
+        notifyError,
+        notifyRatelimit,
+        notifySuccess,
+        withLoadingScreen,
+    } from "../js/util";
+    import axios from "axios";
+    import Card from "../components/Card.svelte";
+    import Button from "../components/Button.svelte";
+    import { API_URL, FRONTPAGE_URL } from "../js/constants";
+    import { setDefaultHeaders } from "../includes/Auth.svelte";
+    import Dropdown from "../components/form/Dropdown.svelte";
+    import Input from "../components/form/Input.svelte";
+
+    setDefaultHeaders();
+
+    let active = false;
+    let token;
+    let bot = {};
+    let fetched = {};
+    let errors = [];
+
+    async function invite() {
+        const res = await axios.get(`${API_URL}/user/whitelabel/`);
+        if (res.status !== 200) {
+            notifyError(res.data.error);
+            return;
+        }
+
+        const inviteUrl =
+            "https://discord.com/oauth2/authorize?client_id=" +
+            res.data.id +
+            "&scope=bot+applications.commands&permissions=805825784";
+        window.open(inviteUrl, "_blank");
+    }
+
+    async function submitToken() {
+        const data = {
+            token: token,
+        };
+
+        const res = await axios.post(`${API_URL}/user/whitelabel/`, data);
+        if (res.status !== 200 || !res.data.success) {
+            notifyError(res.data.error);
+            return;
+        }
+
+        $: token = "";
+
+        await loadBot();
+        notifySuccess(`Started tickets whitelabel on ${res.data.bot.name}`);
+    }
+
+    async function updateStatus() {
+        const data = {
+            status: bot.status,
+            status_type: bot.status_type,
+        };
+
+        const res = await axios.post(`${API_URL}/user/whitelabel/status`, data);
+        if (res.status !== 200 || !res.data.success) {
+            if (res.status === 429) {
+                notifyRatelimit();
+            } else {
+                notifyError(res.data.error);
+            }
+
+            return;
+        }
+
+        fetched = { ...data };
+        notifySuccess("Updated status successfully");
+    }
+
+    async function deleteStatus() {
+        const res = await axios.delete(`${API_URL}/user/whitelabel/status`);
+        if (res.status !== 200 || !res.data.success) {
+            if (res.status === 429) {
+                notifyRatelimit();
+            } else {
+                notifyError(res.data.error);
+            }
+
+            return;
+        }
+
+        const blankStatus = {
+            status: "",
+            status_type: "0",
+        };
+
+        bot = blankStatus;
+        fetched = { ...blankStatus };
+        notifySuccess("Deleted status successfully");
+    }
+
+    async function loadBot() {
+        const res = await axios.get(`${API_URL}/user/whitelabel/`);
+        if (res.status !== 200) {
+            if (res.status === 402) {
+                window.location.replace(`${FRONTPAGE_URL}/premium`);
+                return false;
+            }
+
+            if (res.status !== 404) {
+                notifyError(res.data.error);
+            }
+
+            return true;
+        }
+
+        bot = res.data;
+        fetched = { ...res.data };
+
+        active = true;
+
+        return true;
+    }
+
+    async function loadErrors() {
+        const res = await axios.get(`${API_URL}/user/whitelabel/errors`);
+        if (res.status !== 200 || !res.data.success) {
+            notifyError(res.data.error);
+            return;
+        }
+
+        // append errors
+        if (res.data.errors !== null) {
+            errors = res.data.errors.map((error) =>
+                Object.assign({}, error, { time: new Date(error.time) }),
+            );
+        }
+    }
+
+    async function createSlashCommands() {
+        const opts = {
+            timeout: 20 * 1000,
+        };
+
+        const res = await axios.post(
+            `${API_URL}/user/whitelabel/create-interactions`,
+            {},
+            opts,
+        );
+        if (res.status !== 200 || !res.data.success) {
+            notifyError(res.data.error);
+            return;
+        }
+
+        notifySuccess(
+            "Slash commands have been created. Please note, they may take a few minutes before they are visible.",
+        );
+    }
+
+    async function disable() {
+        const res = await axios.delete(`${API_URL}/user/whitelabel/`);
+        if (res.status !== 204) {
+            notifyError(res.data.error);
+            return;
+        }
+
+        active = false;
+        notifySuccess("Whitelabel has been disabled");
+    }
+
+    withLoadingScreen(async () => {
+        if (await loadBot()) {
+            await Promise.all([loadErrors()]);
+        }
+    });
+</script>
+
 <div class="wrapper">
     <div class="col">
         {#if active}
-            <Card footer="{false}" fill="{false}">
-                <h4 slot="title">Bot verwalten</h4>
+            <Card footer={false} fill={false}>
+                <h4 slot="title">Manage Bot</h4>
                 <div slot="body" class="full-width">
-                    <p>Dein Whitelabel Bot <b>{bot.username}</b> ist aktiv.</p>
+                    <p>Your whitelabel bot <b>{bot.username}</b> is active.</p>
 
                     <div class="buttons">
                         <Button icon="fas fa-plus" on:click={invite}>
-                            Invite Link Erstellen
+                            Generate Invite Link
                         </Button>
 
-                        <Button icon="fas fa-paper-plane" on:click={createSlashCommands}>
-                            Slash Commands neu erstellen
+                        <Button
+                            icon="fas fa-paper-plane"
+                            on:click={createSlashCommands}
+                        >
+                            Re-create Slash Commands
                         </Button>
 
-                        <Button icon="fas fa-trash-can" on:click={disable} danger>
-                            Bot Deaktivieren
+                        <Button
+                            icon="fas fa-trash-can"
+                            on:click={disable}
+                            danger
+                        >
+                            Disable Whitelabel
                         </Button>
                     </div>
                 </div>
             </Card>
 
-            <Card footer="{false}" fill="{false}">
-                <h4 slot="title">Eigener Status</h4>
+            <Card footer={false} fill={false}>
+                <h4 slot="title">Custom Status</h4>
                 <div slot="body" class="full-width">
-                    <form class="form-wrapper full-width" on:submit|preventDefault>
+                    <form
+                        class="form-wrapper full-width"
+                        on:submit|preventDefault
+                    >
                         <div class="row">
-                            <Dropdown col3 label="Status Typ" bind:value={bot.status_type}>
-                                <option value="0">Spielt</option>
-                                <option value="2">Hört</option>
-                                <option value="3">Schaut</option>
+                            <Dropdown
+                                col3
+                                label="Status Type"
+                                bind:value={bot.status_type}
+                            >
+                                <option value="0">Playing</option>
+                                <option value="2">Listening</option>
+                                <option value="3">Watching</option>
+                                <option value="5">Competing</option>
+                                <option value="4">Custom</option>
                             </Dropdown>
 
                             <div class="col-2-3">
-                                <Input col1 label="Status Text" placeholder="/help" bind:value={bot.status}/>
+                                <Input
+                                    col1
+                                    label="Status Text"
+                                    placeholder="/help"
+                                    bind:value={bot.status}
+                                />
                             </div>
                         </div>
 
                         <div class="buttons">
-                            <Button icon="fas fa-paper-plane" on:click={updateStatus} fullWidth="{true}">
-                                Speichern
+                            <Button
+                                icon="fas fa-paper-plane"
+                                on:click={updateStatus}
+                                fullWidth={true}
+                            >
+                                Submit
                             </Button>
+                            {#if fetched.status != ""}
+                                <Button
+                                    icon="fas fa-trash-can"
+                                    on:click={deleteStatus}
+                                    danger
+                                    fullWidth={true}
+                                >
+                                    Clear Status
+                                </Button>
+                            {/if}
                         </div>
                     </form>
                 </div>
             </Card>
         {:else}
-            <Card footer="{false}" fill="{false}">
+            <Card footer={false} fill={false}>
                 <h4 slot="title">Bot Token</h4>
                 <div slot="body" class="full-width">
                     <form class="full-width" on:submit|preventDefault>
                         <label class="form-label">Bot Token</label>
 
-                        <input name="token" type="text" bind:value={token} class="form-input full-width"
-                               placeholder="xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxx">
-                        <p>Info: Du kannst den Bot token nach dem Speichern nicht mehr einsehen</p>
+                        <input
+                            name="token"
+                            type="text"
+                            bind:value={token}
+                            class="form-input full-width"
+                            placeholder="xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                        />
+                        <p>
+                            Note: You will not be able to view the token after
+                            submitting it
+                        </p>
 
                         <div class="buttons">
-                            <Button icon="fas fa-paper-plane" on:click={submitToken} fullWidth="{true}">Speichern
+                            <Button
+                                icon="fas fa-paper-plane"
+                                on:click={submitToken}
+                                fullWidth={true}
+                                >Submit
                             </Button>
                         </div>
                     </form>
@@ -67,23 +287,25 @@
         {/if}
     </div>
     <div class="col">
-        <Card footer="{false}" fill="{false}">
-            <h4 slot="title">Fehler Log</h4>
+        <Card footer={false} fill={false}>
+            <h4 slot="title">Error Log</h4>
             <div slot="body" class="full-width">
                 <table class="error-log">
                     <thead>
-                    <tr style="border-bottom: 1px solid #dee2e6;">
-                        <th class="table-col">Error</th>
-                        <th class="table-col">Time</th>
-                    </tr>
+                        <tr style="border-bottom: 1px solid #dee2e6;">
+                            <th class="table-col">Error</th>
+                            <th class="table-col">Time</th>
+                        </tr>
                     </thead>
                     <tbody id="error_body">
-                    {#each errors as error}
-                        <tr class="table-row table-border">
-                            <td class="table-col">{error.message}</td>
-                            <td class="table-col">{error.time.toLocaleString()}</td>
-                        </tr>
-                    {/each}
+                        {#each errors as error}
+                            <tr class="table-row table-border">
+                                <td class="table-col">{error.message}</td>
+                                <td class="table-col"
+                                    >{error.time.toLocaleString()}</td
+                                >
+                            </tr>
+                        {/each}
                     </tbody>
                 </table>
             </div>
@@ -126,15 +348,16 @@
         text-transform: uppercase;
     }
 
-    :global(.form-input), :global(.form-input:focus-visible) {
-        border-color: #2e3136 !important;
-        background-color: #2e3136 !important;
+    :global(.form-input),
+    :global(.form-input:focus-visible) {
+        border-color: #262b3d !important;
+        background-color: #262b3d !important;
+        border-radius: var(--border-radius-md);
         color: white !important;
         outline: none;
-        border-radius: 4px;
         padding: 8px 12px;
         margin: 0 0 0.5em 0;
-        height: 40px;
+        height: 48px;
     }
 
     .full-width {
@@ -185,138 +408,3 @@
         gap: 10px;
     }
 </style>
-
-<script>
-    import {notifyError, notifyRatelimit, notifySuccess, withLoadingScreen} from '../js/util'
-    import axios from "axios";
-    import Card from '../components/Card.svelte'
-    import Button from '../components/Button.svelte'
-    import {API_URL} from "../js/constants";
-    import {setDefaultHeaders} from '../includes/Auth.svelte'
-    import Dropdown from "../components/form/Dropdown.svelte";
-    import Input from "../components/form/Input.svelte";
-
-    setDefaultHeaders()
-
-    let active = false;
-    let token;
-    let bot = {};
-    let errors = [];
-
-    async function invite() {
-        const res = await axios.get(`${API_URL}/user/whitelabel/`);
-        if (res.status !== 200) {
-            notifyError(res.data.error);
-            return;
-        }
-
-        const inviteUrl = 'https://discord.com/oauth2/authorize?client_id=' + res.data.id + '&scope=bot+applications.commands&permissions=805825784';
-        window.open(inviteUrl, '_blank');
-    }
-
-    async function submitToken() {
-        const data = {
-            token: token
-        };
-
-        const res = await axios.post(`${API_URL}/user/whitelabel/`, data);
-        if (res.status !== 200 || !res.data.success) {
-            notifyError(res.data.error);
-            return;
-        }
-
-        $: token = '';
-
-        await loadBot();
-        notifySuccess(`Tickets Whitelabel auf ${res.data.bot.name} gestartet`);
-    }
-
-    async function updateStatus() {
-        const data = {
-            status: bot.status,
-            status_type: bot.status_type,
-        };
-
-        const res = await axios.post(`${API_URL}/user/whitelabel/status`, data);
-        if (res.status !== 200 || !res.data.success) {
-            if (res.status === 429) {
-                notifyRatelimit()
-            } else {
-                notifyError(res.data.error)
-            }
-
-            return;
-        }
-
-        notifySuccess('Status erfolgreich Aktualisiert')
-    }
-
-    async function loadBot() {
-        const res = await axios.get(`${API_URL}/user/whitelabel/`);
-        if (res.status !== 200) {
-            if (res.status === 402) {
-                notifyError("Du hast kein Whitelabel");
-                window.location.href = '/';
-                return false;
-            }
-
-            if (res.status !== 404) {
-                notifyError(res.data.error);
-            }
-
-            return true;
-        }
-
-        bot = res.data;
-
-        active = true;
-
-        return true;
-    }
-
-    async function loadErrors() {
-        const res = await axios.get(`${API_URL}/user/whitelabel/errors`);
-        if (res.status !== 200 || !res.data.success) {
-            notifyError(res.data.error);
-            return;
-        }
-
-        // append errors
-        if (res.data.errors !== null) {
-            errors = res.data.errors.map(error => Object.assign({}, error, {time: new Date(error.time)}));
-        }
-    }
-
-    async function createSlashCommands() {
-        const opts = {
-            timeout: 20 * 1000
-        };
-
-        const res = await axios.post(`${API_URL}/user/whitelabel/create-interactions`, {}, opts);
-        if (res.status !== 200 || !res.data.success) {
-            notifyError(res.data.error);
-            return;
-        }
-
-        notifySuccess('Slash Befehle wurden erstellt. Es wird eventuell kurz dauern, bis diese angezeigt werden.have been created. ');
-    }
-
-    async function disable() {
-        const res = await axios.delete(`${API_URL}/user/whitelabel/`);
-        if (res.status !== 204) {
-            notifyError(res.data.error);
-            return;
-        }
-
-        active = false;
-        notifySuccess('Whitelabel wurde Deaktiviert');
-    }
-
-    withLoadingScreen(async () => {
-        if (await loadBot()) {
-            await Promise.all([
-                loadErrors()
-            ]);
-        }
-    });
-</script>

@@ -7,9 +7,9 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/app"
 	"github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/utils"
+	"github.com/TicketsBot-cloud/gdl/objects/user"
+	"github.com/TicketsBot-cloud/gdl/rest"
 	"github.com/gin-gonic/gin"
-	"github.com/rxdn/gdl/objects/user"
-	"github.com/rxdn/gdl/rest"
 )
 
 type whitelabelResponse struct {
@@ -24,7 +24,7 @@ func WhitelabelGet(c *gin.Context) {
 	// Check if this is a different token
 	bot, err := database.Client.Whitelabel.GetByUserId(c, userId)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to load whitelabel bots"))
 		return
 	}
 
@@ -36,7 +36,7 @@ func WhitelabelGet(c *gin.Context) {
 	// Get status
 	status, statusType, _, err := database.Client.WhitelabelStatuses.Get(c, bot.BotId)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to load whitelabel bots"))
 		return
 	}
 

@@ -16,9 +16,9 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/Miniplays-Tickets/dashboard/utils/types"
 	"github.com/TicketsBot-cloud/database"
-	"github.com/rxdn/gdl/objects/channel"
-	"github.com/rxdn/gdl/objects/guild"
-	"github.com/rxdn/gdl/objects/interaction/component"
+	"github.com/TicketsBot-cloud/gdl/objects/channel"
+	"github.com/TicketsBot-cloud/gdl/objects/guild"
+	"github.com/TicketsBot-cloud/gdl/objects/interaction/component"
 )
 
 func ApplyPanelDefaults(data *panelBody) {
@@ -167,7 +167,7 @@ func validateEmoji(c PanelValidationContext) validation.ValidationFunc {
 	}
 }
 
-var urlRegex = regexp.MustCompile(`^https?://([-a-zA-Z0-9@:%._+~#=]{1,256})\.[a-zA-Z0-9()]{1,63}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*\.(?:gif|jpg|jpeg|png|webp))$`)
+var urlRegex = regexp.MustCompile(`^https?://([-a-zA-Z0-9@:%._+~#=]{1,256})\.[a-zA-Z0-9()]{1,63}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$`)
 
 func validateNullableUrl(url *string) validation.ValidationFunc {
 	return func() error {
@@ -360,15 +360,21 @@ func validateAccessControlList(ctx PanelValidationContext) validation.Validation
 func validateEmbed(e *types.CustomEmbed) error {
 	if e == nil || e.Title != nil || e.Description != nil || len(e.Fields) > 0 || e.ImageUrl != nil || e.ThumbnailUrl != nil {
 		if e.ImageUrl != nil && (len(*e.ImageUrl) > 255 || !urlRegex.MatchString(*e.ImageUrl)) {
-			if *e.ImageUrl != "%avatar_url%" {
-				return validation.NewInvalidInputError("Ungültige Bild-URL. Sie muss mit .gif, .jpg, .jpeg, .png oder .webp enden")
+			if *e.ImageUrl == "%avatar_url%" {
+				// Ignore validation as it is a placeholder
+				return nil
 			}
+
+			return validation.NewInvalidInputError("Invalid URL")
 		}
 
 		if e.ThumbnailUrl != nil && (len(*e.ThumbnailUrl) > 255 || !urlRegex.MatchString(*e.ThumbnailUrl)) {
-			if *e.ThumbnailUrl != "%avatar_url%" {
-				return validation.NewInvalidInputError("Ungültige Bild-URL. Sie muss mit .gif, .jpg, .jpeg, .png oder .webp enden")
+			if *e.ThumbnailUrl == "%avatar_url%" {
+				// Ignore validation as it is a placeholder
+				return nil
 			}
+
+			return validation.NewInvalidInputError("Invalid URL")
 		}
 
 		return nil

@@ -22,8 +22,8 @@ import (
 	"github.com/TicketsBot-cloud/common/observability"
 	"github.com/TicketsBot-cloud/common/premium"
 	"github.com/TicketsBot-cloud/common/secureproxy"
+	"github.com/TicketsBot-cloud/gdl/rest/request"
 	"github.com/getsentry/sentry-go"
-	"github.com/rxdn/gdl/rest/request"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
@@ -45,7 +45,7 @@ func main() {
 			Debug:            config.Conf.Debug,
 			AttachStacktrace: true,
 			EnableTracing:    true,
-			TracesSampleRate: 0.1,
+			TracesSampleRate: 1,
 		}
 
 		if err := sentry.Init(sentryOpts); err != nil {
@@ -84,7 +84,7 @@ func main() {
 	cache.Instance = cache.NewCache()
 
 	logger.Info("Connecting to import S3")
-	s3.ConnectS3(config.Conf.S3Import.Endpoint, config.Conf.S3Import.AccessKey, config.Conf.S3Import.SecretKey)
+	s3.ConnectS3(config.Conf.S3Import.Endpoint, config.Conf.S3Import.AccessKey, config.Conf.S3Import.SecretKey, config.Conf.S3Import.Secure)
 
 	logger.Info("Initialising microservice clients")
 	utils.ArchiverClient = archiverclient.NewArchiverClient(archiverclient.NewProxyRetriever(config.Conf.Bot.ObjectStore), []byte(config.Conf.Bot.AesKey))

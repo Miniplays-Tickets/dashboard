@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/rxdn/gdl/rest/request"
+	"github.com/TicketsBot-cloud/gdl/rest/request"
 )
 
 type ApiError struct {

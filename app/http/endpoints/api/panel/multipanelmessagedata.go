@@ -2,15 +2,17 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"math"
 
 	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	"github.com/Miniplays-Tickets/dashboard/config"
 	"github.com/Miniplays-Tickets/dashboard/utils/types"
 	"github.com/TicketsBot-cloud/database"
-	"github.com/rxdn/gdl/objects/channel/embed"
-	"github.com/rxdn/gdl/objects/interaction/component"
-	"github.com/rxdn/gdl/rest"
-	"github.com/rxdn/gdl/utils"
+	"github.com/TicketsBot-cloud/gdl/objects/channel/embed"
+	"github.com/TicketsBot-cloud/gdl/objects/interaction/component"
+	"github.com/TicketsBot-cloud/gdl/rest"
+	"github.com/TicketsBot-cloud/gdl/utils"
 )
 
 type multiPanelMessageData struct {
@@ -38,8 +40,7 @@ func multiPanelIntoMessageData(panel database.MultiPanel, isPremium bool) multiP
 
 func (d *multiPanelMessageData) send(ctx *botcontext.BotContext, panels []database.Panel) (uint64, error) {
 	if !d.IsPremium {
-		// TODO: Don't harcode
-		d.Embed.SetFooter("Powered by MINIPLAYS", "https://miniplays.de/imgs/miniplays_logo_neu1024.png")
+		d.Embed.SetFooter(fmt.Sprintf("Powered by %s", config.Conf.Bot.PoweredBy), config.Conf.Bot.IconUrl)
 	}
 
 	var components []component.Component

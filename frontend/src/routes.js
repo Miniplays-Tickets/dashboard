@@ -38,9 +38,13 @@ import EditMultiPanel from "./views/panels/EditMultiPanel.svelte";
 import SelectServers from "./views/premium/SelectServers.svelte";
 import Import from './views/Import.svelte'
 
+import TranscriptsView2 from './views/TranscriptView2.svelte'
+
 import LegalLayout from "./layouts/LegalLayout.svelte"
 import PrivacyPolicy from "./views/legal/PrivacyPolicy.svelte"
 import TermsOfService from "./views/legal/TOS.svelte"
+
+import {WHITELABEL_DISABLED} from "./js/constants";
 
 export const routes = [
     {name: '/', component: Index, layout: IndexLayout},
@@ -50,7 +54,7 @@ export const routes = [
     {name: '/login', component: Login},
     {name: '/logout', component: Logout},
     {name: '/error', component: Error, layout: ErrorLayout},
-    {name: '/whitelabel', component: Whitelabel, layout: IndexLayout},
+    !WHITELABEL_DISABLED && {name: '/whitelabel', component: Whitelabel, layout: IndexLayout},
     {
         name: 'legal',
         nestedRoutes: [
@@ -86,8 +90,8 @@ export const routes = [
                     },
                     {
                         name: 'view/:ticketid',
-                        component: TranscriptView, // just to test
-                        layout: TranscriptViewLayout,
+                        component: TranscriptsView2, // Switched to the new view for now
+                        layout: ManageLayout,
                     }
                 ]
             },
@@ -190,4 +194,4 @@ export const routes = [
             }
         ],
     }
-]
+].filter(Boolean); // Filter out false values

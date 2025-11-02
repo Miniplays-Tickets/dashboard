@@ -3,10 +3,11 @@ package chatreplica
 import (
 	"strconv"
 
-	v2 "github.com/TicketsBot/logarchiver/pkg/model/v2"
-	"github.com/rxdn/gdl/objects/channel"
-	"github.com/rxdn/gdl/objects/channel/embed"
-	"github.com/rxdn/gdl/objects/channel/message"
+	"github.com/TicketsBot-cloud/gdl/objects/channel"
+	"github.com/TicketsBot-cloud/gdl/objects/channel/embed"
+	"github.com/TicketsBot-cloud/gdl/objects/channel/message"
+	"github.com/TicketsBot-cloud/gdl/objects/interaction/component"
+	v2 "github.com/TicketsBot-cloud/logarchiver/pkg/model/v2"
 )
 
 type (
@@ -39,13 +40,14 @@ type (
 	}
 
 	Message struct {
-		Id          uint64               `json:"id,string"`
-		Type        message.MessageType  `json:"type"`
-		Author      uint64               `json:"author,string"`
-		Time        int64                `json:"time"` // Unix seconds
-		Content     string               `json:"content"`
-		Embeds      []embed.Embed        `json:"embeds,omitempty"`
-		Attachments []channel.Attachment `json:"attachments,omitempty"`
+		Id          uint64                `json:"id,string"`
+		Type        message.MessageType   `json:"type"`
+		Author      uint64                `json:"author,string"`
+		Time        int64                 `json:"time"` // Unix seconds
+		Content     string                `json:"content"`
+		Embeds      []embed.Embed         `json:"embeds,omitempty"`
+		Components  []component.Component `json:"components,omitempty"`
+		Attachments []channel.Attachment  `json:"attachments,omitempty"`
 	}
 )
 
@@ -65,7 +67,7 @@ func MessagesFromTranscript(messages []v2.Message) []Message {
 	var wrappedMessages []Message
 
 	for _, msg := range messages {
-		if msg.Content == "" && len(msg.Embeds) == 0 && len(msg.Attachments) == 0 {
+		if msg.Content == "" && len(msg.Embeds) == 0 && len(msg.Attachments) == 0 && len(msg.Components) == 0 {
 			continue
 		}
 
@@ -76,6 +78,7 @@ func MessagesFromTranscript(messages []v2.Message) []Message {
 			Time:        msg.Timestamp.UnixMilli(),
 			Content:     msg.Content,
 			Embeds:      msg.Embeds,
+			Components:  msg.Components,
 			Attachments: msg.Attachments,
 		})
 	}

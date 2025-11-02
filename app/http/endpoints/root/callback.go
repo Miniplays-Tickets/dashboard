@@ -14,10 +14,10 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/config"
 	dbclient "github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/utils"
+	"github.com/TicketsBot-cloud/gdl/rest"
+	"github.com/TicketsBot-cloud/gdl/rest/request"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
-	"github.com/rxdn/gdl/rest"
-	"github.com/rxdn/gdl/rest/request"
 )
 
 func CallbackHandler(c *gin.Context) {
@@ -37,7 +37,7 @@ func CallbackHandler(c *gin.Context) {
 			}
 		}
 
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to exchange OAuth code"))
 		return
 	}
 
@@ -50,7 +50,7 @@ func CallbackHandler(c *gin.Context) {
 	// Get ID + name
 	currentUser, err := rest.GetCurrentUser(context.Background(), fmt.Sprintf("Bearer %s", res.AccessToken), nil)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to fetch current user from Discord"))
 		return
 	}
 
@@ -67,7 +67,7 @@ func CallbackHandler(c *gin.Context) {
 	if utils.Contains(scopes, "guilds") {
 		guilds, err = utils.LoadGuilds(c, res.AccessToken, currentUser.Id)
 		if err != nil {
-			_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+			_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to load user guilds"))
 			return
 		}
 
@@ -92,12 +92,12 @@ func CallbackHandler(c *gin.Context) {
 
 	str, err := token.SignedString([]byte(config.Conf.Server.Secret))
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to sign JWT token"))
 		return
 	}
 
 	if err := session.Store.Set(currentUser.Id, store); err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to save session"))
 		return
 	}
 
