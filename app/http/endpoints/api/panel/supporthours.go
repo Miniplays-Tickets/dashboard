@@ -6,12 +6,12 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Miniplays-Tickets/dashboard/app"
+	"github.com/Miniplays-Tickets/dashboard/botcontext"
+	dbclient "github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/rpc"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/common/premium"
-	"github.com/TicketsBot-cloud/dashboard/app"
-	"github.com/TicketsBot-cloud/dashboard/botcontext"
-	dbclient "github.com/TicketsBot-cloud/dashboard/database"
-	"github.com/TicketsBot-cloud/dashboard/rpc"
-	"github.com/TicketsBot-cloud/dashboard/utils"
 	"github.com/TicketsBot-cloud/database"
 	"github.com/gin-gonic/gin"
 )

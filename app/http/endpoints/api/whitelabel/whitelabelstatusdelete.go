@@ -3,11 +3,11 @@ package api
 import (
 	"net/http"
 
+	"github.com/Miniplays-Tickets/dashboard/app"
+	"github.com/Miniplays-Tickets/dashboard/database"
+	"github.com/Miniplays-Tickets/dashboard/redis"
+	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/common/statusupdates"
-	"github.com/TicketsBot-cloud/dashboard/app"
-	"github.com/TicketsBot-cloud/dashboard/database"
-	"github.com/TicketsBot-cloud/dashboard/redis"
-	"github.com/TicketsBot-cloud/dashboard/utils"
 	"github.com/gin-gonic/gin"
 )
 
