@@ -1,6 +1,5 @@
 <script>
     import { Navigate } from "svelte-router-spa";
-    import { WHITELABEL_DISABLED } from "../js/constants";
     import { getAvatarUrl, getDefaultIcon } from "../js/icons";
     import { clearLocalStorage } from "./Auth.svelte";
 
@@ -32,14 +31,12 @@
                 </div>
                 </Navigate>
             {/if}
-            {#if !WHITELABEL_DISABLED}
-                <Navigate to="/whitelabel" styles="sidebar-link">
-                    <div class="sidebar-element">
-                        <i class="fas fa-edit sidebar-icon"></i>
-                        <span class="sidebar-text">Whitelabel</span>
-                    </div>
-                </Navigate>
-            {/if}
+            <Navigate to="/whitelabel" styles="sidebar-link">
+                <div class="sidebar-element">
+                    <i class="fas fa-edit sidebar-icon"></i>
+                    <span class="sidebar-text">Whitelabel</span>
+                </div>
+            </Navigate>
             {#if userData.admin}
                 <Navigate to="/admin/bot-staff" styles="sidebar-link">
                     <div class="sidebar-element">
