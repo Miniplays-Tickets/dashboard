@@ -57,7 +57,7 @@ func GetTranscriptRenderHandler(ctx *gin.Context) {
 		if errors.Is(err, archiverclient.ErrNotFound) {
 			ctx.JSON(404, utils.ErrorStr("Transcript nicht gefunden"))
 		} else {
-			ctx.JSON(500, utils.ErrorStr("Failed to process request. Please try again."))
+			ctx.JSON(503, utils.ErrorStr("Failed to process request. Please try again."))
 		}
 
 		return
@@ -67,7 +67,7 @@ func GetTranscriptRenderHandler(ctx *gin.Context) {
 	payload := chatreplica.FromTranscript(transcript, ticketId)
 	// html, err := chatreplica.Render(payload)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorStr("Failed to process request. Please try again."))
+		ctx.JSON(404, utils.ErrorStr("Failed to process request. Please try again."))
 		return
 	}
 
