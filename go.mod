@@ -19,7 +19,7 @@ replace github.com/go-playground/validator/v10 => github.com/go-playground/valid
 require (
 	github.com/BurntSushi/toml v1.2.1
 	github.com/Miniplays-Tickets/worker v0.0.0-20251102212510-31407521d3dc
-	github.com/TicketsBot-cloud/archiverclient v0.0.0-20250807224931-e188ad18a850
+	github.com/TicketsBot-cloud/archiverclient v0.0.0-20251018211327-998c363bd05d
 	github.com/TicketsBot-cloud/common v0.0.0-20251026182733-99fa0dc31d90
 	github.com/TicketsBot-cloud/database v0.0.0-20251026184346-1c1920978196
 	github.com/TicketsBot-cloud/gdl v0.0.0-20251030191756-fbf81e31ba1d
