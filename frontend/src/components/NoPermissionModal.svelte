@@ -30,7 +30,7 @@
 
             <div slot="body" class="body-wrapper">
                 <p class="intro">
-                    For your server to appear on the dashboard, you need to be a designated <strong>Support Representative</strong> or <strong>Admin User</strong> for the @Tickets v2 bot in that server.
+                    For your server to appear on the dashboard, you need to be a designated <strong>Support Representative</strong> or <strong>Admin User</strong> for the @Miniplays Tickets bot in that server.
                 </p>
 
                 <div class="info-section">
