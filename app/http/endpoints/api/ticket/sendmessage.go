@@ -11,9 +11,9 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/rpc"
 	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/common/premium"
+	"github.com/TicketsBot-cloud/gdl/rest"
+	"github.com/TicketsBot-cloud/gdl/rest/request"
 	"github.com/gin-gonic/gin"
-	"github.com/rxdn/gdl/rest"
-	"github.com/rxdn/gdl/rest/request"
 )
 
 type sendMessageBody struct {
@@ -29,52 +29,37 @@ func SendMessage(ctx *gin.Context) {
 
 	botContext, err := botcontext.ContextForGuild(guildId)
 	if err != nil {
-		ctx.JSON(500, gin.H{
-			"success": false,
-			"error":   err.Error(),
-		})
+		ctx.JSON(500, utils.ErrorStr("Unable to connect to Discord. Please try again later."))
 		return
 	}
 
 	// Get ticket ID
 	ticketId, err := strconv.Atoi(ctx.Param("ticketId"))
 	if err != nil {
-		ctx.JSON(400, gin.H{
-			"success": false,
-			"error":   "Ungültige Ticket ID",
-		})
+		ctx.JSON(400, utils.ErrorStr("Ungültige Ticket ID angegeben: %s", ctx.Param("ticketId")))
 		return
 	}
 
 	var body sendMessageBody
-	if err := ctx.BindJSON(&body); err != nil {
-		ctx.JSON(400, gin.H{
-			"success": false,
-			"error":   "Nachricht fehlt",
-		})
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		ctx.JSON(400, utils.ErrorStr("Invalid request data. Please check your input and try again."))
 		return
 	}
 
 	if len(body.Message.Content) == 0 {
-		ctx.JSON(400, gin.H{
-			"success": false,
-			"error":   "Du musst eine Nachricht eingeben",
-		})
+		ctx.JSON(400, utils.ErrorStr("Message content cannot be empty"))
 		return
 	}
 
 	// Verify guild is premium
 	premiumTier, err := rpc.PremiumClient.GetTierByGuildId(ctx, guildId, true, botContext.Token, botContext.RateLimiter)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to verify premium status for guild %d", guildId))
 		return
 	}
 
 	if premiumTier == premium.None {
-		ctx.JSON(402, gin.H{
-			"success": false,
-			"error":   "Guild hat kein Premium",
-		})
+		ctx.JSON(402, utils.ErrorStr("This feature requires a premium subscription. Guild %d is not premium.", guildId))
 		return
 	}
 
@@ -83,19 +68,13 @@ func SendMessage(ctx *gin.Context) {
 
 	// Verify the ticket exists
 	if ticket.UserId == 0 {
-		ctx.JSON(404, gin.H{
-			"success": false,
-			"error":   "Ticket nicht gefunden",
-		})
+		ctx.JSON(404, utils.ErrorStr("Ticket #%d nicht gefunden", ticketId))
 		return
 	}
 
 	// Verify the user has permission to send to this guild
 	if ticket.GuildId != guildId {
-		ctx.JSON(403, gin.H{
-			"success": false,
-			"error":   "Guild ID stimmt nicht",
-		})
+		ctx.JSON(403, utils.ErrorStr("Ticket #%d does not belong to guild %d", ticketId, guildId))
 		return
 	}
 
@@ -106,16 +85,13 @@ func SendMessage(ctx *gin.Context) {
 	// Preferably send via a webhook
 	webhook, err := database.Client.Webhooks.Get(ctx, guildId, ticketId)
 	if err != nil {
-		ctx.JSON(500, gin.H{
-			"success": false,
-			"error":   err.Error(),
-		})
+		ctx.JSON(500, utils.ErrorStr("Failed to fetch webhook for ticket #%d in guild %d", ticketId, guildId))
 		return
 	}
 
 	settings, err := database.Client.Settings.Get(ctx, guildId)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorStr("Fehler beim abrufen der Einstellungen"))
+		ctx.JSON(500, utils.ErrorStr("Failed to fetch guild settings for guild %d", guildId))
 		return
 	}
 
@@ -124,7 +100,7 @@ func SendMessage(ctx *gin.Context) {
 		if settings.AnonymiseDashboardResponses {
 			guild, err := botContext.GetGuild(context.Background(), guildId)
 			if err != nil {
-				ctx.JSON(500, utils.ErrorStr("Fehler beim abrufen der Guild"))
+				ctx.JSON(500, utils.ErrorStr("Failed to fetch guild information for guild %d", guildId))
 				return
 			}
 
@@ -136,7 +112,7 @@ func SendMessage(ctx *gin.Context) {
 		} else {
 			user, err := botContext.GetUser(context.Background(), userId)
 			if err != nil {
-				ctx.JSON(500, utils.ErrorStr("Fehler beim abrufen des Benutzers"))
+				ctx.JSON(500, utils.ErrorStr("Failed to fetch user information for user %d", userId))
 				return
 			}
 
@@ -168,7 +144,7 @@ func SendMessage(ctx *gin.Context) {
 	if !settings.AnonymiseDashboardResponses {
 		user, err := botContext.GetUser(context.Background(), userId)
 		if err != nil {
-			ctx.JSON(500, utils.ErrorStr("Fehler beim abrufen des Benutzers"))
+			ctx.JSON(500, utils.ErrorStr("Failed to fetch user information for user %d", userId))
 			return
 		}
 
@@ -180,18 +156,12 @@ func SendMessage(ctx *gin.Context) {
 	}
 
 	if ticket.ChannelId == nil {
-		ctx.JSON(404, gin.H{
-			"success": false,
-			"error":   "Ticket Channel ID ist nicht vorhanden",
-		})
+		ctx.JSON(404, utils.ErrorStr("Ticket #%d has no associated Discord channel", ticketId))
 		return
 	}
 
 	if _, err = rest.CreateMessage(ctx, botContext.Token, botContext.RateLimiter, *ticket.ChannelId, rest.CreateMessageData{Content: message}); err != nil {
-		ctx.JSON(500, gin.H{
-			"success": false,
-			"error":   err.Error(),
-		})
+		ctx.JSON(500, utils.ErrorStr("Failed to send message to ticket #%d in channel %d", ticketId, *ticket.ChannelId))
 		return
 	}
 

@@ -24,6 +24,7 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/app/http/session"
 	"github.com/Miniplays-Tickets/dashboard/config"
 	"github.com/TicketsBot-cloud/common/permission"
+	sentrygin "github.com/getsentry/sentry-go/gin"
 	"github.com/gin-gonic/gin"
 	"github.com/penglongli/gin-metrics/ginmetrics"
 	"go.uber.org/zap"
@@ -33,6 +34,7 @@ func StartServer(logger *zap.Logger, sm *livechat.SocketManager) {
 	logger.Info("Starting HTTP server")
 
 	router := gin.New()
+	router.Use(sentrygin.New(sentrygin.Options{}))
 	router.Use(gin.Recovery())
 	router.Use(middleware.Logging(logger))
 	router.Use(middleware.ErrorHandler)
@@ -125,6 +127,7 @@ func StartServer(logger *zap.Logger, sm *livechat.SocketManager) {
 		guildAuthApiAdmin.POST("/import", api_import.ImportHandler)
 		guildAuthApiAdmin.GET("/import/runs", api_import.GetRuns)
 		guildAuthApiAdmin.GET("/import/presign", api_import.PresignURL)
+		guildAuthApiAdmin.GET("/import/queue", api_import.CurrentQueue)
 
 		guildAuthApiSupport.GET("/blacklist", api_blacklist.GetBlacklistHandler)
 		guildAuthApiSupport.POST("/blacklist", api_blacklist.AddBlacklistHandler)
@@ -137,6 +140,12 @@ func StartServer(logger *zap.Logger, sm *livechat.SocketManager) {
 		guildAuthApiAdmin.POST("/panels/:panelid", rl(middleware.RateLimitTypeGuild, 5, 5*time.Second), api_panels.ResendPanel)
 		guildAuthApiAdmin.PATCH("/panels/:panelid", api_panels.UpdatePanel)
 		guildAuthApiAdmin.DELETE("/panels/:panelid", api_panels.DeletePanel)
+
+		// Support hours endpoints
+		guildAuthApiSupport.GET("/panels/:panelid/support-hours", api_panels.GetSupportHours)
+		guildAuthApiAdmin.POST("/panels/:panelid/support-hours", api_panels.SetSupportHours)
+		guildAuthApiAdmin.DELETE("/panels/:panelid/support-hours", api_panels.DeleteSupportHours)
+		guildAuthApiSupport.GET("/panels/:panelid/is-active", api_panels.IsPanelActive)
 
 		guildAuthApiAdmin.GET("/multipanels", api_panels.MultiPanelList)
 		guildAuthApiAdmin.POST("/multipanels", api_panels.MultiPanelCreate)
@@ -216,6 +225,7 @@ func StartServer(logger *zap.Logger, sm *livechat.SocketManager) {
 
 			whitelabelGroup.POST("/", rl(middleware.RateLimitTypeUser, 5, time.Minute), api_whitelabel.WhitelabelPost())
 			whitelabelGroup.POST("/status", rl(middleware.RateLimitTypeUser, 1, time.Second*5), api_whitelabel.WhitelabelStatusPost)
+			whitelabelGroup.DELETE("/status", rl(middleware.RateLimitTypeUser, 1, time.Second*5), api_whitelabel.WhitelabelStatusDelete)
 		}
 	}
 

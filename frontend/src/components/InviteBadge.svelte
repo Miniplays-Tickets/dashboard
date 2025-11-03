@@ -9,7 +9,8 @@
 </div>
 
 <script>
+    import {INVITE_URL} from "../js/constants";
     function invite() {
-        window.location.href = `https://discord.com/oauth2/authorize?client_id=1319784485335728199`;
+        window.location.href = INVITE_URL;
     }
 </script>

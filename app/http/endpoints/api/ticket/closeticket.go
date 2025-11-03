@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -23,12 +24,12 @@ func CloseTicket(c *gin.Context) {
 
 	ticketId, err := strconv.Atoi(c.Param("ticketId"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, utils.ErrorStr("Ungültige Ticket ID"))
+		c.JSON(http.StatusBadRequest, utils.ErrorStr("Ungültige Ticket ID angegben: %s", c.Param("ticketId")))
 		return
 	}
 
 	var body closeBody
-	if err := c.BindJSON(&body); err != nil {
+	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(400, utils.ErrorStr("Fehler 13"))
 		return
 	}
@@ -36,25 +37,25 @@ func CloseTicket(c *gin.Context) {
 	// Get the ticket struct
 	ticket, err := database.Client.Tickets.Get(c, ticketId, guildId)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Unable to load ticket. Please try again."))
 		return
 	}
 
 	// Verify the ticket exists
 	if ticket.UserId == 0 {
-		c.JSON(http.StatusNotFound, utils.ErrorStr("Ticket nicht gefunden"))
+		c.JSON(http.StatusNotFound, utils.ErrorStr("Ticket #%d nicht gefunden", ticketId))
 		return
 	}
 
 	hasPermission, requestErr := utils.HasPermissionToViewTicket(context.Background(), guildId, userId, ticket)
 	if requestErr != nil {
-		// TODO
-		c.JSON(requestErr.StatusCode, utils.ErrorJson(requestErr))
+		c.JSON(requestErr.StatusCode, app.NewError(requestErr,
+			fmt.Sprintf("Failed to verify permissions for user %d to close ticket #%d", userId, ticketId)))
 		return
 	}
 
 	if !hasPermission {
-		c.JSON(http.StatusForbidden, utils.ErrorStr("Du hast keine Berechtigungen dieses Ticket zu schließen"))
+		c.JSON(http.StatusForbidden, utils.ErrorStr("Benutzer %d hat keine Berechtigungen Ticket #%d zu schließen ", userId, ticketId))
 		return
 	}
 
@@ -66,7 +67,7 @@ func CloseTicket(c *gin.Context) {
 	}
 
 	if err := closerelay.Publish(redis.Client.Client, data); err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to publish ticket close event to Redis"))
 		return
 	}
 

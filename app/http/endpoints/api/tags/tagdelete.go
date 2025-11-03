@@ -1,6 +1,8 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/Miniplays-Tickets/dashboard/botcontext"
 	"github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/utils"
@@ -15,8 +17,8 @@ func DeleteTag(ctx *gin.Context) {
 	guildId := ctx.Keys["guildid"].(uint64)
 
 	var body deleteBody
-	if err := ctx.BindJSON(&body); err != nil {
-		ctx.JSON(400, utils.ErrorJson(err))
+	if err := ctx.ShouldBindJSON(&body); err != nil {
+		ctx.JSON(400, utils.ErrorStr("Invalid request data. Please check your input and try again."))
 		return
 	}
 
@@ -29,30 +31,30 @@ func DeleteTag(ctx *gin.Context) {
 	// Fetch tag to see if we need to delete a guild command
 	tag, exists, err := database.Client.Tag.Get(ctx, guildId, body.TagId)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr(fmt.Sprintf("Failed to fetch tag from database: %v", err)))
 		return
 	}
 
 	if !exists {
-		ctx.JSON(404, utils.ErrorStr("Tag nicht gefunden"))
+		ctx.JSON(404, utils.ErrorStr(fmt.Sprintf("Tag nicht gefunden: %s", body.TagId)))
 		return
 	}
 
 	if tag.ApplicationCommandId != nil {
 		botContext, err := botcontext.ContextForGuild(guildId)
 		if err != nil {
-			ctx.JSON(500, utils.ErrorJson(err))
+			ctx.JSON(500, utils.ErrorStr("Unable to connect to Discord. Please try again later."))
 			return
 		}
 
 		if err := botContext.DeleteGuildCommand(ctx, guildId, *tag.ApplicationCommandId); err != nil {
-			ctx.JSON(500, utils.ErrorJson(err))
+			ctx.JSON(500, utils.ErrorStr("Failed to delete tag. Please try again."))
 			return
 		}
 	}
 
 	if err := database.Client.Tag.Delete(ctx, guildId, body.TagId); err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to delete tag. Please try again."))
 		return
 	}
 

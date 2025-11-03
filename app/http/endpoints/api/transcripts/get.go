@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strconv"
 
 	dbclient "github.com/Miniplays-Tickets/dashboard/database"
@@ -18,17 +19,14 @@ func GetTranscriptHandler(ctx *gin.Context) {
 	// format ticket ID
 	ticketId, err := strconv.Atoi(ctx.Param("ticketId"))
 	if err != nil {
-		ctx.JSON(400, utils.ErrorStr("Ungültige Ticket ID"))
+		ctx.JSON(400, utils.ErrorStr(fmt.Sprintf("Invalid ticket ID provided: %s", ctx.Param("ticketId"))))
 		return
 	}
 
 	// get ticket object
 	ticket, err := dbclient.Client.Tickets.Get(ctx, ticketId, guildId)
 	if err != nil {
-		ctx.JSON(500, gin.H{
-			"success": false,
-			"error":   err.Error(),
-		})
+		ctx.JSON(500, utils.ErrorStr("Unable to load ticket. Please try again."))
 		return
 	}
 
@@ -43,7 +41,7 @@ func GetTranscriptHandler(ctx *gin.Context) {
 	if ticket.UserId != userId {
 		hasPermission, err := utils.HasPermissionToViewTicket(context.Background(), guildId, userId, ticket)
 		if err != nil {
-			ctx.JSON(err.StatusCode, utils.ErrorJson(err))
+			ctx.JSON(err.StatusCode, utils.ErrorStr("Failed to query database. Please try again."))
 			return
 		}
 
@@ -59,7 +57,7 @@ func GetTranscriptHandler(ctx *gin.Context) {
 		if errors.Is(err, archiverclient.ErrNotFound) {
 			ctx.JSON(404, utils.ErrorStr("Transcript nicht gefunden"))
 		} else {
-			ctx.JSON(500, utils.ErrorJson(err))
+			ctx.JSON(500, utils.ErrorStr("Failed to fetch records. Please try again."))
 		}
 
 		return

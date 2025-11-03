@@ -7,8 +7,8 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/config"
 	dbclient "github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/redis"
-	"github.com/TicketsBot/common/restcache"
-	"github.com/rxdn/gdl/rest/ratelimit"
+	"github.com/TicketsBot-cloud/common/restcache"
+	"github.com/TicketsBot-cloud/gdl/rest/ratelimit"
 )
 
 func ContextForGuild(guildId uint64) (*BotContext, error) {

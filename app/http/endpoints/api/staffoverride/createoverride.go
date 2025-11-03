@@ -17,7 +17,7 @@ func CreateOverrideHandler(ctx *gin.Context) {
 	guildId := ctx.Keys["guildid"].(uint64)
 
 	var body createOverrideBody
-	if err := ctx.BindJSON(&body); err != nil {
+	if err := ctx.ShouldBindJSON(&body); err != nil {
 		ctx.JSON(400, utils.ErrorStr("Fehler 25"))
 		fmt.Println(err.Error())
 		return
@@ -25,7 +25,7 @@ func CreateOverrideHandler(ctx *gin.Context) {
 
 	expires := time.Now().Add(time.Hour * time.Duration(body.TimePeriod))
 	if err := database.Client.StaffOverride.Set(ctx, guildId, expires); err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Invalid request data. Please check your input and try again."))
 		return
 	}
 

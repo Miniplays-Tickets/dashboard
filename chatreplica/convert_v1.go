@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/rxdn/gdl/objects/channel/message"
+	"github.com/TicketsBot-cloud/gdl/objects/channel/message"
 )
 
 func FromArchiveMessages(messages []message.Message, ticketId int) Payload {

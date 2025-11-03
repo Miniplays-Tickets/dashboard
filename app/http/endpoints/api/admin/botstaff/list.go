@@ -7,8 +7,8 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/rpc/cache"
 	"github.com/Miniplays-Tickets/dashboard/utils"
+	cache2 "github.com/TicketsBot-cloud/gdl/cache"
 	"github.com/gin-gonic/gin"
-	cache2 "github.com/rxdn/gdl/cache"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -20,7 +20,7 @@ type userData struct {
 func ListBotStaffHandler(ctx *gin.Context) {
 	staff, err := database.Client.BotStaff.GetAll(ctx)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to fetch records. Please try again."))
 		return
 	}
 
@@ -53,7 +53,7 @@ func ListBotStaffHandler(ctx *gin.Context) {
 	}
 
 	if err := group.Wait(); err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to fetch records. Please try again."))
 		return
 	}
 

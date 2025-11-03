@@ -7,14 +7,15 @@ import (
 	"net/http"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/Miniplays-Tickets/dashboard/app"
 	dbclient "github.com/Miniplays-Tickets/dashboard/database"
 	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/database"
+	"github.com/TicketsBot-cloud/gdl/objects/interaction/component"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/rxdn/gdl/objects/interaction/component"
 )
 
 type (
@@ -26,12 +27,21 @@ type (
 
 	inputCreateBody struct {
 		Label       string                   `json:"label" validate:"required,min=1,max=45"`
+		Description *string                  `json:"description,omitempty" validate:"omitempty,max=100"`
 		Placeholder *string                  `json:"placeholder,omitempty" validate:"omitempty,min=1,max=100"`
+		Type        int                      `json:"type" validate:"required,min=3,max=8"`
 		Position    int                      `json:"position" validate:"required,min=1,max=5"`
-		Style       component.TextStyleTypes `json:"style" validate:"required,min=1,max=2"`
+		Style       component.TextStyleTypes `json:"style" validate:"omitempty,required,min=1,max=2"`
 		Required    bool                     `json:"required"`
 		MinLength   uint16                   `json:"min_length" validate:"min=0,max=1024"` // validator interprets 0 as not set
 		MaxLength   uint16                   `json:"max_length" validate:"min=0,max=1024"`
+		Options     []inputOption            `json:"options,omitempty" validate:"omitempty,dive,required,min=1,max=25"`
+	}
+
+	inputOption struct {
+		Label       string  `json:"label" validate:"required,min=1,max=100"`
+		Description *string `json:"description,omitempty" validate:"omitempty,max=100"`
+		Value       string  `json:"value" validate:"required,min=1,max=100"`
 	}
 
 	inputUpdateBody struct {
@@ -47,13 +57,13 @@ func UpdateInputs(c *gin.Context) {
 
 	formId, err := strconv.Atoi(c.Param("form_id"))
 	if err != nil {
-		c.JSON(400, utils.ErrorStr("Ungültige Formular ID"))
+		c.JSON(400, utils.ErrorStr("Ungültige Formular ID: %s", c.Param("form_id")))
 		return
 	}
 
 	var data updateInputsBody
-	if err := c.BindJSON(&data); err != nil {
-		c.JSON(400, utils.ErrorJson(err))
+	if err := c.ShouldBindJSON(&data); err != nil {
+		c.JSON(400, utils.ErrorStr("Invalid request data. Please check your input and try again."))
 		return
 	}
 
@@ -71,37 +81,37 @@ func UpdateInputs(c *gin.Context) {
 
 	fieldCount := len(data.Create) + len(data.Update)
 	if fieldCount <= 0 || fieldCount > 5 {
-		c.JSON(400, utils.ErrorStr("Formulare müssen zwischen 1 und 5 Eingabefelder haben"))
+		c.JSON(400, utils.ErrorStr("Formulare müssen zwischen 1 und 5 Eingabefelder haben (current: %d inputs)", fieldCount))
 		return
 	}
 
 	// Verify form exists and is from the right guild
 	form, ok, err := dbclient.Client.Forms.Get(c, formId)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to fetch form from database"))
 		return
 	}
 
 	if !ok {
-		c.JSON(404, utils.ErrorStr("Formular nicht gefunden"))
+		c.JSON(404, utils.ErrorStr("Formular #%d nicht gefunden", formId))
 		return
 	}
 
 	if form.GuildId != guildId {
-		c.JSON(403, utils.ErrorStr("Das Formular gehört nicht zu dieser Guild"))
+		c.JSON(403, utils.ErrorStr("Formular #%d gehört nicht zu dieser Guild %d", formId, guildId))
 		return
 	}
 
 	existingInputs, err := dbclient.Client.FormInput.GetInputs(c, formId)
 	if err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to fetch form inputs from database"))
 		return
 	}
 
 	// Verify that the UPDATE inputs exist
 	for _, input := range data.Update {
 		if !utils.ExistsMap(existingInputs, input.Id, idMapper) {
-			c.JSON(400, utils.ErrorStr("Eingabe (zum Aktualisieren) nicht gefunden"))
+			c.JSON(400, utils.ErrorStr("Eingabe #%d (zum Aktualisieren) nicht gefunden im Formular #%d", input.Id, formId))
 			return
 		}
 	}
@@ -109,7 +119,7 @@ func UpdateInputs(c *gin.Context) {
 	// Verify that the DELETE inputs exist
 	for _, id := range data.Delete {
 		if !utils.ExistsMap(existingInputs, id, idMapper) {
-			c.JSON(400, utils.ErrorStr("Eingabe (zum Löschen) nicht gefunden"))
+			c.JSON(400, utils.ErrorStr("Eingabe #%d (zum Löschen) nicht gefunden im Formular #%d", id, formId))
 			return
 		}
 	}
@@ -117,7 +127,7 @@ func UpdateInputs(c *gin.Context) {
 	// Ensure no overlap between DELETE and UPDATE
 	for _, id := range data.Delete {
 		if utils.ExistsMap(data.Update, id, idMapperBody) {
-			c.JSON(400, utils.ErrorStr("Löschen und Aktualisieren überschneiden sich"))
+			c.JSON(400, utils.ErrorStr("Eingabe #%d kann nicht aktualisiert und gelöscht werden", id))
 			return
 		}
 	}
@@ -149,8 +159,35 @@ func UpdateInputs(c *gin.Context) {
 		return
 	}
 
+	// Validate string select inputs have at least one option and unique option values
+	for _, input := range data.Create {
+		if input.Type == 3 {
+			if len(input.Options) == 0 {
+				c.JSON(400, utils.ErrorStr("String select inputs must have at least one option"))
+				return
+			}
+			if err := validateUniqueOptionValues(input.Options); err != nil {
+				c.JSON(400, utils.ErrorStr("%v", err))
+				return
+			}
+		}
+	}
+
+	for _, input := range data.Update {
+		if input.Type == 3 {
+			if len(input.Options) == 0 {
+				c.JSON(400, utils.ErrorStr("String select inputs must have at least one option"))
+				return
+			}
+			if err := validateUniqueOptionValues(input.Options); err != nil {
+				c.JSON(400, utils.ErrorStr("%v", err))
+				return
+			}
+		}
+	}
+
 	if err := saveInputs(c, formId, data, existingInputs); err != nil {
-		_ = c.AbortWithError(http.StatusInternalServerError, app.NewServerError(err))
+		_ = c.AbortWithError(http.StatusInternalServerError, app.NewError(err, "Failed to save form inputs to database"))
 		return
 	}
 
@@ -188,6 +225,39 @@ func arePositionsCorrect(body updateInputsBody) bool {
 	return true
 }
 
+func validateUniqueOptionValues(options []inputOption) error {
+	if len(options) == 0 {
+		return nil
+	}
+
+	valueSet := make(map[string]bool)
+	duplicates := make(map[string]bool)
+
+	for _, opt := range options {
+		if opt.Value == "" {
+			continue
+		}
+		if valueSet[opt.Value] {
+			duplicates[opt.Value] = true
+		} else {
+			valueSet[opt.Value] = true
+		}
+	}
+
+	if len(duplicates) > 0 {
+		duplicateList := make([]string, 0, len(duplicates))
+		for value := range duplicates {
+			duplicateList = append(duplicateList, value)
+		}
+
+		sort.Strings(duplicateList)
+
+		return fmt.Errorf("Duplicate option values detected: %s. Each option must have a unique value", strings.Join(duplicateList, ", "))
+	}
+
+	return nil
+}
+
 func saveInputs(ctx context.Context, formId int, data updateInputsBody, existingInputs []database.FormInput) error {
 	// We can now update in the database
 	tx, err := dbclient.Client.BeginTx(ctx)
@@ -209,21 +279,97 @@ func saveInputs(ctx context.Context, formId int, data updateInputsBody, existing
 			return fmt.Errorf("Eingabe %d exisitiert nicht", input.Id)
 		}
 
+		// Set default values for min_length and max_length
+		minLength := input.MinLength
+		maxLength := input.MaxLength
+
+		// Handle select types (3, 5-8)
+		if input.Type == 3 || (input.Type >= 5 && input.Type <= 8) {
+			// Enforce min_length constraints (0-25)
+			if minLength < 0 {
+				minLength = 0
+			} else if minLength > 25 {
+				minLength = 25
+			}
+
+			// Handle max_length based on type
+			if input.Type == 3 {
+				// String Select: use options length as max, can be lower but not higher
+				optionsLength := uint16(len(input.Options))
+				if optionsLength > 0 {
+					if maxLength == 0 || maxLength > optionsLength {
+						maxLength = optionsLength
+					}
+				} else {
+					// No options yet, cap at 25
+					if maxLength == 0 || maxLength > 25 {
+						maxLength = 25
+					}
+				}
+			} else {
+				// Other select types (5-8): enforce 1-25 range
+				if maxLength == 0 || maxLength > 25 {
+					maxLength = 25
+				}
+			}
+
+			// Ensure max is at least 1
+			if maxLength < 1 {
+				maxLength = 1
+			}
+
+			// Ensure min doesn't exceed max
+			if minLength > maxLength {
+				minLength = maxLength
+			}
+		}
+
 		wrapped := database.FormInput{
 			Id:          input.Id,
 			FormId:      formId,
+			Type:        input.Type,
 			Position:    input.Position,
 			CustomId:    existing.CustomId,
 			Style:       uint8(input.Style),
 			Label:       input.Label,
+			Description: input.Description,
 			Placeholder: input.Placeholder,
 			Required:    input.Required,
-			MinLength:   &input.MinLength,
-			MaxLength:   &input.MaxLength,
+			MinLength:   &minLength,
+			MaxLength:   &maxLength,
 		}
 
 		if err := dbclient.Client.FormInput.UpdateTx(ctx, tx, wrapped); err != nil {
 			return err
+		}
+
+		if wrapped.Type == 3 { // String Select
+			// Delete existing options
+			options, err := dbclient.Client.FormInputOption.GetOptions(ctx, wrapped.Id)
+			if err != nil {
+				return err
+			}
+
+			for _, option := range options {
+				if err := dbclient.Client.FormInputOption.DeleteTx(ctx, tx, option.Id); err != nil {
+					return err
+				}
+			}
+
+			// Add new options
+			for i, opt := range input.Options {
+				option := database.FormInputOption{
+					FormInputId: wrapped.Id,
+					Position:    i + 1,
+					Label:       opt.Label,
+					Description: opt.Description,
+					Value:       opt.Value,
+				}
+
+				if _, err := dbclient.Client.FormInputOption.CreateTx(ctx, tx, option); err != nil {
+					return err
+				}
+			}
 		}
 	}
 
@@ -233,19 +379,84 @@ func saveInputs(ctx context.Context, formId int, data updateInputsBody, existing
 			return err
 		}
 
-		if _, err := dbclient.Client.FormInput.CreateTx(ctx,
+		// Set default values for min_length and max_length
+		minLength := input.MinLength
+		maxLength := input.MaxLength
+
+		// Handle select types (3, 5-8)
+		if input.Type == 3 || (input.Type >= 5 && input.Type <= 8) {
+			// Enforce min_length constraints (0-25)
+			if minLength < 0 {
+				minLength = 0
+			} else if minLength > 25 {
+				minLength = 25
+			}
+
+			// Handle max_length based on type
+			if input.Type == 3 {
+				// String Select: use options length as max, can be lower but not higher
+				optionsLength := uint16(len(input.Options))
+				if optionsLength > 0 {
+					if maxLength == 0 || maxLength > optionsLength {
+						maxLength = optionsLength
+					}
+				} else {
+					// No options yet, cap at 25
+					if maxLength == 0 || maxLength > 25 {
+						maxLength = 25
+					}
+				}
+			} else {
+				// Other select types (5-8): enforce 1-25 range
+				if maxLength == 0 || maxLength > 25 {
+					maxLength = 25
+				}
+			}
+
+			// Ensure max is at least 1
+			if maxLength < 1 {
+				maxLength = 1
+			}
+
+			// Ensure min doesn't exceed max
+			if minLength > maxLength {
+				minLength = maxLength
+			}
+		}
+
+		formInputId, err := dbclient.Client.FormInput.CreateTx(ctx,
 			tx,
 			formId,
+			input.Type,
 			customId,
 			input.Position,
 			uint8(input.Style),
 			input.Label,
+			input.Description,
 			input.Placeholder,
 			input.Required,
-			&input.MinLength,
-			&input.MaxLength,
-		); err != nil {
+			&minLength,
+			&maxLength,
+		)
+
+		if err != nil {
 			return err
+		}
+
+		if input.Type == 3 { // String Select
+			for i, opt := range input.Options {
+				option := database.FormInputOption{
+					FormInputId: formInputId,
+					Position:    i + 1,
+					Label:       opt.Label,
+					Description: opt.Description,
+					Value:       opt.Value,
+				}
+
+				if _, err := dbclient.Client.FormInputOption.CreateTx(ctx, tx, option); err != nil {
+					return err
+				}
+			}
 		}
 	}
 

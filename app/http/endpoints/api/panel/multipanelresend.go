@@ -10,9 +10,9 @@ import (
 	"github.com/Miniplays-Tickets/dashboard/rpc"
 	"github.com/Miniplays-Tickets/dashboard/utils"
 	"github.com/TicketsBot-cloud/common/premium"
+	"github.com/TicketsBot-cloud/gdl/rest"
+	"github.com/TicketsBot-cloud/gdl/rest/request"
 	"github.com/gin-gonic/gin"
-	"github.com/rxdn/gdl/rest"
-	"github.com/rxdn/gdl/rest/request"
 )
 
 func MultiPanelResend(ctx *gin.Context) {
@@ -21,14 +21,14 @@ func MultiPanelResend(ctx *gin.Context) {
 	// parse panel ID
 	panelId, err := strconv.Atoi(ctx.Param("panelid"))
 	if err != nil {
-		ctx.JSON(400, utils.ErrorJson(err))
+		ctx.JSON(400, utils.ErrorStr("Failed to send message. Please try again."))
 		return
 	}
 
 	// retrieve panel from DB
 	multiPanel, ok, err := dbclient.Client.MultiPanels.Get(ctx, panelId)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to send message. Please try again."))
 		return
 	}
 
@@ -47,7 +47,7 @@ func MultiPanelResend(ctx *gin.Context) {
 	// get bot context
 	botContext, err := botcontext.ContextForGuild(guildId)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Unable to connect to Discord. Please try again later."))
 		return
 	}
 
@@ -56,7 +56,7 @@ func MultiPanelResend(ctx *gin.Context) {
 	if err := rest.DeleteMessage(context.Background(), botContext.Token, botContext.RateLimiter, multiPanel.ChannelId, multiPanel.MessageId); err != nil {
 		var unwrapped request.RestError
 		if errors.As(err, &unwrapped) && !unwrapped.IsClientError() {
-			ctx.JSON(500, utils.ErrorJson(err))
+			ctx.JSON(500, utils.ErrorStr("Failed to send message. Please try again."))
 			return
 		}
 	}
@@ -64,13 +64,13 @@ func MultiPanelResend(ctx *gin.Context) {
 	// get premium status
 	premiumTier, err := rpc.PremiumClient.GetTierByGuildId(ctx, guildId, true, botContext.Token, botContext.RateLimiter)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Unable to verify premium status. Please try again."))
 		return
 	}
 
 	panels, err := dbclient.Client.MultiPanelTargets.GetPanels(ctx, multiPanel.Id)
 	if err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to send message. Please try again."))
 		return
 	}
 
@@ -80,16 +80,16 @@ func MultiPanelResend(ctx *gin.Context) {
 	if err != nil {
 		var unwrapped request.RestError
 		if errors.As(err, &unwrapped) && unwrapped.StatusCode == 403 {
-			ctx.JSON(500, utils.ErrorJson(errors.New("Ich habe keine Berechtigung, Nachrichten in dem angegebenen Kanal zu senden.")))
+			ctx.JSON(500, utils.ErrorStr("Ich habe keine Berechtigung, Nachrichten in dem angegebenen Kanal zu senden"))
 		} else {
-			ctx.JSON(500, utils.ErrorJson(err))
+			ctx.JSON(500, utils.ErrorStr("Failed to send message. Please try again."))
 		}
 
 		return
 	}
 
 	if err = dbclient.Client.MultiPanels.UpdateMessageId(ctx, multiPanel.Id, messageId); err != nil {
-		ctx.JSON(500, utils.ErrorJson(err))
+		ctx.JSON(500, utils.ErrorStr("Failed to send message. Please try again."))
 		return
 	}
 
