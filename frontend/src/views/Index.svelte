@@ -34,10 +34,7 @@
                 return;
             }
 
-            if (
-                !res.data.success &&
-                res.data["reauthenticate_required"] === true
-            ) {
+            if (!res.data.success && res.data["reauthenticate_required"] === true) {
                 window.location.href = "/login";
                 return;
             }
@@ -61,11 +58,11 @@
 <div class="content">
     <div class="card-wrapper">
         <Card footer={false} fill={false}>
-            <span slot="title"> Servers </span>
+            <span slot="title"> Server </span>
 
             <div slot="body" style="width: 100%">
                 <span>
-                    <h2>Your Servers</h2>
+                    <h2>Deine Server</h2>
                 </span>
                 <div id="guild-container">
                     <InviteBadge />
@@ -79,14 +76,14 @@
 
                 <br />
                 <span>
-                    <h2>Other Servers</h2>
-                    <i>You do not have access to managing these servers. <button
-                        class="help-link"
-                        on:click={openNoPermissionModal}
-                        aria-label="Learn how to get access"
-                    >
-                        Click here to learn why
-                    </button>.</i>
+                    <h2>Andere Server</h2>
+                    <i>
+                        Du hast keinen Zugriff zum verwalten dieser Server
+                        <button class="help-link" on:click={openNoPermissionModal}>
+                            Klicke hier um zu erfahren warum.
+                        </button>
+                        .
+                    </i>
                 </span>
 
                 <div id="guild-container">
@@ -99,7 +96,7 @@
 
                 <div id="refresh-container">
                     <Button icon="fas fa-sync" on:click={refreshGuilds}>
-                        Refresh list
+                        Liste Aktualisieren
                     </Button>
                 </div>
             </div>
