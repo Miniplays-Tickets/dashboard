@@ -23,7 +23,7 @@
     const USER_TYPE = 0;
     const ROLE_TYPE = 1;
 
-    let defaultTeam = { id: "default", name: "Default" };
+    let defaultTeam = { id: "default", name: "Standart" };
 
     let createName;
     let teams = [defaultTeam];
@@ -53,17 +53,14 @@
     }
 
     async function addRole() {
-        const res = await axios.put(
-            `${API_URL}/api/${guildId}/team/${activeTeam}/${selectedRole.id}?type=1`,
-        );
+        const res = await axios.put(`${API_URL}/api/${guildId}/team/${activeTeam}/${selectedRole.id}?type=1`);
+
         if (res.status !== 200) {
             notifyError(res.data.error);
             return;
         }
 
-        notifySuccess(
-            `${selectedRole.name} has been added to the support team ${getTeam(activeTeam).name}`,
-        );
+        notifySuccess(`${selectedRole.name} wurde zum support team ${getTeam(activeTeam).name} hinzugefügt`);
 
         let entity = {
             id: selectedRole.id,
@@ -75,9 +72,8 @@
     }
 
     async function removeMember(teamId, entity) {
-        const res = await axios.delete(
-            `${API_URL}/api/${guildId}/team/${teamId}/${entity.id}?type=${entity.type}`,
-        );
+        const res = await axios.delete(`${API_URL}/api/${guildId}/team/${teamId}/${entity.id}?type=${entity.type}`);
+
         if (res.status !== 200) {
             notifyError(res.data.error);
             return;
@@ -86,19 +82,15 @@
         members = members.filter((member) => member.id !== entity.id);
 
         if (entity.type === USER_TYPE) {
-            notifySuccess(`${entity.name} has been removed from the team`);
+            notifySuccess(`${entity.name} wurde von dem Team entfernt`);
         } else {
             const role = roles.find((role) => role.id === entity.id);
-            notifySuccess(
-                `${role === undefined ? "Unknown role" : role.name} has been removed from the team`,
-            );
+            notifySuccess(`${role === undefined ? "Unbekannte Rolle" : role.name} wurde von dem Team entfernt`);
         }
     }
 
     async function createTeam() {
-        let data = {
-            name: createName,
-        };
+        let data = {name: createName};
 
         const res = await axios.post(`${API_URL}/api/${guildId}/team`, data);
         if (res.status !== 200) {
@@ -106,7 +98,7 @@
             return;
         }
 
-        notifySuccess(`Team ${createName} has been created`);
+        notifySuccess(`Team ${createName} wurde erfolgreich erstellt`);
         createName = "";
         teams = [...teams, res.data];
     }
@@ -118,7 +110,7 @@
             return;
         }
 
-        notifySuccess(`Team deleted successfully`);
+        notifySuccess(`Team erfolgreich gelöscht`);
 
         activeTeam = defaultTeam.id;
         teams = teams.filter((team) => team.id !== id);
@@ -160,7 +152,7 @@
         <span slot="title">Support Teams</span>
         <div slot="body" class="body-wrapper">
             <div class="section">
-                <h2 class="section-title">Create Team</h2>
+                <h2 class="section-title">Team erstellen</h2>
 
                 <form on:submit|preventDefault={createTeam}>
                     <div class="row" style="max-height: 48px">
@@ -171,13 +163,15 @@
                             bind:value={createName}
                         />
                         <div style="margin-left: 30px">
-                            <Button icon="fas fa-paper-plane">Submit</Button>
+                            <Button icon="fas fa-paper-plane">
+                                Bestätigen
+                            </Button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="section">
-                <h2 class="section-title">Manage Teams</h2>
+                <h2 class="section-title">Teams Verwalten</h2>
 
                 <div class="col-1" style="flex-direction: row; gap: 12px">
                     <Dropdown
@@ -205,35 +199,31 @@
 
                 <div class="manage">
                     <div class="col">
-                        <h3>Manage Members</h3>
+                        <h3>Mitglieder verwalten</h3>
 
                         <table class="nice">
                             <tbody>
                                 {#each members as member}
                                     <tr>
                                         {#if member.type === USER_TYPE}
-                                            <td>{member.name}</td>
+                                            <td>
+                                                {member.name}
+                                            </td>
                                         {:else if member.type === ROLE_TYPE}
-                                            {@const role = roles.find(
-                                                (role) => role.id === member.id,
-                                            )}
-                                            <td
-                                                >{role === undefined
-                                                    ? "Unknown Role"
-                                                    : role.name}</td
-                                            >
+                                            {@const role = roles.find((role) => role.id === member.id)}
+                                            <td>
+                                                {role === undefined ? "Unbekannte Rolle" : role.name}
+                                            </td>
                                         {/if}
+
                                         <td class="action-cell">
                                             <div class="button-right">
                                                 <Button
                                                     type="button"
                                                     danger={true}
-                                                    on:click={() =>
-                                                        removeMember(
-                                                            activeTeam,
-                                                            member,
-                                                        )}
-                                                    >Delete
+                                                    on:click={() => removeMember(activeTeam, member)}
+                                                >
+                                                    Löschen
                                                 </Button>
                                             </div>
                                         </td>
@@ -244,7 +234,7 @@
                     </div>
 
                     <div class="col">
-                        <h3>Add Role</h3>
+                        <h3>Rolle hinzufügen</h3>
                         <div class="user-select">
                             <div class="col-1" style="display: flex; flex: 1">
                                 <RoleSelect
@@ -258,10 +248,10 @@
                                 <Button
                                     type="button"
                                     icon="fas fa-plus"
-                                    disabled={selectedRole === null ||
-                                        selectedRole == undefined}
+                                    disabled={selectedRole === null || selectedRole == undefined}
                                     on:click={addRole}
-                                    >Add To Team
+                                >
+                                    Zum Team Hinzufügen
                                 </Button>
                             </div>
                         </div>
