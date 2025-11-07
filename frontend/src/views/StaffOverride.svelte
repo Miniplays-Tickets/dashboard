@@ -1,25 +1,33 @@
 {#if modal}
-  <StaffOverrideModal {guildId} on:close={() => modal = false} on:confirm={handleConfirm}/>
+    <StaffOverrideModal {guildId} on:close={() => modal = false} on:confirm={handleConfirm}/>
 {/if}
 
 <div class="parent">
-  <div class="content">
-    <div class="main-col">
-      <Card footer footerRight>
-        <span slot="title">Support Zugriff</span>
-        <div slot="body" class="body-wrapper">
-          Du kannst dem Support Team temporären Zugriff auf das Dashboard des Servers geben, sodass sie dir mit Problemen helfen können. 
-          Du kannst diesen Zugriff jederzeit auf dieser Webseite entfernen.
+    <div class="content">
+        <div class="main-col">
+            <Card footer footerRight>
+                <span slot="title">
+                    Support Zugriff
+                </span>
+
+                <div slot="body" class="body-wrapper">
+                    Du kannst dem Support Team temporären Zugriff auf das Dashboard des Servers geben, sodass sie dir mit Problemen helfen können. 
+                    Du kannst diesen Zugriff jederzeit auf dieser Webseite entfernen.
+                </div>
+
+                <div slot="footer" class="footer-wrapper">
+                    {#if activeOverride}
+                        <Button danger on:click={removeOverride}>
+                            Zugriff Entfernen
+                        </Button>
+                    {/if}
+                    <Button on:click={() => modal = true}>
+                        Zugriff geben
+                    </Button>
+                </div>
+            </Card>
         </div>
-        <div slot="footer" class="footer-wrapper">
-          {#if activeOverride}
-            <Button danger on:click={removeOverride}>Zugriff Entfernen</Button>
-          {/if}
-          <Button on:click={() => modal = true}>Zugriff geben</Button>
-        </div>
-      </Card>
     </div>
-  </div>
 </div>
 
 <script>
@@ -132,3 +140,4 @@
         }
     }
 </style>
+
