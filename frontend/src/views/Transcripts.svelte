@@ -184,7 +184,7 @@
         <Card footer footerRight ref="filter-card">
             <span slot="title">
                 <i class="fas fa-filter"></i>
-                Filter Logs
+                Transscripts Filtern
             </span>
 
             <div slot="body" class="body-wrapper">

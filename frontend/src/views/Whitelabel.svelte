@@ -49,7 +49,7 @@
         $: token = "";
 
         await loadBot();
-        notifySuccess(`Started tickets whitelabel on ${res.data.bot.name}`);
+        notifySuccess(`Miniplays Tickets Whitelabel auf ${res.data.bot.name} gestartet`);
     }
 
     async function updateStatus() {
@@ -70,7 +70,7 @@
         }
 
         fetched = { ...data };
-        notifySuccess("Updated status successfully");
+        notifySuccess("Status erfolgreich Aktualisiert");
     }
 
     async function deleteStatus() {
@@ -92,7 +92,7 @@
 
         bot = blankStatus;
         fetched = { ...blankStatus };
-        notifySuccess("Deleted status successfully");
+        notifySuccess("Status erfolgreich gelöscht");
     }
 
     async function loadBot() {
@@ -149,7 +149,7 @@
         }
 
         notifySuccess(
-            "Slash commands have been created. Please note, they may take a few minutes before they are visible.",
+            "Slash Befehle wurden erstellt. Bitte bedenke, dass es einige Minuten dauern kann bis diese sichtbar sind.",
         );
     }
 
@@ -161,7 +161,7 @@
         }
 
         active = false;
-        notifySuccess("Whitelabel has been disabled");
+        notifySuccess("Whitelabel wurde erfolgreich deaktiviert");
     }
 
     withLoadingScreen(async () => {
@@ -175,20 +175,20 @@
     <div class="col">
         {#if active}
             <Card footer={false} fill={false}>
-                <h4 slot="title">Manage Bot</h4>
+                <h4 slot="title">Whitelabel Bot verwalten</h4>
                 <div slot="body" class="full-width">
-                    <p>Your whitelabel bot <b>{bot.username}</b> is active.</p>
+                    <p>Dein Whitelabel Bot <b>{bot.username}</b> ist aktiv.</p>
 
                     <div class="buttons">
                         <Button icon="fas fa-plus" on:click={invite}>
-                            Generate Invite Link
+                            Invite Link Erstellen
                         </Button>
 
                         <Button
                             icon="fas fa-paper-plane"
                             on:click={createSlashCommands}
                         >
-                            Re-create Slash Commands
+                            Slash Befehle neu erstellen
                         </Button>
 
                         <Button
@@ -196,14 +196,14 @@
                             on:click={disable}
                             danger
                         >
-                            Disable Whitelabel
+                            Whitelabel deaktivieren
                         </Button>
                     </div>
                 </div>
             </Card>
 
             <Card footer={false} fill={false}>
-                <h4 slot="title">Custom Status</h4>
+                <h4 slot="title">Eigener Status</h4>
                 <div slot="body" class="full-width">
                     <form
                         class="form-wrapper full-width"
@@ -212,14 +212,14 @@
                         <div class="row">
                             <Dropdown
                                 col3
-                                label="Status Type"
+                                label="Status Typ"
                                 bind:value={bot.status_type}
                             >
-                                <option value="0">Playing</option>
-                                <option value="2">Listening</option>
-                                <option value="3">Watching</option>
+                                <option value="0">Spielt</option>
+                                <option value="2">Hört</option>
+                                <option value="3">Schaut</option>
                                 <option value="5">Competing</option>
-                                <option value="4">Custom</option>
+                                <option value="4">Eigener</option>
                             </Dropdown>
 
                             <div class="col-2-3">
@@ -238,7 +238,7 @@
                                 on:click={updateStatus}
                                 fullWidth={true}
                             >
-                                Submit
+                                Bestätigen
                             </Button>
                             {#if fetched.status != ""}
                                 <Button
@@ -247,7 +247,7 @@
                                     danger
                                     fullWidth={true}
                                 >
-                                    Clear Status
+                                    Status leeren
                                 </Button>
                             {/if}
                         </div>
@@ -269,8 +269,7 @@
                             placeholder="xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxx"
                         />
                         <p>
-                            Note: You will not be able to view the token after
-                            submitting it
+                            Info: Nach dem Bestätigen kannst du dein Bot Token nicht mehr einsehen
                         </p>
 
                         <div class="buttons">
@@ -278,7 +277,7 @@
                                 icon="fas fa-paper-plane"
                                 on:click={submitToken}
                                 fullWidth={true}
-                                >Submit
+                                >Bestätigen
                             </Button>
                         </div>
                     </form>
@@ -288,13 +287,13 @@
     </div>
     <div class="col">
         <Card footer={false} fill={false}>
-            <h4 slot="title">Error Log</h4>
+            <h4 slot="title">Fehler Log</h4>
             <div slot="body" class="full-width">
                 <table class="error-log">
                     <thead>
                         <tr style="border-bottom: 1px solid #dee2e6;">
-                            <th class="table-col">Error</th>
-                            <th class="table-col">Time</th>
+                            <th class="table-col">Fehler</th>
+                            <th class="table-col">Zeit</th>
                         </tr>
                     </thead>
                     <tbody id="error_body">
