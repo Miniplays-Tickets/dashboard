@@ -1,9 +1,9 @@
 <div class="content">
-  <div class="main-col">
-    <div class="card">
-      <SettingsCard {guildId}/>
+    <div class="main-col">
+        <div class="card">
+            <SettingsCard {guildId}/>
+        </div>
     </div>
-  </div>
 </div>
 
 <script>
@@ -64,3 +64,4 @@
         }
     }
 </style>
+
