@@ -1,7 +1,7 @@
 <div class="parent">
     <div class="content">
         <Card footer={false}>
-            <span slot="title">#{transcriptData.channel_name} - View Transcript</span>
+            <span slot="title">#{transcriptData.channel_name} - Transscript Ansehen</span>
             <div slot="body" class="body-wrapper">
                 <div class="section">
                     <div class="messages-container" id="messages-container">

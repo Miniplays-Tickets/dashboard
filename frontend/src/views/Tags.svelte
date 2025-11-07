@@ -11,9 +11,9 @@
         on:cancel={() => (tagToDelete = null)}
         on:confirm={() => deleteTag(tagToDelete)}
     >
-        <span slot="title">Delete Tag</span>
-        <span slot="body">Are you sure you want to delete the tag <strong>{tagToDelete}</strong>?</span>
-        <span slot="confirm">Delete</span>
+        <span slot="title">Tag löschen</span>
+        <span slot="body">Bist du dir sicher, dass du den Tag <strong>{tagToDelete}</strong>löschen willst?</span>
+        <span slot="confirm">Löschen</span>
     </ConfirmationModal>
 {/if}
 
@@ -31,10 +31,25 @@
                 <tbody>
                 {#each Object.entries(tags) as [id, tag]}
                     <tr>
-                        <td>{id}</td>
+                        <td>
+                            {id}
+                        </td>
+
                         <td class="actions">
-                            <Button type="button" on:click={() => openEditModal(id)}>Bearbeiten</Button>
-                            <Button type="button" danger={true} on:click={() => deleteTag(id)}>Löschen</Button>
+                            <Button 
+                                type="button" 
+                                on:click={() => openEditModal(id)}
+                            >
+                                Bearbeiten
+                            </Button>
+
+                            <Button 
+                                type="button" 
+                                danger={true} 
+                                on:click={() => deleteTag(id)}
+                            >
+                                Löschen
+                            </Button>
                         </td>
                     </tr>
                 {/each}
@@ -42,7 +57,12 @@
             </table>
         </div>
         <div slot="footer">
-            <Button icon="fas fa-plus" on:click={openCreateModal}>Tag Erstellen</Button>
+            <Button 
+                icon="fas fa-plus" 
+                on:click={openCreateModal}
+            >
+                Tag Erstellen
+            </Button>
         </div>
     </Card>
 </div>
@@ -105,7 +125,7 @@
             return;
         }
 
-        notifySuccess(`Tag ${data.id} has been created`);
+        notifySuccess(`Tag ${data.id} wurde erfolgreich erstellt`);
         tagCreateModal = false;
         tags[data.id] = data;
     }
@@ -240,3 +260,4 @@
         }
     }
 </style>
+

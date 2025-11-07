@@ -1,5 +1,5 @@
 <script>
-  import {redirectLogin} from '../includes/Auth.svelte'
+    import {redirectLogin} from '../includes/Auth.svelte'
 
-  redirectLogin()
+    redirectLogin()
 </script>
