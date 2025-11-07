@@ -177,35 +177,35 @@
         </span>
         <div slot="body" class="filter-wrapper">
             <Dropdown col2 label="Sort Tickets By..." bind:value={sortMethod}>
-                <option value="id_asc"
-                    >Ticket ID (Ascending) / Oldest First</option
-                >
-                <option value="id_desc"
-                    >Ticket ID (Descending) / Newest First</option
-                >
-                <option value="unclaimed"
-                    >Unclaimed & Awaiting Response First</option
-                >
+                <option value="id_asc">
+                    Ticket ID (Aufsteigend) / Älteste zuerst
+                </option>
+                <option value="id_desc">
+                    Ticket ID (Absteigend) / Neuste zuerst</option
+                </option>
+                <option value="unclaimed">
+                    Nicht Beansprucht & Wartend auf Antwort</option
+                </option>
             </Dropdown>
 
             <Checkbox
-                label="Only Show Unclaimed Tickets & Tickets Claimed By Me"
+                label="Zeige nur nicht Beanspruchte Tickets & Tickets von mir Beansprucht"
                 bind:value={onlyShowMyTickets}
             />
         </div>
     </Card>
 
     <Card footer={false}>
-        <span slot="title"> Open Tickets </span>
+        <span slot="title"> Offene Tickets </span>
         <ColumnSelector
             options={[
                 "ID",
                 "Panel",
-                "User",
-                "Opened Time",
-                "Claimed By",
-                "Last Message Time",
-                "Awaiting Response",
+                "Benutzer",
+                "Zeit des Öffnens",
+                "Beansprucht von",
+                "Zeit letzter Nachricht",
+                "Wartend auf Antwort",
             ]}
             bind:selected={selectedColumns}
             slot="title-items"
@@ -214,84 +214,60 @@
             <table class="nice">
                 <thead>
                     <tr>
-                        <th class:visible={selectedColumns.includes("ID")}
-                            >ID</th
-                        >
-                        <th class:visible={selectedColumns.includes("Panel")}
-                            >Panel</th
-                        >
-                        <th class:visible={selectedColumns.includes("User")}
-                            >User</th
-                        >
-                        <th
-                            class:visible={selectedColumns.includes(
-                                "Opened Time",
-                            )}>Opened</th
-                        >
-                        <th
-                            class:visible={selectedColumns.includes(
-                                "Claimed By",
-                            )}>Claimed By</th
-                        >
-                        <th
-                            class:visible={selectedColumns.includes(
-                                "Last Message Time",
-                            )}>Last Message</th
-                        >
-                        <th
-                            class:visible={selectedColumns.includes(
-                                "Awaiting Response",
-                            )}>Awaiting Response</th
-                        >
+                        <th class:visible={selectedColumns.includes("ID")}>
+                            ID
+                        </th>
+                        <th class:visible={selectedColumns.includes("Panel")}>
+                            Panel
+                        </th>
+                        <th class:visible={selectedColumns.includes("Benutzer")}>
+                            Benutzer
+                        </th>
+                        <th class:visible={selectedColumns.includes("Zeit des Öffnens")}>
+                            Geöffnet
+                        </th>
+                        <th class:visible={selectedColumns.includes("Beansprucht von")}>
+                            Beansprucht von
+                        </th>
+                        <th class:visible={selectedColumns.includes("Zeit letzter Nachricht")}>
+                            Zeit letzter Nachricht
+                        </th>
+                        <th class:visible={selectedColumns.includes("Wartend auf Antwort")}>
+                            Wartend auf Antwort
+                        </th>
                         <th class="visible"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {#each filtered as ticket}
                         {@const user = data.resolved_users[ticket.user_id]}
-                        {@const claimer = ticket.claimed_by
-                            ? data.resolved_users[ticket.claimed_by]
-                            : null}
-                        {@const panel_title =
-                            data.panel_titles[ticket.panel_id?.toString()]}
+                        {@const claimer = ticket.claimed_by ? data.resolved_users[ticket.claimed_by] : null}
+                        {@const panel_title = data.panel_titles[ticket.panel_id?.toString()]}
 
                         <tr>
-                            <td class:visible={selectedColumns.includes("ID")}
-                                >{ticket.id}</td
-                            >
-                            <td
-                                class:visible={selectedColumns.includes(
-                                    "Panel",
-                                )}
-                            >
-                                {panel_title || "Unknown Panel"}
+                            <td class:visible={selectedColumns.includes("ID")}>
+                                {ticket.id}
                             </td>
 
-                            <td
-                                class:visible={selectedColumns.includes("User")}
-                            >
+                            <td class:visible={selectedColumns.includes("Panel")}>
+                                {panel_title || "Unbekanntes Panel"}
+                            </td>
+
+                            <td class:visible={selectedColumns.includes("Benutzer")}>
                                 {#if user}
                                     {user.global_name || user.username}
                                 {:else}
-                                    Unknown
+                                    Unbekannt
                                 {/if}
                             </td>
 
-                            <td
-                                class:visible={selectedColumns.includes(
-                                    "Opened Time",
-                                )}
-                            >
+                            <td class:visible={selectedColumns.includes("Zeit des Öffnens")}>
                                 {getRelativeTime(new Date(ticket.opened_at))}
                             </td>
 
-                            <td
-                                class:visible={selectedColumns.includes(
-                                    "Claimed By",
-                                )}
-                            >
+                            <td class:visible={selectedColumns.includes("Beansprucht von")}>
                                 {#if ticket.claimed_by === null}
-                                    <b>Unclaimed</b>
+                                    <b>Nicht Beansprucht</b>
                                 {:else if claimer}
                                     {claimer.global_name || claimer.username}
                                 {:else}
@@ -299,39 +275,26 @@
                                 {/if}
                             </td>
 
-                            <td
-                                class:visible={selectedColumns.includes(
-                                    "Last Message Time",
-                                )}
-                            >
+                            <td class:visible={selectedColumns.includes("Zeit letzter Nachricht")}>
                                 {#if ticket.last_response_time}
-                                    {getRelativeTime(
-                                        new Date(ticket.last_response_time),
-                                    )}
+                                    {getRelativeTime(new Date(ticket.last_response_time))}
                                 {:else}
-                                    Never
+                                    Nie
                                 {/if}
                             </td>
 
-                            <td
-                                class:visible={selectedColumns.includes(
-                                    "Awaiting Response",
-                                )}
-                            >
+                            <td class:visible={selectedColumns.includes("Wartend auf Antwort")}>
                                 {#if ticket.last_response_is_staff}
-                                    No
+                                    Nein
                                 {:else}
-                                    <b>Yes</b>
+                                    <b>Ja</b>
                                 {/if}
                             </td>
 
                             <td class="visible action-cell">
                                 <div class="button-right">
-                                    <Navigate
-                                        to="/manage/{guildId}/tickets/view/{ticket.id}"
-                                        styles="link"
-                                    >
-                                        <Button type="button">View</Button>
+                                    <Navigate to="/manage/{guildId}/tickets/view/{ticket.id}" styles="link">
+                                        <Button type="button">Anzeigen</Button>
                                     </Navigate>
                                 </div>
                             </td>
